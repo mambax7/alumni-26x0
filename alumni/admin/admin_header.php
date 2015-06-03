@@ -8,7 +8,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
-use Xoops\Core\Request;
+
 /**
  * @copyright    The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -17,6 +17,8 @@ use Xoops\Core\Request;
  * @author       XOOPS Development Team
  * @version      $Id $
  */
+
+use Xoops\Core\Request;
 
 include_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 include_once dirname(__DIR__) . '/include/common.php';

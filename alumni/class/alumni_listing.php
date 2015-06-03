@@ -8,7 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-use Xoops\Core\Database\Connection;
+
 /**
  * ALUMNI module
  *
@@ -18,6 +18,8 @@ use Xoops\Core\Database\Connection;
  * @since           2.6.0
  * @author          John Mordo (jlm69)
  */
+
+use Xoops\Core\Database\Connection;
 
 //defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
 $xoops = Xoops::getInstance();

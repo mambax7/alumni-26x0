@@ -8,8 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-use Xoops\Module\Plugin\PluginAbstract;
-use Xmf\Metagen;
+
 /**
  * alumni module
  * Edited by John Mordo (jlm69)
@@ -20,6 +19,8 @@ use Xmf\Metagen;
  * @version         $Id: $
  */
 
+use Xoops\Module\Plugin\PluginAbstract;
+use Xmf\Metagen;
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
 if (!empty($_GET['by_cat'])) {
   $by_cat = $_GET['by_cat'];

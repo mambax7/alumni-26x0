@@ -9,7 +9,6 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-use Xoops\Core\Database\Connection;
 
 /**
  * test1 module for xoops
@@ -20,6 +19,8 @@ use Xoops\Core\Database\Connection;
  * @author          John Mordo (jlm69)
  */
 	
+use Xoops\Core\Database\Connection;
+
 if (!defined("XOOPS_ROOT_PATH")) {
 	die("XOOPS root path not defined");
 }

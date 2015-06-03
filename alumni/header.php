@@ -8,7 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-use Xoops\Core\Request;
+
 /**
  * page module
  *
@@ -19,6 +19,8 @@ use Xoops\Core\Request;
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id$
  */
+
+use Xoops\Core\Request;
 
 include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 include_once __DIR__ . '/include/common.php';

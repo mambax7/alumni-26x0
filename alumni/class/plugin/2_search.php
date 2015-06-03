@@ -8,8 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-use Xoops\Module\Plugin\PluginAbstract;
-use Xmf\Metagen;
+
 /**
  * alumni module
  * Edited by John Mordo (jlm69)
@@ -19,6 +18,9 @@ use Xmf\Metagen;
  * @author          Mage Grégory (AKA Mage)
  * @version         $Id: $
  */
+
+use Xoops\Module\Plugin\PluginAbstract;
+use Xmf\Metagen;
 
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
 include_once(XOOPS_ROOT_PATH."/modules/alumni/include/common.php");

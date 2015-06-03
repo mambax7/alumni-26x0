@@ -8,7 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
-use Xoops\Core\Request;
+
 /**
  * page module
  *
@@ -19,6 +19,8 @@ use Xoops\Core\Request;
  * @author          DuGris (aka Laurent JEN)
  * @version         $Id$
  */
+
+use Xoops\Core\Request;
 
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
