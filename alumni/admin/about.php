@@ -18,7 +18,7 @@
  **/
 use Xoops\Core\Request;
 
-include_once dirname(__FILE__) . '/admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 //xoops_cp_header();
 $xoops = Xoops::getInstance();

@@ -19,7 +19,7 @@
  * @version         $Id: const_entete.php 9860 2012-07-13 10:41:41Z txmodxoops $
  */
 include __DIR__ . '/admin_header.php';
-$mydirname = basename(dirname(dirname(__FILE__)));
+$mydirname = basename(dirname(__DIR__));
 include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
 $myts = MyTextSanitizer::getInstance();
 $xoops = Xoops::getInstance();

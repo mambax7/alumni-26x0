@@ -18,8 +18,8 @@ use Xoops\Core\Request;
  * @version      $Id $
  */
 
-include_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mainfile.php';
-include_once dirname(dirname(__FILE__)) . '/include/common.php';
+include_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+include_once dirname(__DIR__) . '/include/common.php';
 //include_once XOOPS_ROOT_PATH . '/include/cp_header.php';
 //include_once '../include/functions.php';
 XoopsLoad::load('system', 'system');

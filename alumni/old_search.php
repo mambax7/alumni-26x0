@@ -23,7 +23,7 @@ use Xoops\Core\Request;
 
 include dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'mainfile.php';
 include_once __DIR__ . '/header.php';
-include_once dirname(__FILE__) . '/include/common.php';
+include_once __DIR__ . '/include/common.php';
 
 $alumni = Alumni::getInstance();
 $search = Search::getInstance();

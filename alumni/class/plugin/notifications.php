@@ -20,7 +20,7 @@
  */
 
 defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
-$mydirname = basename(dirname(dirname(__FILE__)));
+$mydirname = basename(dirname(__DIR__));
 include_once (XOOPS_ROOT_PATH . "/modules/alumni/include/functions.php");
 //include_once (XOOPS_ROOT_PATH . "/modules/jobs/include/resume_functions.php");
 

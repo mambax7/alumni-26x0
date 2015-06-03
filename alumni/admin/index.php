@@ -14,7 +14,7 @@
  * @version : $Id:
  * ****************************************************************************
  */
-//require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/include/cp_header.php';
+//require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 include __DIR__ . '/admin_header.php';
 //include_once '../include/functions.php';
 //$xoops = Xoops::getInstance();

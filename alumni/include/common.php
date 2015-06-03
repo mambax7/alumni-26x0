@@ -20,14 +20,14 @@
  */
 defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
 
-define("ALUMNI_DIRNAME", basename(dirname(dirname(__FILE__))));
+define("ALUMNI_DIRNAME", basename(dirname(__DIR__)));
 define("ALUMNI_URL", XOOPS_URL . '/modules/' . ALUMNI_DIRNAME);
 define("ALUMNI_ADMIN_URL", ALUMNI_URL . '/admin');
 define("ALUMNI_UPLOADS_URL", XOOPS_URL . '/uploads/' . ALUMNI_DIRNAME);
 define("ALUMNI_ROOT_PATH", XOOPS_ROOT_PATH . '/modules/' . ALUMNI_DIRNAME);
 define("ALUMNI_UPLOADS_PATH", XOOPS_ROOT_PATH . '/uploads/' . ALUMNI_DIRNAME);
 
-$path = dirname(dirname(__FILE__));
+$path = dirname(__DIR__);
 XoopsLoad::addMap(array(
     'alumnisession'   => $path . '/class/session.php',
     'alumni'          => $path . '/class/helper.php',

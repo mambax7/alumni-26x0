@@ -13,7 +13,7 @@
  * @since           2.6.0
  * @author          John Mordo - jlm69
  */
-include dirname(__FILE__) . '/admin_header.php';
+include __DIR__ . '/admin_header.php';
 
 $xoops = Xoops::getInstance();
 $op = $request->asStr('op', 'alumni_view');

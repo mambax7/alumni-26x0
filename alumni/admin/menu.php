@@ -1,7 +1,7 @@
 ﻿<?php
 
 defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
-////$path = dirname(dirname(dirname(dirname(__FILE__))));
+////$path = dirname(dirname(dirname(__DIR__)));
 ////include_once $path . '/mainfile.php';
 include_once dirname(__DIR__) . '/include/common.php';
 $alumni = Alumni::getInstance();

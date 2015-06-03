@@ -19,10 +19,10 @@ if (!class_exists('XoopsGTicket')) {
                 defined('XOOPS_ROOT_PATH') && !empty($xoopsConfig['language']) && !strstr($xoopsConfig['language'], '/')
             ) {
                 if (file_exists(
-                    dirname(dirname(__FILE__)) . '/language/' . $xoopsConfig['language'] . '/gticket_messages.phtml'
+                    dirname(__DIR__) . '/language/' . $xoopsConfig['language'] . '/gticket_messages.phtml'
                 )
                 ) {
-                    includedirname(dirname(__FILE__)) . '/language/' . $xoopsConfig['language']
+                    includedirname(__DIR__) . '/language/' . $xoopsConfig['language']
                         . '/gticket_messages.phtml';
                 }
             }

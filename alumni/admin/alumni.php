@@ -3,7 +3,7 @@
 //                                                                                           //
 // include_once '../../../include/cp_header.php';
 include __DIR__ . '/admin_header.php';
-$mydirname = basename(dirname(dirname(__FILE__)));
+$mydirname = basename(dirname(__DIR__));
 include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
 $myts = MyTextSanitizer::getInstance();
 $xoops = Xoops::getInstance();
