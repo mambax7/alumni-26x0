@@ -3,7 +3,7 @@ include "header.php";
 $xoops = Xoops::getInstance();
 //$alumni = Alumni::getInstance();
 $myts = MyTextSanitizer::getInstance();
-$mydirname = basename( dirname( __FILE__ ) ) ;
+$mydirname = basename(__DIR__);
 $main_lang =  '_' . strtoupper( $mydirname ) ;
 
 if (!empty($_POST['submit'])) {

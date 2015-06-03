@@ -16,7 +16,7 @@
 // ------------------------------------------------------------------------- //
 include("header.php");
 
-$mydirname = basename( dirname( __FILE__ ) ) ;
+$mydirname = basename(__DIR__);
 $main_lang =  '_' . strtoupper( $mydirname ) ;
 require_once( XOOPS_ROOT_PATH."/modules/$mydirname/include/gtickets.php" ) ;
 $myts = MyTextSanitizer::getInstance();

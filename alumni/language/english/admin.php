@@ -1,6 +1,6 @@
 ﻿<?php
 
-	$mydirname = basename( dirname( dirname( dirname( __FILE__ ) ) ) );
+$mydirname   = basename(dirname(dirname(__DIR__)));
 	$cloned_lang =  '_AM_' . strtoupper( $mydirname ) ;
 
 	define($cloned_lang."_CONF","Alumni Configuration");

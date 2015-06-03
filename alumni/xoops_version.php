@@ -1,7 +1,7 @@
 <?php
 // This Release Apr-04-2011
 //defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
-$mydirname = basename( dirname( __FILE__ ) ) ;
+$mydirname   = basename(__DIR__);
 $cloned_lang =  '_MI_' . strtoupper( $mydirname ) ;
 
 $xoops = Xoops::getInstance();

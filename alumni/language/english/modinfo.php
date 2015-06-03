@@ -1,7 +1,7 @@
 <?php
 // Module Info
 
-$mydirname = basename( dirname( dirname( dirname( __FILE__ ) ) ) );
+$mydirname    = basename(dirname(dirname(__DIR__)));
 $modinfo_lang =  '_MI_' . strtoupper( $mydirname ) ;
 $admin_lang =  '_AM_' . strtoupper( $mydirname ) ;
 

@@ -4,7 +4,7 @@
 //                            By John Mordo - jlm69                          //
 //  -----------------------------------------------------------------------  //
 
-	$mydirname = basename( dirname( dirname( __FILE__ ) ) ) ;
+$mydirname = basename(dirname(__DIR__));
 
 	require_once( XOOPS_ROOT_PATH."/modules/$mydirname/include/gtickets.php" ) ;
 

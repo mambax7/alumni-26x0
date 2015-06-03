@@ -10,7 +10,7 @@
 
 include("header.php");
 $xoops = Xoops::getInstance();
-$mydirname = basename( dirname( __FILE__ ) ) ;
+$mydirname = basename(__DIR__);
 require_once( XOOPS_ROOT_PATH."/modules/$mydirname/include/gtickets.php" ) ;
 //include(XOOPS_ROOT_PATH."/modules/$mydirname/include/functions.php");
 $myts = MyTextSanitizer::getInstance();

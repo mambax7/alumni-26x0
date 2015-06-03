@@ -1,5 +1,5 @@
 ﻿<?php
-	$mydirname = basename( dirname( dirname( dirname( __FILE__ ) ) ) );
+$mydirname = basename(dirname(dirname(__DIR__)));
 	$main_lang =  '_' . strtoupper( $mydirname ) ;
 	define("_ALUMNI_ADDON","Addon");
 	define("_ALUMNI_LISTINGS","Alumni Listings");

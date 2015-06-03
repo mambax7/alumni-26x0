@@ -8,7 +8,7 @@ $lid = isset( $_REQUEST['lid'] ) ? $_REQUEST['lid'] : '' ;
 if (!empty($_POST['submit'])) {
 	include("header.php");
 	
-	$mydirname = basename( dirname( __FILE__ ) ) ;
+    $mydirname = basename(__DIR__);
 
 	require_once( XOOPS_ROOT_PATH."/modules/$mydirname/include/gtickets.php" ) ;
 	
