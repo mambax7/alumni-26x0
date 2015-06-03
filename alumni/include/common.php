@@ -31,7 +31,6 @@ $path = dirname(__DIR__);
 XoopsLoad::addMap(array(
     'alumnisession'   => $path . '/class/session.php',
     'alumni'          => $path . '/class/helper.php',
-    'alumnirequest'   => $path . '/class/request.php',
     'alumniblockform' => $path . '/class/blockform.php',
 ));
 
