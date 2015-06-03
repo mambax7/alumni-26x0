@@ -37,7 +37,7 @@ class AlumniSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements S
         $sql = "SELECT lid, usid, name, mname, lname, school, year, date FROM " . $xoopsDB->prefix("alumni_listing") . " WHERE valid='1' AND date<=".time()."";
 
         if ( $uid != 0 ) {
-            $sql .= " AND usid=" . intval($uid);
+            $sql .= " AND usid=" . (int)($uid);
         }
 	if ( $by_cat != "") {
 		$sql .= " AND (cid LIKE '$by_cat')";

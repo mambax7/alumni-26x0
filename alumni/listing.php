@@ -26,7 +26,7 @@ if (is_object($xoopsUser)) {
 }
 $gperm_handler = $xoops->getHandler('groupperm');
 if (isset($_POST['item_id'])) {
-    $perm_itemid = intval($_POST['item_id']);
+    $perm_itemid = (int)($_POST['item_id']);
 } else {
     $perm_itemid = 0;
 }
@@ -41,8 +41,8 @@ if (!$gperm_handler->checkRight("".$mydirname."_premium", $perm_itemid, $groups,
     $prem_perm = "1";
 }
     if (isset($_REQUEST["lid"])) {
-	$lid = intval($_REQUEST['lid']);
-	$lid = (intval($lid) > 0) ? intval($lid) : 0 ;
+	$lid = (int)($_REQUEST['lid']);
+	$lid = ((int)($lid) > 0) ? (int)($lid) : 0 ;
 	}
 	$xoops->header('module:alumni/alumni_item.tpl');
 	Xoops::getInstance()->header();
@@ -224,7 +224,7 @@ case "new_listing":
 	}
 	$gperm_handler = $xoops->getHandler('groupperm');
 	if (isset($_POST['item_id'])) {
-	$perm_itemid = intval($_POST['item_id']);
+	$perm_itemid = (int)($_POST['item_id']);
 	} else {
 	$perm_itemid = 0;
 	}

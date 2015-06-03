@@ -31,7 +31,7 @@ if (is_object($xoopsUser)) {
 }
 $gperm_handler = $xoops->getHandler('groupperm');
 if (isset($_POST['item_id'])) {
-    $perm_itemid = intval($_POST['item_id']);
+    $perm_itemid = (int)($_POST['item_id']);
 } else {
     $perm_itemid = 0;
 }
@@ -48,7 +48,7 @@ if (!$gperm_handler->checkRight("".$mydirname."_premium", $perm_itemid, $groups,
 
 include(XOOPS_ROOT_PATH."/modules/$mydirname/include/functions.php");
 
-$cid = intval($_GET['cid']);
+$cid = (int)($_GET['cid']);
 
 $xoops->header('module:alumni/alumni_category.tpl');
 Xoops::getInstance()->header();
@@ -66,7 +66,7 @@ $xoTheme->addScript(ALUMNI_URL . '/media/jquery/photo.js');
 	$default_sort = $xoops->getModuleConfig("".$mydirname."_csortorder");
 	$listing_sort = $xoops->getModuleConfig("".$mydirname."_lsortorder");
 
-	$cid = (intval($cid) > 0) ? intval($cid) : 0 ;
+	$cid = ((int)($cid) > 0) ? (int)($cid) : 0 ;
 
 	$xoops->tpl()->assign('add_from', _ALUMNI_ADDFROM." ".$xoopsConfig['sitename']);
 	$xoops->tpl()->assign('add_from_title', _ALUMNI_ADDFROM );

@@ -136,7 +136,7 @@ class alumni_categories extends XoopsObject
 
     public function getPathFromId($id = NULL, $path = '')
     {
-        $id = isset($id) ? intval($id) : $this->cid;
+        $id = isset($id) ? (int)($id) : $this->cid;
         $myts =& MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($this->title);
         $path = "/{$name}{$path}";

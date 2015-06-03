@@ -142,9 +142,9 @@ echo "</table><table border=0>";
 ##############################################################
 
 if(!isset($_POST['lid']) && isset($_GET['lid']) ) {
-	$lid = intval($_GET['lid']) ;
+	$lid = (int)($_GET['lid']) ;
 }else {
-	$lid = intval($_POST['lid']) ;
+	$lid = (int)($_POST['lid']) ;
 }
 
 $op= '';

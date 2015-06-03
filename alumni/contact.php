@@ -22,7 +22,7 @@ if (!empty($_POST['submit'])) {
 	}
 	}
 
-	$lid = intval($_REQUEST["lid"]);
+	$lid = (int)($_REQUEST["lid"]);
 
 	$body = ( isset($_REQUEST['body']) )? $_REQUEST['body'] : null ;
 	$sname = ( isset($_REQUEST['sname']) )? $_REQUEST['sname'] : null ;

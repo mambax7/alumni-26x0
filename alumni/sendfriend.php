@@ -22,10 +22,10 @@ $fname = $_POST['fname'];
 $fmail = $_POST['fmail'];
 
         if (isset($_POST["lid"])) {
-        $lid = intval($_POST["lid"]);
+        $lid = (int)($_POST["lid"]);
     } else {
         if (isset($_GET["lid"])) {
-            $lid = intval($_GET["lid"]);
+            $lid = (int)($_GET["lid"]);
         } else {
             $lid = 0;
         }

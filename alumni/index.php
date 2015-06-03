@@ -20,7 +20,7 @@ if (is_object($xoops->user)) {
 }
 $gperm_handler = $xoops->getHandler('groupperm');
 if (isset($_POST['item_id'])) {
-    $perm_itemid = intval($_POST['item_id']);
+    $perm_itemid = (int)($_POST['item_id']);
 } else {
     $perm_itemid = 0;
 }
@@ -185,17 +185,17 @@ Xoops::getInstance()->header();
 		unset($subcategories);
 	  
 		$xoops->tpl()->append('categories', array('image' => $cat_img,
-			'id' => intval($cats[$i]->getVar('cid')),
+			'id' => (int)($cats[$i]->getVar('cid')),
 			'title' => $cats[$i]->getVar('title'),
-			'totalcats' => intval($alumni_count),
-			'count' => intval($count)));
+			'totalcats' => (int)($alumni_count),
+			'count' => (int)($count)));
 	 } else {
 		$xoops->tpl()->append('categories', array('image' => $cat_img,
-			'id' => intval($cats[$i]->getVar('cid')),
+			'id' => (int)($cats[$i]->getVar('cid')),
 			'title' => $cats[$i]->getVar('title'),
 			'subcategories' => $subcategories,
-			'totalcats' => intval($alumni_count),
-			'count' => intval($count)));
+			'totalcats' => (int)($alumni_count),
+			'count' => (int)($count)));
 	 }
 	}
 	$xoops->tpl()->assign('total_confirm', "");

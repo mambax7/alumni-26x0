@@ -46,7 +46,7 @@ class AlumniSearchForm extends XoopsThemeForm
         
  //   if (isset($_REQUEST["by_cat"])) {
   //      $by_cat = $_REQUEST['by_cat'];
- //       $by_cat = (intval($by_cat) > 0) ? intval($by_cat) : 0 ;
+ //       $by_cat = ((int)($by_cat) > 0) ? (int)($by_cat) : 0 ;
  //       }
         
         
@@ -54,9 +54,9 @@ class AlumniSearchForm extends XoopsThemeForm
    //     $by_cat = $request->asInt('by_cat','');
         
 	if (!empty($_GET['by_cat'])) {
-	$by_cat = intval($_GET['by_cat']);
+	$by_cat = (int)($_GET['by_cat']);
 	} elseif (!empty($_POST['by_cat'])) {
-	$by_cat = intval($_POST['by_cat']);
+	$by_cat = (int)($_POST['by_cat']);
 	} else {
 	$by_cat = "";
 	} 

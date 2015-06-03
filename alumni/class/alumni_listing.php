@@ -170,7 +170,7 @@ class alumni_listing extends XoopsObject
 	$form->addElement(new Xoops\Form\Hidden("usid", $xoops->user->uid()));
 
 		if (!$this->isNew()) {
-        $form->addElement(new Xoops\Form\Hidden('lid', intval($this->getVar('lid', 'e'))));
+        $form->addElement(new Xoops\Form\Hidden('lid', (int)($this->getVar('lid', 'e'))));
 		}
 
 	$form->addElement(new Xoops\Form\Hidden("op", "save_listing"));

@@ -31,7 +31,7 @@ class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
 	
     if (isset($_REQUEST["by_cat"])) {
         $by_cat = $_REQUEST['by_cat'];
-        $by_cat = (intval($by_cat) > 0) ? intval($by_cat) : 0 ;
+        $by_cat = ((int)($by_cat) > 0) ? (int)($by_cat) : 0 ;
         }
 	
 	$alumni = Alumni::getInstance();

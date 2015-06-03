@@ -58,8 +58,8 @@ switch ($op) {
     case 'alumni_view':
     default:
         // Content
-        $limit = empty($_REQUEST['limit']) ? 10 : intval($_REQUEST['limit']);
-        $start = isset($_REQUEST['start']) ? intval($_REQUEST['start']) : 0;
+        $limit = empty($_REQUEST['limit']) ? 10 : (int)($_REQUEST['limit']);
+        $start = isset($_REQUEST['start']) ? (int)($_REQUEST['start']) : 0;
         $order = $xoops->getModuleConfig('alumni_csortorder');       
 	$cat_criteria = new CriteriaCompo();
 	$cat_criteria->setSort("cid");
