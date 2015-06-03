@@ -1,0 +1,4 @@
+
+
+
+<{$sendfriend_form}>

@@ -1,0 +1,20 @@
+{HELLO} {SUBMITTER},
+
+{YOUR_AD_ON} {X_SITENAME} {APPROVED}
+
+{VEDIT_AD}
+{LINK_URL}
+
+ {YOUR_AD}
+ {TYPE} : {TITLE}
+ {DESCTEXT}
+
+
+{THANKS}
+-----------
+{X_SITENAME} ({X_SITEURL}) 
+{WEBMASTER}
+{X_ADMINMAIL}
+-----------
+
+
