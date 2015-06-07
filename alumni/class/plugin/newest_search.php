@@ -21,46 +21,44 @@
 use Xoops\Module\Plugin\PluginAbstract;
 use Xmf\Metagen;
 
-class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
-{
+class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface {
     /**
      * search - search
      *
      * @param string[] $queries search terms
-     * @param string   $andor      and/or how to treat search terms
-     * @param integer  $limit      max number to return
-     * @param integer  $offset     offset of first row to return
-     * @param integer  $userid     a specific user id to limit the query
+     * @param string   $andor   and/or how to treat search terms
+     * @param integer  $limit   max number to return
+     * @param integer  $offset  offset of first row to return
+     * @param integer  $userid  a specific user id to limit the query
      *
      * @return array of result items
-     *           'title' => the item title
-     *           'content' => brief content or summary
-     *           'link' => link to visit item
-     *           'time' => time modified (unix timestamp)
-     *           'uid' => author uid
-     *           'image' => icon for search display
+     *               'title' => the item title
+     *               'content' => brief content or summary
+     *               'link' => link to visit item
+     *               'time' => time modified (unix timestamp)
+     *               'uid' => author uid
+     *               'image' => icon for search display
      *
      */
-    public function search($queries, $andor, $limit, $offset, $userid)
-    {
-        $andor = strtolower($andor)=='and' ? 'and' : 'or';
-        $time = time();
+    public function search($queries, $andor, $limit, $offset, $userid) {
+        $andor = strtolower($andor) == 'and' ? 'and' : 'or';
+        $time  = time();
 
         $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb ->select('DISTINCT *')
-            ->fromPrefix('alumni_listing')
-            ->where($eb->neq('valid', '1'))
- //           ->andWhere($eb->neq('date', $time, "!="))
-            ->orderBy('date', 'DESC')
-            ->setFirstResult($offset)
-            ->setMaxResults($limit);
+        $qb->select('DISTINCT *')
+           ->fromPrefix('alumni_listing')
+           ->where($eb->neq('valid', '1'))
+            //           ->andWhere($eb->neq('date', $time, "!="))
+           ->orderBy('date', 'DESC')
+           ->setFirstResult($offset)
+           ->setMaxResults($limit);
         if (is_array($queries) && !empty($queries)) {
             $queryParts = array();
             foreach ($queries as $i => $q) {
                 $qterm = ':qterm' . $i;
                 $qb->setParameter($qterm, '%' . $q . '%', \PDO::PARAM_STR);
-                $queryParts[] = $eb -> orX(
+                $queryParts[] = $eb->orX(
                     $eb->like('name', $qterm),
                     $eb->like('mname', $qterm),
                     $eb->like('lname', $qterm),
@@ -69,44 +67,43 @@ class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
                 );
             }
             if ($andor == 'and') {
-                $qb->andWhere(call_user_func_array(array($eb, "andX"), $queryParts));
+                $qb->andWhere(call_user_func_array(array($eb, 'andX'), $queryParts));
             } else {
-                $qb->andWhere(call_user_func_array(array($eb, "orX"), $queryParts));
+                $qb->andWhere(call_user_func_array(array($eb, 'orX'), $queryParts));
             }
         } else {
-            $qb->setParameter(':uid', (int) $userid, \PDO::PARAM_INT);
+            $qb->setParameter(':uid', (int)$userid, \PDO::PARAM_INT);
             $qb->andWhere($eb->eq('submitter', ':uid'));
         }
 
         $myts = MyTextSanitizer::getInstance();
-//       $items = array();
+        //       $items = array();
         $result = $qb->execute();
-        $ret = array();
-        $i = 0;
+        $ret    = array();
+        $i      = 0;
         while ($myrow = $result->fetch(\PDO::FETCH_ASSOC)) {
- //           $content = $myrow["content_shorttext"] . "<br /><br />" . $myrow["content_text"];
- //           $content = $myts->xoopsCodeDecode($content);
+            //           $content = $myrow["content_shorttext"] . "<br /><br />" . $myrow["content_text"];
+            //           $content = $myts->xoopsCodeDecode($content);
 
-            $ret[$i]["image"] = "images/logo_small.png";
-            $ret[$i]["link"] = "listing.php?lid=" . $myrow["lid"];
-            $ret[$i]["title"] = $myrow['name']." ".$myrow['mname']." ".$myrow['lname']."   ---   ".$myrow['school']." ---   ".$myrow['year'];
-            $ret[$i]["time"] = $myrow["date"];
-        //    $ret[$i]["content"] = $myrow["content_text"] . $myrow["content_shorttext"];
-            $ret[$i]["uid"] = $myrow["usid"];
+            $ret[$i]['image'] = 'images/logo_small.png';
+            $ret[$i]['link']  = 'listing.php?lid=' . $myrow['lid'];
+            $ret[$i]['title'] = $myrow['name'] . ' ' . $myrow['mname'] . ' ' . $myrow['lname'] . '   ---   ' . $myrow['school'] . ' ---   ' . $myrow['year'];
+            $ret[$i]['time']  = $myrow['date'];
+            //    $ret[$i]['content'] = $myrow['content_text'] . $myrow['content_shorttext'];
+            $ret[$i]['uid'] = $myrow['usid'];
             $i++;
- 
- 
- 
- 
- //$items[] = array(
- //               'title' => $myrow['name']." ".$myrow['mname']." ".$myrow['lname']."   ---   ".$myrow['school']." ---   ".$myrow['year'],
- //               'link' => "listing.php?lid=" . $myrow["lid"],
- //               'time' => $myrow['date'],
- //               'uid' => $myrow['usid'],
- //           );
+
+
+            //$items[] = array(
+            //               'title' => $myrow['name']." ".$myrow['mname']." ".$myrow['lname']."   ---   ".$myrow['school']." ---   ".$myrow['year'],
+            //               'link' => "listing.php?lid=" . $myrow["lid"],
+            //               'time' => $myrow['date'],
+            //               'uid' => $myrow['usid'],
+            //           );
         }
-//        return $items;
-return $ret;
+
+        //        return $items;
+        return $ret;
 
     }
 }

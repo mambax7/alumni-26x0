@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -16,8 +16,7 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') or die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class AlumniLocale extends AlumniLocaleEn_US
-{
+class AlumniLocale extends AlumniLocaleEn_US {
 }

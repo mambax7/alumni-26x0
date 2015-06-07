@@ -87,14 +87,14 @@
     		<td valign="top" width="33%" align="center">
     		
     		
-    		<a href="<{$xoops_url}>/modules/alumni/categories.php?cid=<{$category.id}>"><img src="<{$category.image}>" /></a><br /><br />
+    		<a href="<{$xoops_url}>/modules/<{$moduleDirName}>/categories.php?cid=<{$category.id}>"><img src="<{$category.image}>" /></a><br /><br />
     		
-						<a href="<{$xoops_url}>/modules/alumni/categories.php?cid=<{$category.id}>"><b><{$category.title}></b></a><br />(<{$category.totalcats}>)<br />
+						<a href="<{$xoops_url}>/modules/<{$moduleDirName}>/categories.php?cid=<{$category.id}>"><b><{$category.title}></b></a><br />(<{$category.totalcats}>)<br />
 			
 						<{if $category.subcategories}>
 							<{foreach item=subcat from=$category.subcategories}>
 								<div style="margin-bottom: 3px; margin-left: 16px;">
-									<small><a href="<{$xoops_url}>/modules/alumni/categories.php?cid=<{$subcat.id}>"><{$subcat.title}>&nbsp;(<{$subcat.count}>)</a></small>
+									<small><a href="<{$xoops_url}>/modules/<{$moduleDirName}>/categories.php?cid=<{$subcat.id}>"><{$subcat.title}>&nbsp;(<{$subcat.count}>)</a></small>
 								</div><br />
 							<{/foreach}>
     					<{/if}>

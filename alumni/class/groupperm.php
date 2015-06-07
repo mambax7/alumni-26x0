@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -20,12 +20,9 @@
  * @version         $Id$
  */
 
-use Xoops\Core\Request;
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined('XOOPS_ROOT_PATH') or die('Restricted access');
-
-class AlumniGroupPermHandler extends XoopsGroupPermHandler
-{
+class AlumniGroupPermHandler extends XoopsGroupPermHandler {
     /**
      * Check permission
      *
@@ -37,38 +34,31 @@ class AlumniGroupPermHandler extends XoopsGroupPermHandler
      *
      * @return bool
      */
-    public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $trueifadmin = true)
-    {
+    public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $trueifadmin = true) {
         return parent::checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid, $trueifadmin);
     }
 
-    public function updatePerms($cid, $groups = array())
-    {
+    public function updatePerms($cid, $groups = array()) {
         $module_id = Alumni::getInstance()->getModule()->getVar('mid');
 
         $groups_exists = parent::getGroupIds('alumni_view', $cid, $module_id);
         $groups_exists = array_values($groups_exists);
         $groups_delete = array_diff(array_values($groups_exists), $groups);
-        $groups_add = array_diff($groups, array_values($groups_exists));
+        $groups_add    = array_diff($groups, array_values($groups_exists));
 
         $groups1_exists = parent::getGroupIds('alumni_submit', $cid, $module_id);
         $groups1_exists = array_values($groups1_exists);
         $groups1_delete = array_diff(array_values($groups1_exists), $groups);
-        $groups1_add = array_diff($groups, array_values($groups1_exists));
-        
+        $groups1_add    = array_diff($groups, array_values($groups1_exists));
+
         $groups2_exists = parent::getGroupIds('alumni_premium', $cid, $module_id);
         $groups2_exists = array_values($groups2_exists);
         $groups2_delete = array_diff(array_values($groups2_exists), $groups);
-        $groups2_add = array_diff($groups, array_values($groups2_exists));
-        
-        
-        
-        
-        
-        
-        
+        $groups2_add    = array_diff($groups, array_values($groups2_exists));
+
+
         // delete classifieds_view
-        if (count($groups_delete) != 0 ) {
+        if (count($groups_delete) != 0) {
             $criteria = $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('gperm_itemid', $cid));
             $criteria->add(new Criteria('gperm_modid', $module_id));
@@ -77,10 +67,10 @@ class AlumniGroupPermHandler extends XoopsGroupPermHandler
             if (parent::deleteAll($criteria)) {
             }
         }
-        
-        
+
+
         // delete classifieds_view
-        if (count($groups1_delete) != 0 ) {
+        if (count($groups1_delete) != 0) {
             $criteria = $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('gperm_itemid', $cid));
             $criteria->add(new Criteria('gperm_modid', $module_id));
@@ -89,9 +79,9 @@ class AlumniGroupPermHandler extends XoopsGroupPermHandler
             if (parent::deleteAll($criteria)) {
             }
         }
-        
+
         // delete classifieds_view
-        if (count($groups2_delete) != 0 ) {
+        if (count($groups2_delete) != 0) {
             $criteria = $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('gperm_itemid', $cid));
             $criteria->add(new Criteria('gperm_modid', $module_id));
@@ -99,29 +89,29 @@ class AlumniGroupPermHandler extends XoopsGroupPermHandler
             $criteria->add(new Criteria('gperm_groupid', '(' . implode(', ', $groups2_delete) . ')', 'IN'));
             if (parent::deleteAll($criteria)) {
             }
-        } 
-        
+        }
+
         // Add classifieds_view
-        if (count($groups_add) != 0 ) {
-            foreach($groups_add as $group_id) {
+        if (count($groups_add) != 0) {
+            foreach ($groups_add as $group_id) {
                 parent::addRight('alumni_view', $cid, $group_id, $module_id);
             }
         }
-        
-                // Add classifieds_submit
-        if (count($groups1_add) != 0 ) {
-            foreach($groups1_add as $group_id) {
+
+        // Add classifieds_submit
+        if (count($groups1_add) != 0) {
+            foreach ($groups1_add as $group_id) {
                 parent::addRight('alumni_submit', $cid, $group_id, $module_id);
             }
         }
-        
-                // Add classifieds_submit
-        if (count($groups2_add) != 0 ) {
-            foreach($groups2_add as $group_id) {
+
+        // Add classifieds_submit
+        if (count($groups2_add) != 0) {
+            foreach ($groups2_add as $group_id) {
                 parent::addRight('alumni_premium', $cid, $group_id, $module_id);
             }
         }
-        
-        
+
+
     }
 }

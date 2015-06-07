@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -19,90 +19,81 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @version         $Id: helper.php 10597 2012-12-29 02:00:28Z trabis $
  */
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class Alumni extends Xoops\Module\Helper\HelperAbstract
-{
+class Alumni extends Xoops\Module\Helper\HelperAbstract {
     /**
      * Init the module
      *
      * @return null|void
      */
-    public function init()
-    {
+    public function init() {
         $this->setDirname('alumni');
         //$this->setDebug(true);
-    //    $this->loadLanguage('modinfo');
+        //    $this->loadLanguage('modinfo');
     }
 
     /**
-     * @return Jobs
+     * @return Alumni
      */
     public static function getInstance() {
         return parent::getInstance();
     }
 
     /**
-     * @return JobsItemHandler
+     * @return AlumniAlumni_listingHandler
      */
-    public function getListingHandler()
-    {
+    public function getListingHandler() {
         return $this->getHandler('alumni_listing');
     }
 
     /**
-     * @return JobsCategoryHandler
+     * @return AlumniAlumni_categoriesHandler
      */
-    public function getCategoryHandler()
-    {
+    public function getCategoryHandler() {
         return $this->getHandler('alumni_categories');
     }
 
     /**
-     * @return JobsPermissionHandler
+     * @return AlumniPermissionHandler
      */
-    public function getPermissionHandler()
-    {
+    public function getPermissionHandler() {
         return $this->getHandler('permission');
     }
 
     /**
-     * @return JobsFileHandler
+     * @return AlumniFileHandler
+     */
+//    public function getFileHandler() {
+//        return $this->getHandler('file');
+//    }
 
-    public function getFileHandler()
-    {
-        return $this->getHandler('file');
-    }
-     */
     /**
-     * @return JobsMimetypeHandler
+     * @return AluAlumniMimetypeHandler
+     */
+//    public function getMimetypeHandler() {
+//        return $this->getHandler('mimetype');
+//    }
 
-    public function getMimetypeHandler()
-    {
-        return $this->getHandler('mimetype');
-    }
-     */
     /**
-     * @return JobsRatingHandler
-     
-    public function getRatingHandler()
-    {
-        return $this->getHandler('rating');
-    }
-*/
-    /**
-     * @return JobsGrouppermHandler
+     * @return AlumniRatingHandler
      */
-    public function getGrouppermHandler()
-    {
+//    public function getRatingHandler() {
+//        return $this->getHandler('rating');
+//    }
+
+    /**
+     * @return AlumniGroupPermHandler
+     */
+    public function getGrouppermHandler() {
         return $this->getHandler('groupperm');
     }
-    
-    public function getUserId()
-    {
+
+    public function getUserId() {
         if ($this->xoops()->isUser()) {
             return $this->xoops()->user->getVar('uid');
         }
+
         return 0;
-    }    
+    }
 }

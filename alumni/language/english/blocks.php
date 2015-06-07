@@ -1,15 +1,16 @@
-﻿<?php
+<?php
 // Blocks
-define("_MB_ALUMNI_TITLE","Alumni Listings");
-define("_MB_ALUMNI_ALL_LISTINGS","View all Alumni Listings.");
-define("_MB_ALUMNI_ITEM","Title");
-define("_MB_ALUMNI_DATE","Date");
-define("_MB_ALUMNI_DISP","Display");
-define("_MB_ALUMNI_CHARS","Length of the title");
-define("_MB_ALUMNI_LISTINGS","Listings");
-define("_MB_ALUMNI_LENGTH"," characters");
+$moduleDirName   = basename(dirname(dirname(__DIR__)));
+$blocks_lang = '_MB_' . strtoupper($moduleDirName);
 
-define("_MB_ALUMNI_ORDER"," Order");
-define("_MB_ALUMNI_HITS"," Hits");
+define($blocks_lang . '_TITLE', 'Alumni Listings');
+define($blocks_lang . '_ALL_LISTINGS', 'View all Alumni Listings.');
+define($blocks_lang . '_ITEM', 'Title');
+define($blocks_lang . '_DATE', 'Date');
+define($blocks_lang . '_DISP', 'Display');
+define($blocks_lang . '_CHARS', 'Length of the title');
+define($blocks_lang . '_LISTINGS', 'Listings');
+define($blocks_lang . '_LENGTH', ' characters');
 
-
+define($blocks_lang . '_ORDER', ' Order');
+define($blocks_lang . '_HITS', ' Hits');

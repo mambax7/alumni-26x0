@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -27,17 +27,20 @@ include_once dirname(__DIR__) . '/include/common.php';
 XoopsLoad::load('system', 'system');
 //global $xoopsModule;
 $xoops = Xoops::getInstance();
-
 $xoops->loadLanguage('modinfo');
 
 $helper = Alumni::getInstance();
-$xoops = $helper->xoops();
+$xoops  = $helper->xoops();
+
+$moduleDirName = basename(dirname(__DIR__));
+$modinfo_lang  = '_MI_' . strtoupper($moduleDirName);
+$admin_lang    = '_AM_' . strtoupper($moduleDirName);
 
 //$request = Xoops_Request::getInstance();
-$alumni_listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+$alumni_listing_Handler    = $xoops->getModuleHandler('alumni_listing', 'alumni');
 $alumni_categories_Handler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-$alumni_gperm_Handler = $helper->getGrouppermHandler();
-$module_id = $helper->getModule()->getVar('mid');
+$alumni_gperm_Handler      = $helper->getGrouppermHandler();
+$module_id                 = $helper->getModule()->getVar('mid');
 
 XoopsLoad::loadFile($xoops->path(XOOPS_ROOT_PATH . '/include/cp_header.php'));
 // Define Stylesheet

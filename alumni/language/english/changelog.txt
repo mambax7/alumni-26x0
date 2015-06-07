@@ -2,6 +2,8 @@
 =================================
 --- Works with Xoops 2.6.0 ALPHA3
 --- Added tablesorter for pagination and sorting
+--- cleaned-up language files for consistency (mamba)
+--- replaced hard-coded module directory name (mamba)
 
 
 v3.01 RC  Apr. 11, 2011:

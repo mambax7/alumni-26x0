@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -19,136 +19,129 @@
  * @version         $Id: notifications.php 10605 2012-12-29 14:19:09Z trabis $
  */
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
-$mydirname = basename(dirname(__DIR__));
-include_once (XOOPS_ROOT_PATH . "/modules/alumni/include/functions.php");
-//include_once (XOOPS_ROOT_PATH . "/modules/jobs/include/resume_functions.php");
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+$moduleDirName = basename(dirname(dirname(__DIR__)));
+include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php");
+
+//include_once (XOOPS_ROOT_PATH . '/modules/jobs/include/resume_functions.php');
 
 
-
-
-class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract implements NotificationsPluginInterface
-{
+class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract implements NotificationsPluginInterface {
     /**
      * @param string $category
      * @param int    $item_id
      *
      * @return array
      */
-    public function item($category, $item_id)
-    {
-    
-
-    
-    
-        $xoops = Xoops::getInstance();
-        $item = array();
-        $item_id = (int) $item_id;
+    public function item($category, $item_id) {
 
 
-        
-        
+        $xoops   = Xoops::getInstance();
+        $item    = array();
+        $item_id = (int)$item_id;
+
+
         if ($category == 'global') {
             $item['name'] = '';
-            $item['url'] = '';
+            $item['url']  = '';
+
             return $item;
         }
 
+        global $xoopsDB, $moduleDirName;
 
-//        global $xoopsDB, $mydirname;    
-        
-	if ($category=='category') {
+        if ($category == 'category') {
 
-		// Assume we have a valid topid id
-		$sql = 'SELECT title  FROM '. $xoopsDB->prefix("alumni_categories") .' WHERE cid = '. $item_id .' limit 1';
-//echo $sql;
-		$result = $xoopsDB->query($sql); // TODO: error check
-		$result_array = $xoopsDB->fetchArray($result);
-		$item['name'] = $result_array['title'];
-//		$item['type'] = $result_array['ann.type'];		
-		$item['url'] = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/categories.php?cid=' .  $item_id;
-		return $item;
-	}
+            // Assume we have a valid topid id
+            $sql = 'SELECT title  FROM ' . $xoopsDB->prefix('alumni_categories') . ' WHERE cid = ' . $item_id . ' limit 1';
+            //echo $sql;
+            $result       = $xoopsDB->query($sql); // TODO: error check
+            $result_array = $xoopsDB->fetchArray($result);
+            $item['name'] = $result_array['title'];
+            //		$item['type'] = $result_array['ann.type'];
+            $item['url'] = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/categories.php?cid=' . $item_id;
 
-	if ($category=='listing') {
-		// Assume we have a valid post id
-		$sql = 'SELECT title FROM ' . $xoopsDB->prefix("alumni_listing").  ' WHERE lid = ' . $item_id . ' LIMIT 1';
-		$result = $xoopsDB->query($sql);
-		$result_array = $xoopsDB->fetchArray($result);
-		$item['name'] = $result_array['title'];
-//		$item['catname'] = $result_array['cat.title'];
-		$item['url'] = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/listing.php?lid= ' .  $item_id;
-		return $item;
-	}
+            return $item;
+        }
+
+        if ($category == 'listing') {
+            // Assume we have a valid post id
+            $sql          = 'SELECT title FROM ' . $xoopsDB->prefix('alumni_listing') . ' WHERE lid = ' . $item_id . ' LIMIT 1';
+            $result       = $xoopsDB->query($sql);
+            $result_array = $xoopsDB->fetchArray($result);
+            $item['name'] = $result_array['title'];
+            //		$item['catname'] = $result_array['cat.title'];
+            $item['url'] = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/listing.php?lid= ' . $item_id;
+
+            return $item;
+        }
+
         return $item;
     }
 
     /**
      * @return array
      */
-    public function categories()
-    {
-     
-        $ret = array();
+    public function categories() {
+        $moduleDirName = basename(dirname(dirname(__DIR__)));
+        $modinfo_lang  = '_MI_' . strtoupper($moduleDirName);
+
+        $ret                      = array();
         $ret[1]['name']           = 'global';
-        $ret[1]['title']          = _MI_ALUMNI_GLOBAL_NOTIFY;
-        $ret[1]['description']    = _MI_ALUMNI_GLOBAL_NOTIFYDSC;
+        $ret[1]['title']          = constant($modinfo_lang . '_GLOBAL_NOTIFY');
+        $ret[1]['description']    = constant($modinfo_lang . '_GLOBAL_NOTIFYDSC');
         $ret[1]['subscribe_from'] = array('index.php', 'categories.php');
 
-
-
         $ret[2]['name']           = 'category';
-        $ret[2]['title']          = _MI_ALUMNI_CATEGORY_NOTIFY;
-        $ret[2]['description']    = _MI_ALUMNI_CATEGORY_NOTIFYDSC;
+        $ret[2]['title']          = constant($modinfo_lang . '_CATEGORY_NOTIFY');
+        $ret[2]['description']    = constant($modinfo_lang . '_CATEGORY_NOTIFYDSC');
         $ret[2]['subscribe_from'] = array('categories.php');
         $ret[2]['item_name']      = 'cid';
         $ret[2]['allow_bookmark'] = 1;
 
-
         $ret[3]['name']           = 'alumni_listing';
-        $ret[3]['title']          = _MI_ALUMNI_NOTIFY;
-        $ret[3]['description']    = _MI_ALUMNI_NOTIFYDSC;
+        $ret[3]['title']          = constant($modinfo_lang . '_NOTIFY');
+        $ret[3]['description']    = constant($modinfo_lang . '_NOTIFYDSC');
         $ret[3]['subscribe_from'] = array('listing.php');
         $ret[3]['item_name']      = 'lid';
         $ret[3]['allow_bookmark'] = 1;
 
 
-               
         return $ret;
     }
 
     /**
      * @return array
      */
-    public function events()
-    {    
-        $ret = array();    
+    public function events() {
+        $moduleDirName    = basename(dirname(dirname(__DIR__)));
+        $modinfo_lang = '_MI_' . strtoupper($moduleDirName);
 
+        $ret = array();
 
-//event
-//alumni notifications new listings in this category
-$ret[1]['name'] = 'new_listing';
-$ret[1]['category'] = 'category';
-$ret[1]['title'] = _MI_ALUMNI_NEWPOST_NOTIFY;
-$ret[1]['caption'] = _MI_ALUMNI_NEWPOST_NOTIFYCAP;
-$ret[1]['description'] = _MI_ALUMNI_NEWPOST_NOTIFYDSC;
-$ret[1]['mail_template'] = 'listing_newpost_notify';
-$ret[1]['mail_subject'] = _MI_ALUMNI_NEWPOST_NOTIFYSBJ;
- 
-//new listings in all categories posted
-$ret[2]['name'] = 'new_listing';
-$ret[2]['category'] = 'global';
-$ret[2]['title'] = _MI_ALUMNI_GLOBAL_NEWPOST_NOTIFY;
-$ret[2]['caption'] = _MI_ALUMNI_GLOBAL_NEWPOST_NOTIFYCAP;
-$ret[2]['description'] = _MI_ALUMNI_GLOBAL_NEWPOST_NOTIFYDSC;
-$ret[2]['mail_template'] = 'listing_newpost_notify';
-$ret[2]['mail_subject'] = _MI_ALUMNI_GLOBAL_NEWPOST_NOTIFYSBJ;
+        //event
+        //alumni notifications new listings in this category
+        $ret[1]['name']          = 'new_listing';
+        $ret[1]['category']      = 'category';
+        $ret[1]['title']         = constant($modinfo_lang . '_NEWPOST_NOTIFY');
+        $ret[1]['caption']       = constant($modinfo_lang . '_NEWPOST_NOTIFYCAP');
+        $ret[1]['description']   = constant($modinfo_lang . '_NEWPOST_NOTIFYDSC');
+        $ret[1]['mail_template'] = 'listing_newpost_notify';
+        $ret[1]['mail_subject']  = constant($modinfo_lang . '_NEWPOST_NOTIFYSBJ');
 
+        //new listings in all categories posted
+        $ret[2]['name']          = 'new_listing';
+        $ret[2]['category']      = 'global';
+        $ret[2]['title']         = constant($modinfo_lang . '_GLOBAL_NEWPOST_NOTIFY');
+        $ret[2]['caption']       = constant($modinfo_lang . '_GLOBAL_NEWPOST_NOTIFYCAP');
+        $ret[2]['description']   = constant($modinfo_lang . '_GLOBAL_NEWPOST_NOTIFYDSC');
+        $ret[2]['mail_template'] = 'listing_newpost_notify';
+        $ret[2]['mail_subject']  = constant($modinfo_lang . '_GLOBAL_NEWPOST_NOTIFYSBJ');
 
         return $ret;
     }
-    
-    
+
+
     /**
      * @param string $category
      * @param int    $item_id
@@ -156,8 +149,7 @@ $ret[2]['mail_subject'] = _MI_ALUMNI_GLOBAL_NEWPOST_NOTIFYSBJ;
      *
      * @return array
      */
-    public function tags($category, $item_id, $event)
-    {
+    public function tags($category, $item_id, $event) {
         return array();
     }
 }

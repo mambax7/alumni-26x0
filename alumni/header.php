@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -20,10 +20,13 @@
  * @version         $Id$
  */
 
-use Xoops\Core\Request;
-
 include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 include_once __DIR__ . '/include/common.php';
+
+$moduleDirName    = basename(__DIR__);
+$modinfo_lang = '_MI_' . strtoupper($moduleDirName);
+$main_lang = '_MA_' . strtoupper($moduleDirName);
+
 // Get main instance
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
@@ -34,13 +37,13 @@ $helper = Alumni::getInstance();
 $xoops = $helper->xoops();
 // Get handler
 $category_Handler = $helper->getCategoryHandler();
-$listing_Handler = $helper->getListingHandler();
+$listing_Handler  = $helper->getListingHandler();
 
 $gperm_Handler = $helper->getGrouppermHandler();
 
 //permission
 $groups = $xoops->getUserGroups();
-$uid = $helper->getUserId();
+$uid    = $helper->getUserId();
 // Define Stylesheet
 $xoops->theme()->addStylesheet($helper->url('css/styles.css'));
 $xoops->theme()->addStylesheet($helper->url('css/rating.css'));
@@ -50,4 +53,5 @@ $xoops->theme()->addStylesheet($helper->url('css/rating.css'));
 
 // Parameters
 $module_id = $helper->getModule()->getVar('mid');
-$interval = 3600; //1 hour
+$interval  = 3600; //1 hour
+
