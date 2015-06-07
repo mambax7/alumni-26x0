@@ -157,6 +157,6 @@
 
 
 <br /><br />
-<{include file='module:notifications|select.tpl'}>
+<{include file='module:notifications/select.tpl'}>
 <br /><br />
 
