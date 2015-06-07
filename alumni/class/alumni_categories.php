@@ -9,11 +9,10 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-
 /**
  * test1 module for xoops
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project http://xoops.org/
  * @license         GPL 2.0 or later
  * @package         alumni
  * @author          John Mordo (jlm69)

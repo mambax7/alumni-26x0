@@ -9,12 +9,12 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright    The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright           XOOPS Project http://xoops.org/
  * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package    Marquee
- * @since        2.5.0
- * @author     Mage, Mamba
- * @version    $Id $
+ * @package             Alumni
+ * @since               3.0.0
+ * @author              XOOPS Development Team
+ * @version             $Id $
  **/
 use Xoops\Core\Request;
 
@@ -23,7 +23,6 @@ include_once __DIR__ . '/admin_header.php';
 //xoops_cp_header();
 $xoops = Xoops::getInstance();
 $xoops->header();
-
 
 $aboutAdmin = new Xoops\Module\Admin();
 
