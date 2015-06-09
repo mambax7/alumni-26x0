@@ -10,31 +10,31 @@ $moduleDirName = basename(dirname(__DIR__));
 $xoops         = Xoops::getInstance();
 $xoops->loadLanguage('modinfo', $moduleDirName);
 
-$modinfo_lang = '_MI_' . strtoupper($moduleDirName);
+$modinfoLang = '_MI_' . strtoupper($moduleDirName);
 
 //$adminmenu = array();
 
 $adminmenu[] = array(
-    'title' => constant($modinfo_lang . '_ADMENU1'),
+    'title' => constant($modinfoLang . '_ADMENU1'),
     'link'  => 'admin/index.php',
     'icon'  => 'home.png');
 
 $adminmenu[] = array(
-    'title' => constant($modinfo_lang . '_ADMENU5'),
+    'title' => constant($modinfoLang . '_ADMENU5'),
     'link'  => 'admin/alumni.php',
     'icon'  => 'manage.png');
 
 $adminmenu[] = array(
-    'title' => constant($modinfo_lang . '_ADMENU2'),
+    'title' => constant($modinfoLang . '_ADMENU2'),
     'link'  => 'admin/alumni_categories.php',
     'icon'  => 'category.png');
 
 $adminmenu[] = array(
-    'title' => constant($modinfo_lang . '_ADMENU3'),
+    'title' => constant($modinfoLang . '_ADMENU3'),
     'link'  => 'admin/permissions.php',
     'icon'  => 'permissions.png');
 
 $adminmenu[] = array(
-    'title' => constant($modinfo_lang . '_ADMENU7'),
+    'title' => constant($modinfoLang . '_ADMENU7'),
     'link'  => 'admin/about.php',
     'icon'  => 'about.png');

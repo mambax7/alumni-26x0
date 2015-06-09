@@ -87,24 +87,24 @@ class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
     public function categories()
     {
         $moduleDirName = basename(dirname(dirname(__DIR__)));
-        $modinfo_lang  = '_MI_' . strtoupper($moduleDirName);
+        $modinfoLang  = '_MI_' . strtoupper($moduleDirName);
 
         $ret                      = array();
         $ret[1]['name']           = 'global';
-        $ret[1]['title']          = constant($modinfo_lang . '_GLOBAL_NOTIFY');
-        $ret[1]['description']    = constant($modinfo_lang . '_GLOBAL_NOTIFYDSC');
+        $ret[1]['title']          = constant($modinfoLang . '_GLOBAL_NOTIFY');
+        $ret[1]['description']    = constant($modinfoLang . '_GLOBAL_NOTIFYDSC');
         $ret[1]['subscribe_from'] = array('index.php', 'categories.php');
 
         $ret[2]['name']           = 'category';
-        $ret[2]['title']          = constant($modinfo_lang . '_CATEGORY_NOTIFY');
-        $ret[2]['description']    = constant($modinfo_lang . '_CATEGORY_NOTIFYDSC');
+        $ret[2]['title']          = constant($modinfoLang . '_CATEGORY_NOTIFY');
+        $ret[2]['description']    = constant($modinfoLang . '_CATEGORY_NOTIFYDSC');
         $ret[2]['subscribe_from'] = array('categories.php');
         $ret[2]['item_name']      = 'cid';
         $ret[2]['allow_bookmark'] = 1;
 
         $ret[3]['name']           = 'alumni_listing';
-        $ret[3]['title']          = constant($modinfo_lang . '_NOTIFY');
-        $ret[3]['description']    = constant($modinfo_lang . '_NOTIFYDSC');
+        $ret[3]['title']          = constant($modinfoLang . '_NOTIFY');
+        $ret[3]['description']    = constant($modinfoLang . '_NOTIFYDSC');
         $ret[3]['subscribe_from'] = array('listing.php');
         $ret[3]['item_name']      = 'lid';
         $ret[3]['allow_bookmark'] = 1;
@@ -118,7 +118,7 @@ class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
     public function events()
     {
         $moduleDirName = basename(dirname(dirname(__DIR__)));
-        $modinfo_lang  = '_MI_' . strtoupper($moduleDirName);
+        $modinfoLang  = '_MI_' . strtoupper($moduleDirName);
 
         $ret = array();
 
@@ -126,20 +126,20 @@ class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
         //alumni notifications new listings in this category
         $ret[1]['name']          = 'new_listing';
         $ret[1]['category']      = 'category';
-        $ret[1]['title']         = constant($modinfo_lang . '_NEWPOST_NOTIFY');
-        $ret[1]['caption']       = constant($modinfo_lang . '_NEWPOST_NOTIFYCAP');
-        $ret[1]['description']   = constant($modinfo_lang . '_NEWPOST_NOTIFYDSC');
+        $ret[1]['title']         = constant($modinfoLang . '_NEWPOST_NOTIFY');
+        $ret[1]['caption']       = constant($modinfoLang . '_NEWPOST_NOTIFYCAP');
+        $ret[1]['description']   = constant($modinfoLang . '_NEWPOST_NOTIFYDSC');
         $ret[1]['mail_template'] = 'listing_newpost_notify';
-        $ret[1]['mail_subject']  = constant($modinfo_lang . '_NEWPOST_NOTIFYSBJ');
+        $ret[1]['mail_subject']  = constant($modinfoLang . '_NEWPOST_NOTIFYSBJ');
 
         //new listings in all categories posted
         $ret[2]['name']          = 'new_listing';
         $ret[2]['category']      = 'global';
-        $ret[2]['title']         = constant($modinfo_lang . '_GLOBAL_NEWPOST_NOTIFY');
-        $ret[2]['caption']       = constant($modinfo_lang . '_GLOBAL_NEWPOST_NOTIFYCAP');
-        $ret[2]['description']   = constant($modinfo_lang . '_GLOBAL_NEWPOST_NOTIFYDSC');
+        $ret[2]['title']         = constant($modinfoLang . '_GLOBAL_NEWPOST_NOTIFY');
+        $ret[2]['caption']       = constant($modinfoLang . '_GLOBAL_NEWPOST_NOTIFYCAP');
+        $ret[2]['description']   = constant($modinfoLang . '_GLOBAL_NEWPOST_NOTIFYDSC');
         $ret[2]['mail_template'] = 'listing_newpost_notify';
-        $ret[2]['mail_subject']  = constant($modinfo_lang . '_GLOBAL_NEWPOST_NOTIFYSBJ');
+        $ret[2]['mail_subject']  = constant($modinfoLang . '_GLOBAL_NEWPOST_NOTIFYSBJ');
 
         return $ret;
     }

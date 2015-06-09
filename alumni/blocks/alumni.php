@@ -14,8 +14,8 @@ function alumni_show($options)
 {
 
     $blockDirName = basename(dirname(__DIR__));
-    $block_lang   = '_MB_' . strtoupper($blockDirName);
-    $modinfo_lang = '_MI_' . strtoupper($blockDirName);
+    $blocksLang   = '_MB_' . strtoupper($blockDirName);
+//    $modinfoLang = '_MI_' . strtoupper($blockDirName);
 
     global $xoops, $helper, $alumni;
 
@@ -46,9 +46,9 @@ function alumni_show($options)
 
         $block['items'][] = $a_item;
     }
-    $block['lang_title'] = constant($block_lang . '_ITEM');
-    $block['lang_date']  = constant($block_lang . '_DATE');
-    $block['link']       = "<a href=\"" . XOOPS_URL . "/modules/{$blockDirName}/index.php\"><b>" . constant($block_lang . '_ALL_LISTINGS') . "</b></a></div>";
+    $block['lang_title'] = constant($blocksLang . '_ITEM');
+    $block['lang_date']  = constant($blocksLang . '_DATE');
+    $block['link']       = "<a href=\"" . XOOPS_URL . "/modules/{$blockDirName}/index.php\"><b>" . constant($blocksLang . '_ALL_LISTINGS') . "</b></a></div>";
 
     return $block;
 }
@@ -57,22 +57,22 @@ function alumni_edit($options)
 {
     global $xoopsDB;
     $blockDirName = basename(dirname(__DIR__));
-    $block_lang   = '_MB_' . strtoupper($blockDirName);
+    $blocksLang   = '_MB_' . strtoupper($blockDirName);
 
-    $form = constant($block_lang . '_ORDER') . "&nbsp;<select name='options[]'>";
+    $form = constant($blocksLang . '_ORDER') . "&nbsp;<select name='options[]'>";
     $form .= "<option value='date'";
     if ($options[0] == 'date') {
         $form .= " selected='selected'";
     }
-    $form .= '>' . constant($block_lang . '_DATE') . "</option>\n";
+    $form .= '>' . constant($blocksLang . '_DATE') . "</option>\n";
     $form .= "<option value='view'";
     if ($options[0] == 'view') {
         $form .= " selected='selected'";
     }
-    $form .= '>' . constant($block_lang . '_HITS') . '</option>';
+    $form .= '>' . constant($blocksLang . '_HITS') . '</option>';
     $form .= "</select>\n";
-    $form .= '&nbsp;' . constant($block_lang . '_DISP') . "&nbsp;<input type='text' name='options[]' value='" . $options[1] . "'/>&nbsp;" . constant($block_lang . "_LISTINGS");
-    $form .= "&nbsp;<br /><br />" . constant($block_lang . '_CHARS') . "&nbsp;<input type='text' name='options[]' value='" . $options[2] . "'/>&nbsp;" . constant($block_lang . '_LENGTH') . '<br /><br />';
+    $form .= '&nbsp;' . constant($blocksLang . '_DISP') . "&nbsp;<input type='text' name='options[]' value='" . $options[1] . "'/>&nbsp;" . constant($blocksLang . "_LISTINGS");
+    $form .= "&nbsp;<br /><br />" . constant($blocksLang . '_CHARS') . "&nbsp;<input type='text' name='options[]' value='" . $options[2] . "'/>&nbsp;" . constant($blocksLang . '_LENGTH') . '<br /><br />';
 
     return $form;
 }

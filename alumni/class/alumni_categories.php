@@ -73,9 +73,9 @@ class alumni_categories extends XoopsObject
         }
 
         $moduleDirName = basename(dirname(__DIR__));
-        $admin_lang    = '_AM_' . strtoupper($moduleDirName);
+        $adminLang    = '_AM_' . strtoupper($moduleDirName);
 
-        $title = $this->isNew() ? sprintf(constant($admin_lang . '_CATEGORY_ADD')) : sprintf(constant($admin_lang . '_CATEGORY_EDIT'));
+        $title = $this->isNew() ? sprintf(constant($adminLang . '_CATEGORY_ADD')) : sprintf(constant($adminLang . '_CATEGORY_EDIT'));
 
         include_once(XOOPS_ROOT_PATH . '/class/xoopsformloader.php');
 
@@ -88,14 +88,14 @@ class alumni_categories extends XoopsObject
         //$mytree = new XoopsObjectTree($arr, 'category_id', 'category_pid');
         $mytree = new XoopsObjectTree($arr, 'cid', 'pid');
 
-        $form->addElement(new Xoops\Form\Label(constant($admin_lang . '_CATEGORY_PID'), $mytree->makeSelBox('pid', 'title', '-', $this->getVar('pid'), true)));
-        $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_CATEGORY_TITLE'), 'title', 50, 255, $this->getVar('title')), true);
+        $form->addElement(new Xoops\Form\Label(constant($adminLang . '_CATEGORY_PID'), $mytree->makeSelBox('pid', 'title', '-', $this->getVar('pid'), true)));
+        $form->addElement(new Xoops\Form\Text(constant($adminLang . '_CATEGORY_TITLE'), 'title', 50, 255, $this->getVar('title')), true);
         //$form->addElement(new XoopsFormTextArea(_AM_TEST1_CATEGORY_DESC, 'category_desc', $this->getVar('category_desc'), 4, 47), true);
 
         $img                         = $this->getVar('img') ?: 'default.gif';
         $uploadirectory_category_img = "/modules/{$moduleDirName}/assets/images/cat";
-        $imgtray_category_img        = new Xoops\Form\ElementTray(constant($admin_lang . '_IMGCAT'), '<br />');
-        $imgpath_category_img        = sprintf(constant($admin_lang . '_FORMIMAGE_PATH'), $uploadirectory_category_img);
+        $imgtray_category_img        = new Xoops\Form\ElementTray(constant($adminLang . '_IMGCAT'), '<br />');
+        $imgpath_category_img        = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadirectory_category_img);
         $imageselect_category_img    = new Xoops\Form\Select($imgpath_category_img, 'img', $img);
         $image_array_category_img    = XoopsLists:: getImgListAsArray(XOOPS_ROOT_PATH . $uploadirectory_category_img);
         foreach ($image_array_category_img as $image_category_img) {
@@ -106,40 +106,40 @@ class alumni_categories extends XoopsObject
         $imgtray_category_img->addElement(new Xoops\Form\Label('', '<br /><img src=\'' . XOOPS_URL . '/' . $uploadirectory_category_img . '/' . $img . "' name='image_category_img' id='image_category_img' alt='' />"));
 
         $fileseltray_category_img = new Xoops\Form\ElementTray('', '<br />');
-        $fileseltray_category_img->addElement(new Xoops\Form\File(constant($admin_lang . '_FORMUPLOAD'), 'img', $xoops->getModuleConfig('alumni_photomax')), false);
+        $fileseltray_category_img->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'img', $xoops->getModuleConfig('alumni_photomax')), false);
         $fileseltray_category_img->addElement(new Xoops\Form\Label(''), false);
         $imgtray_category_img->addElement($fileseltray_category_img);
         $form->addElement($imgtray_category_img);
 
-        $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_ORDER'), 'ordre', 50, 255, $this->getVar('ordre')), false);
-        $form->addElement(new Xoops\Form\Label(constant($admin_lang . '_IFSCHOOL'), ''));
+        $form->addElement(new Xoops\Form\Text(constant($adminLang . '_ORDER'), 'ordre', 50, 255, $this->getVar('ordre')), false);
+        $form->addElement(new Xoops\Form\Label(constant($adminLang . '_IFSCHOOL'), ''));
 
         $photo_old            = $this->getVar('scphoto') ?: '';
         $uploadirectory_photo = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/school_photos";
-        $imgtray_photo        = new Xoops\Form\ElementTray(constant($admin_lang . '_SCPHOTO'), '<br />');
-        $imgpath_photo        = sprintf(constant($admin_lang . '_FORMIMAGE_PATH'), $uploadirectory_photo);
+        $imgtray_photo        = new Xoops\Form\ElementTray(constant($adminLang . '_SCPHOTO'), '<br />');
+        $imgpath_photo        = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadirectory_photo);
         $fileseltray_photo    = new Xoops\Form\ElementTray('', '<br />');
-        $fileseltray_photo->addElement(new XoopsFormFile(constant($admin_lang . '_FORMUPLOAD'), 'scphoto', $xoops->getModuleConfig('alumni_photomax')), false);
+        $fileseltray_photo->addElement(new XoopsFormFile(constant($adminLang . '_FORMUPLOAD'), 'scphoto', $xoops->getModuleConfig('alumni_photomax')), false);
         if ($photo_old) {
-            $fileseltray_photo->addElement(new Xoops\Form\Label(constant($admin_lang . '_ACTUALPICT'), '<a href="../photos/school_photos/' . $photo_old . '">' . $photo_old . '</a>', false));
+            $fileseltray_photo->addElement(new Xoops\Form\Label(constant($adminLang . '_ACTUALPICT'), '<a href="../photos/school_photos/' . $photo_old . '">' . $photo_old . '</a>', false));
             $imgtray_checkbox = new Xoops\Form\CheckBox('', 'del_photo', 0);
-            $imgtray_checkbox->addOption(1, constant($admin_lang . '_DELPICT'));
+            $imgtray_checkbox->addOption(1, constant($adminLang . '_DELPICT'));
             $fileseltray_photo->addElement($imgtray_checkbox);
         }
         $imgtray_photo->addElement($fileseltray_photo);
         $form->addElement($imgtray_photo);
         $form->addElement(new Xoops\Form\Hidden('photo_old', $photo_old));
-        $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_SCADDRESS'), 'scaddress', 50, 255, $this->getVar('scaddress')), false);
-        $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_SCADDRESS2'), 'scaddress2', 50, 255, $this->getVar('scaddress2')), false);
-        $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_SCCITY'), 'sccity', 50, 255, $this->getVar('sccity')), false);
-        $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_SCSTATE'), 'scstate', 50, 255, $this->getVar('scstate')), false);
-        $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_SCZIP'), 'sczip', 50, 255, $this->getVar('sczip')), false);
-        $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_SCPHONE'), 'scphone', 50, 255, $this->getVar('scphone')), false);
-        $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_SCFAX'), 'scfax', 50, 255, $this->getVar('scfax')), false);
-        $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_SCMOTTO'), 'scmotto', 50, 255, $this->getVar('scmotto')), false);
-        $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_SCURL'), 'scurl', 50, 255, $this->getVar('scurl')), false);
+        $form->addElement(new Xoops\Form\Text(constant($adminLang . '_SCADDRESS'), 'scaddress', 50, 255, $this->getVar('scaddress')), false);
+        $form->addElement(new Xoops\Form\Text(constant($adminLang . '_SCADDRESS2'), 'scaddress2', 50, 255, $this->getVar('scaddress2')), false);
+        $form->addElement(new Xoops\Form\Text(constant($adminLang . '_SCCITY'), 'sccity', 50, 255, $this->getVar('sccity')), false);
+        $form->addElement(new Xoops\Form\Text(constant($adminLang . '_SCSTATE'), 'scstate', 50, 255, $this->getVar('scstate')), false);
+        $form->addElement(new Xoops\Form\Text(constant($adminLang . '_SCZIP'), 'sczip', 50, 255, $this->getVar('sczip')), false);
+        $form->addElement(new Xoops\Form\Text(constant($adminLang . '_SCPHONE'), 'scphone', 50, 255, $this->getVar('scphone')), false);
+        $form->addElement(new Xoops\Form\Text(constant($adminLang . '_SCFAX'), 'scfax', 50, 255, $this->getVar('scfax')), false);
+        $form->addElement(new Xoops\Form\Text(constant($adminLang . '_SCMOTTO'), 'scmotto', 50, 255, $this->getVar('scmotto')), false);
+        $form->addElement(new Xoops\Form\Text(constant($adminLang . '_SCURL'), 'scurl', 50, 255, $this->getVar('scurl')), false);
         $form->addElement(new Xoops\Form\Hidden('op', 'save_category'));
-        $form->addElement(new Xoops\Form\Button('', 'submit', constant($admin_lang . '_SUBMIT'), 'submit'));
+        $form->addElement(new Xoops\Form\Button('', 'submit', constant($adminLang . '_SUBMIT'), 'submit'));
 
         return $form;
     }

@@ -25,4 +25,4 @@ if ($numrows > '0') {
     echo '<center><br /><br /><img src="photos/grad_photo/$photo" border=0></center>';
 }
 
-echo '<center><table><tr><td><a href=#  onClick="window.close()">' . constant($main_lang . '_CLOSEF') . '</a></td></tr></table></center>';
+echo '<center><table><tr><td><a href=#  onClick="window.close()">' . constant($mainLang . '_CLOSEF') . '</a></td></tr></table></center>';

@@ -3,8 +3,8 @@
 //defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 $moduleDirName = basename(__DIR__);
-$modinfo_lang  = '_MI_' . strtoupper($moduleDirName);
-//$block_lang    = '_MB_' . strtoupper($moduleDirName);
+$modinfoLang  = '_MI_' . strtoupper($moduleDirName);
+//$blocksLang    = '_MB_' . strtoupper($moduleDirName);
 
 $xoops = Xoops::getInstance();
 
@@ -136,8 +136,8 @@ $modversion['templates'] = array(
 /*
 $modversion['blocks'][] = array(
     'file'        => 'alumni.php',
-    'name'        => constant($block_lang . '_BNAME'),
-    'description' => constant($block_lang . '_BNAME_DESC'),
+    'name'        => constant($blocksLang . '_BNAME'),
+    'description' => constant($blocksLang . '_BNAME_DESC'),
     'show_func'   => 'alumni_show',
     'edit_func'   => 'alumni_edit',
     'template'    => 'alumni_block_new.tpl',
@@ -146,8 +146,8 @@ $modversion['blocks'][] = array(
 */
 $modversion['blocks'][] = array(
     'file'        => 'alumni.php',
-    'name'        => constant($modinfo_lang . '_BNAME'),
-    'description' => constant($modinfo_lang . '_BNAME_DESC'),
+    'name'        => constant($modinfoLang . '_BNAME'),
+    'description' => constant($modinfoLang . '_BNAME_DESC'),
     'show_func'   => 'alumni_show',
     'edit_func'   => 'alumni_edit',
     'template'    => 'alumni_block_new.tpl',
@@ -174,7 +174,7 @@ $modversion['blocks'][] = array(
 // ------------------- Config Options ------------------- //
 $modversion['config'][] = array(
     'name'        => 'alumni_usecat',
-    'title'       => constant($modinfo_lang . '_USECAT'),
+    'title'       => constant($modinfoLang . '_USECAT'),
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
@@ -184,7 +184,7 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_moderated']
 $modversion['config'][] = array(
     'name'        => 'alumni_moderated',
-    'title'       => constant($modinfo_lang . '_MODERAT'),
+    'title'       => constant($modinfoLang . '_MODERAT'),
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
@@ -194,7 +194,7 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_per_page']
 $modversion['config'][] = array(
     'name'        => 'alumni_per_page',
-    'title'       => constant($modinfo_lang . '_PERPAGE'),
+    'title'       => constant($modinfoLang . '_PERPAGE'),
     'description' => '',
     'formtype'    => 'select',
     'valuetype'   => 'int',
@@ -204,8 +204,8 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_new_listing']
 $modversion['config'][] = array(
     'name'        => 'alumni_new_listing',
-    'title'       => constant($modinfo_lang . '_VIEWNEWCLASS'),
-    'description' => constant($modinfo_lang . '_ONHOME'),
+    'title'       => constant($modinfoLang . '_VIEWNEWCLASS'),
+    'description' => constant($modinfoLang . '_ONHOME'),
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '1',
@@ -214,8 +214,8 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_newalumni']
 $modversion['config'][] = array(
     'name'        => 'alumni_newalumni',
-    'title'       => constant($modinfo_lang . '_NUMNEW'),
-    'description' => constant($modinfo_lang . '_ONHOME'),
+    'title'       => constant($modinfoLang . '_NUMNEW'),
+    'description' => constant($modinfoLang . '_ONHOME'),
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
     'default'     => '10',
@@ -224,8 +224,8 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_countday']
 $modversion['config'][] = array(
     'name'        => 'alumni_countday',
-    'title'       => constant($modinfo_lang . '_NEWTIME'),
-    'description' => constant($modinfo_lang . '_INDAYS'),
+    'title'       => constant($modinfoLang . '_NEWTIME'),
+    'description' => constant($modinfoLang . '_INDAYS'),
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
     'default'     => '3',
@@ -234,8 +234,8 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_photomax']
 $modversion['config'][] = array(
     'name'        => 'alumni_photomax',
-    'title'       => constant($modinfo_lang . '_MAXIIMGS'),
-    'description' => constant($modinfo_lang . '_INBYTES'),
+    'title'       => constant($modinfoLang . '_MAXIIMGS'),
+    'description' => constant($modinfoLang . '_INBYTES'),
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
     'default'     => '500000',
@@ -244,8 +244,8 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_maxwide']
 $modversion['config'][] = array(
     'name'        => 'alumni_maxwide',
-    'title'       => constant($modinfo_lang . '_MAXWIDE'),
-    'description' => $modinfo_lang . '_INPIXEL',
+    'title'       => constant($modinfoLang . '_MAXWIDE'),
+    'description' => $modinfoLang . '_INPIXEL',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
     'default'     => '700',
@@ -254,8 +254,8 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_maxhigh']
 $modversion['config'][] = array(
     'name'        => 'alumni_maxhigh',
-    'title'       => constant($modinfo_lang . '_MAXHIGH'),
-    'description' => constant($modinfo_lang . '_INPIXEL'),
+    'title'       => constant($modinfoLang . '_MAXHIGH'),
+    'description' => constant($modinfoLang . '_INPIXEL'),
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
     'default'     => '1000',
@@ -264,18 +264,18 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_csortorder']
 $modversion['config'][] = array(
     'name'        => 'alumni_csortorder',
-    'title'       => constant($modinfo_lang . '_ORDER'),
+    'title'       => constant($modinfoLang . '_ORDER'),
     'description' => '',
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'title ASC',
-    'options'     => array($modinfo_lang . '_ORDREALPHA' => 'title', $modinfo_lang . '_ORDREPERSO' => 'ordre'));
+    'options'     => array($modinfoLang . '_ORDREALPHA' => 'title', $modinfoLang . '_ORDREPERSO' => 'ordre'));
 
 // $xoopsModuleConfig['alumni_showsubcat']
 $modversion['config'][] = array(
     'name'        => 'alumni_showsubcat',
-    'title'       => constant($modinfo_lang . '_DISPLSUBCAT'),
-    'description' => constant($modinfo_lang . '_ONHOME'),
+    'title'       => constant($modinfoLang . '_DISPLSUBCAT'),
+    'description' => constant($modinfoLang . '_ONHOME'),
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '1',
@@ -284,7 +284,7 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_numsubcat']
 $modversion['config'][] = array(
     'name'        => 'alumni_numsubcat',
-    'title'       => constant($modinfo_lang . '_NUMSUBCAT'),
+    'title'       => constant($modinfoLang . '_NUMSUBCAT'),
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
@@ -294,22 +294,22 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_csortorder']
 $modversion['config'][] = array(
     'name'        => 'alumni_csortorder',
-    'title'       => constant($modinfo_lang . '_ORDER'),
+    'title'       => constant($modinfoLang . '_ORDER'),
     'description' => '',
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'title',
-    'options'     => array($modinfo_lang . '_ORDREALPHA' => 'title', $modinfo_lang . '_ORDREPERSO' => 'ordre'));
+    'options'     => array($modinfoLang . '_ORDREALPHA' => 'title', $modinfoLang . '_ORDREPERSO' => 'ordre'));
 
 // $xoopsModuleConfig['alumni_lsortorder']
 $modversion['config'][] = array(
     'name'        => 'alumni_lsortorder',
-    'title'       => constant($modinfo_lang . '_AORDER'),
+    'title'       => constant($modinfoLang . '_AORDER'),
     'description' => '',
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'name',
-    'options'     => array($modinfo_lang . '_ORDER_DATE' => 'date DESC', $modinfo_lang . '_ORDER_NAME' => 'name ASC', $modinfo_lang . '_ORDER_POP' => 'hits DESC'));
+    'options'     => array($modinfoLang . '_ORDER_DATE' => 'date DESC', $modinfoLang . '_ORDER_NAME' => 'name ASC', $modinfoLang . '_ORDER_POP' => 'hits DESC'));
 
 // $xoopsModuleConfig['alumni_form_options'] - Use WYSIWYG Editors?
 
@@ -317,16 +317,16 @@ $editors = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor')
 
 $modversion['config'][] = array(
     'name'        => 'alumni_form_options',
-    'title'       => constant($modinfo_lang . '_EDITOR'),
-    'description' => constant($modinfo_lang . '_LIST_EDITORS'),
+    'title'       => constant($modinfoLang . '_EDITOR'),
+    'description' => constant($modinfoLang . '_LIST_EDITORS'),
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'dhtmltextarea',
     'options'     => $editors);
 
 //$modversion['config'][$i]['name'] = 'alumni_form_options';
-//$modversion['config'][$i]['title'] =  $modinfo_lang . '_EDITOR';
-//$modversion['config'][$i]['description'] =  $modinfo_lang . '_LIST_EDITORS';
+//$modversion['config'][$i]['title'] =  $modinfoLang . '_EDITOR';
+//$modversion['config'][$i]['description'] =  $modinfoLang . '_LIST_EDITORS';
 //$modversion['config'][$i]['formtype'] = 'select';
 //$modversion['config'][$i]['valuetype'] = 'text';
 //$modversion['config'][$i]['default'] = 'dhtmltextarea';
@@ -337,8 +337,8 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_use_captcha']
 $modversion['config'][] = array(
     'name'        => 'alumni_use_captcha',
-    'title'       => constant($modinfo_lang . '_USE_CAPTCHA'),
-    'description' => constant($modinfo_lang . '_USE_CAPTCHA_DESC'),
+    'title'       => constant($modinfoLang . '_USE_CAPTCHA'),
+    'description' => constant($modinfoLang . '_USE_CAPTCHA_DESC'),
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '1',
@@ -347,8 +347,8 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_use_code']
 $modversion['config'][] = array(
     'name'        => 'alumni_use_code',
-    'title'       => constant($modinfo_lang . '_USE_INDEX_CODE'),
-    'description' => constant($modinfo_lang . '_USE_INDEX_CODE_DESC'),
+    'title'       => constant($modinfoLang . '_USE_INDEX_CODE'),
+    'description' => constant($modinfoLang . '_USE_INDEX_CODE_DESC'),
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '1',
@@ -357,8 +357,8 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_use_banner']
 $modversion['config'][] = array(
     'name'        => 'alumni_use_banner',
-    'title'       => constant($modinfo_lang . '_USE_BANNER'),
-    'description' => constant($modinfo_lang . '_USE_BANNER_DESC'),
+    'title'       => constant($modinfoLang . '_USE_BANNER'),
+    'description' => constant($modinfoLang . '_USE_BANNER_DESC'),
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '1',
@@ -367,8 +367,8 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_index_code']
 $modversion['config'][] = array(
     'name'        => 'alumni_index_code',
-    'title'       => constant($modinfo_lang . '_INDEX_CODE'),
-    'description' => constant($modinfo_lang . '_INDEX_CODE_DESC'),
+    'title'       => constant($modinfoLang . '_INDEX_CODE'),
+    'description' => constant($modinfoLang . '_INDEX_CODE_DESC'),
     'formtype'    => 'textarea',
     'valuetype'   => 'text',
     'default'     => ''
@@ -378,8 +378,8 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_index_code_place']
 $modversion['config'][] = array(
     'name'        => 'alumni_code_place',
-    'title'       => constant($modinfo_lang . '_INDEX_CODE_PLACE'),
-    'description' => constant($modinfo_lang . '_INDEX_CODE_PLACE_DESC'),
+    'title'       => constant($modinfoLang . '_INDEX_CODE_PLACE'),
+    'description' => constant($modinfoLang . '_INDEX_CODE_PLACE_DESC'),
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
     'default'     => '5');
@@ -387,8 +387,8 @@ $modversion['config'][] = array(
 // $xoopsModuleConfig['alumni_offer_search'] - added for optional search
 $modversion['config'][] = array(
     'name'        => 'alumni_offer_search',
-    'title'       => constant($modinfo_lang . '_OFFER_SEARCH'),
-    'description' => constant($modinfo_lang . '_OFFER_SEARCH_DESC'),
+    'title'       => constant($modinfoLang . '_OFFER_SEARCH'),
+    'description' => constant($modinfoLang . '_OFFER_SEARCH_DESC'),
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '1',

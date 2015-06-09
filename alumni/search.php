@@ -143,7 +143,7 @@ switch ($action) {
             $mid           = $module->getVar('mid');
 
             if ($count > 0) {
-                $xoops->tpl()->assign('sr_showing', sprintf(constant($main_lang . '_SHOWING'), $start + 1, $start + $count));
+                $xoops->tpl()->assign('sr_showing', sprintf(constant($mainLang . '_SHOWING'), $start + 1, $start + $count));
                 $xoops->tpl()->assign('showing_of', AlumniLocale::OF . "&nbsp;$result_count2");
             }
             $xoops->tpl()->assign('in_category', '');
@@ -153,7 +153,7 @@ switch ($action) {
                 $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
                 $catObj                  = $alumniCategoriesHandler->get($by_cat);
                 $cat_name                = $catObj->getVar('title');
-                $xoops->tpl()->assign('in_category', constant($main_lang . '_INCATEGORY'));
+                $xoops->tpl()->assign('in_category', constant($mainLang . '_INCATEGORY'));
                 $xoops->tpl()->assign('cat_name', "<b> :  &nbsp;&nbsp; $cat_name</b>");
             }
 
@@ -230,15 +230,15 @@ switch ($action) {
             if (is_array($next_results) && $next_count == 1) {
                 $has_next = true;
             }
-            $xoops->tpl()->assign('sr_showing', sprintf(constant($main_lang . '_SHOWING'), $start + 1, $start + $count));
-            $xoops->tpl()->assign('showing_of', constant($main_lang . '_OF') . "&nbsp;$count2");
+            $xoops->tpl()->assign('sr_showing', sprintf(constant($mainLang . '_SHOWING'), $start + 1, $start + $count));
+            $xoops->tpl()->assign('showing_of', constant($mainLang . '_OF') . "&nbsp;$count2");
 
             if (!empty($by_cat)) {
                 $cat_name                = '';
                 $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
                 $catObj                  = $alumniCategoriesHandler->get($by_cat);
                 $cat_name                = $catObj->getVar('title');
-                $xoops->tpl()->assign('in_category', constant($main_lang . '_INCATEGORY'));
+                $xoops->tpl()->assign('in_category', constant($mainLang . '_INCATEGORY'));
                 $xoops->tpl()->assign('cat_name', "<b> :  &nbsp;&nbsp; $cat_name</b>");
             }
 

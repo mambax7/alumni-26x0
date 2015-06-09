@@ -1,19 +1,19 @@
 <?php
 // Blocks
 $moduleDirName = basename(dirname(dirname(__DIR__)));
-$blocks_lang   = '_MB_' . strtoupper($moduleDirName);
+$blocksLang   = '_MB_' . strtoupper($moduleDirName);
 
-define($blocks_lang . '_TITLE', 'Alumni Listings');
-define($blocks_lang . '_ALL_LISTINGS', 'View all Alumni Listings.');
-define($blocks_lang . '_ITEM', 'Title');
-define($blocks_lang . '_DATE', 'Date');
-define($blocks_lang . '_DISP', 'Display');
-define($blocks_lang . '_CHARS', 'Length of the title');
-define($blocks_lang . '_LISTINGS', 'Listings');
-define($blocks_lang . '_LENGTH', ' characters');
+define($blocksLang . '_TITLE', 'Alumni Listings');
+define($blocksLang . '_ALL_LISTINGS', 'View all Alumni Listings.');
+define($blocksLang . '_ITEM', 'Title');
+define($blocksLang . '_DATE', 'Date');
+define($blocksLang . '_DISP', 'Display');
+define($blocksLang . '_CHARS', 'Length of the title');
+define($blocksLang . '_LISTINGS', 'Listings');
+define($blocksLang . '_LENGTH', ' characters');
 
-define($blocks_lang . '_ORDER', ' Order');
-define($blocks_lang . '_HITS', ' Hits');
+define($blocksLang . '_ORDER', ' Order');
+define($blocksLang . '_HITS', ' Hits');
 
-define($blocks_lang . '_BNAME', 'Alumni Block');
-define($blocks_lang . '_BNAME_DESC', 'Shows Alumni Block');
+define($blocksLang . '_BNAME', 'Alumni Block');
+define($blocksLang . '_BNAME_DESC', 'Shows Alumni Block');

@@ -101,7 +101,7 @@ switch ($op) {
         $xoops->header();
         $indexAdmin = new Xoops\Module\Admin();
         $indexAdmin->displayNavigation('alumni_categories.php');
-        $indexAdmin->addItemButton(constant($admin_lang . '_CATEGORYLIST'), 'alumni_categories.php');
+        $indexAdmin->addItemButton(constant($adminLang . '_CATEGORYLIST'), 'alumni_categories.php');
         $indexAdmin->renderButton('left', '');
         $obj  = $alumniCategoriesHandler->create();
         $form = $obj->getForm();
@@ -185,7 +185,7 @@ switch ($op) {
         }
 
         if ($alumniCategoriesHandler->insert($obj)) {
-            $xoops->redirect('alumni_categories.php', 3, constant($admin_lang . '_FORMOK'));
+            $xoops->redirect('alumni_categories.php', 3, constant($adminLang . '_FORMOK'));
         }
         echo $obj->getHtmlErrors();
         $form =& $obj->getForm();
@@ -198,7 +198,7 @@ switch ($op) {
         $xoops->header();
         $indexAdmin = new Xoops\Module\Admin();
         $indexAdmin->displayNavigation('alumni_categories.php');
-        $indexAdmin->addItemButton(constant($admin_lang . '_CATEGORYLIST'), 'alumni.php', 'list');
+        $indexAdmin->addItemButton(constant($adminLang . '_CATEGORYLIST'), 'alumni.php', 'list');
         $indexAdmin->renderButton('left', '');
         $obj  = $alumniCategoriesHandler->get($_REQUEST['cid']);
         $form = $obj->getForm();
@@ -214,12 +214,12 @@ switch ($op) {
                 $xoops->redirect('alumni_categories.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             if ($alumniCategoriesHandler->delete($obj)) {
-                $xoops->redirect('alumni_categories.php', 3, constant($admin_lang . '_FORMDELOK'));
+                $xoops->redirect('alumni_categories.php', 3, constant($adminLang . '_FORMDELOK'));
             } else {
                 echo $obj->getHtmlErrors();
             }
         } else {
-            $xoops->confirm(array('ok' => 1, 'cid' => $_REQUEST['cid'], 'op' => 'delete_category'), $_SERVER['REQUEST_URI'], sprintf(constant($admin_lang . '_FORMSUREDEL'), $obj->getVar('category')));
+            $xoops->confirm(array('ok' => 1, 'cid' => $_REQUEST['cid'], 'op' => 'delete_category'), $_SERVER['REQUEST_URI'], sprintf(constant($adminLang . '_FORMSUREDEL'), $obj->getVar('category')));
         }
         break;
 }

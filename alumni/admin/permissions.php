@@ -42,7 +42,7 @@ include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/alumni_tree.php"
 $cattree = new AlumniObjectTree($cats, 'cid', 'pid');
 
 if ('0' == $cat_rows) {
-    echo constant($modinfo_lang . '_MUST_ADD_CAT');
+    echo constant($modinfoLang . '_MUST_ADD_CAT');
 } else {
 
     $perm_desc = '';

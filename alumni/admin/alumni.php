@@ -125,7 +125,7 @@ switch ($op) {
         $xoops->header();
         $indexAdmin = new Xoops\Module\Admin();
         $indexAdmin->displayNavigation('alumni.php');
-        $indexAdmin->addItemButton(constant($admin_lang . '_CATEGORYLIST'), 'alumni.php');
+        $indexAdmin->addItemButton(constant($adminLang . '_CATEGORYLIST'), 'alumni.php');
         echo $indexAdmin->renderButton('left', '');
         $obj  = $alumniListingHandler->create();
         $form = $obj->getAdminForm();
@@ -252,7 +252,7 @@ switch ($op) {
         }
 
         if ($alumniListingHandler->insert($obj)) {
-            $xoops->redirect('alumni.php', 3, constant($admin_lang . '_FORMOK'));
+            $xoops->redirect('alumni.php', 3, constant($adminLang . '_FORMOK'));
 
             //notifications
             if (0 == $lid && $xoops->isActiveModule('notifications')) {
@@ -274,8 +274,8 @@ switch ($op) {
     case 'edit_listing':
         $xoops->header();
         $indexAdmin = new Xoops\Module\Admin();
-        $indexAdmin->addItemButton(constant($admin_lang . '_ADD_LINK'), 'alumni.php?op=new_listing', 'add');
-        $indexAdmin->addItemButton(constant($admin_lang . '_LISTINGLIST'), 'alumni.php', 'list');
+        $indexAdmin->addItemButton(constant($adminLang . '_ADD_LINK'), 'alumni.php?op=new_listing', 'add');
+        $indexAdmin->addItemButton(constant($adminLang . '_LISTINGLIST'), 'alumni.php', 'list');
         echo $indexAdmin->renderButton('left', '');
         $obj  = $alumniListingHandler->get($_REQUEST['lid']);
         $form = $obj->getAdminForm();
@@ -290,12 +290,12 @@ switch ($op) {
                 $xoops->redirect('alumni.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             if ($alumniListingHandler->delete($obj)) {
-                $xoops->redirect('alumni.php', 3, constant($admin_lang . '_FORMDELOK'));
+                $xoops->redirect('alumni.php', 3, constant($adminLang . '_FORMDELOK'));
             } else {
                 echo $obj->getHtmlErrors();
             }
         } else {
-            $xoops->confirm(array('ok' => 1, 'lid' => $_REQUEST['lid'], 'op' => 'delete_listing'), $_SERVER['REQUEST_URI'], sprintf(constant($admin_lang . '_FORMSUREDEL'), $obj->getVar('lid')));
+            $xoops->confirm(array('ok' => 1, 'lid' => $_REQUEST['lid'], 'op' => 'delete_listing'), $_SERVER['REQUEST_URI'], sprintf(constant($adminLang . '_FORMSUREDEL'), $obj->getVar('lid')));
         }
         break;
 
@@ -305,7 +305,7 @@ switch ($op) {
             $obj = $alumniListingHandler->get($lid);
             $obj->setVar('valid', 1);
             if ($alumniListingHandler->insert($obj)) {
-                $xoops->redirect('alumni.php?op=list_moderated', 3, constant($admin_lang . '_LISTING_VALIDATED'));
+                $xoops->redirect('alumni.php?op=list_moderated', 3, constant($adminLang . '_LISTING_VALIDATED'));
             }
             echo $obj->getHtmlErrors();
         }
@@ -410,12 +410,12 @@ switch ($op) {
                 $xoops->tpl()->assign('valid', AlumniLocale::A_APPROVE);
                 $xoops->tpl()->assign('school', AlumniLocale::A_SCHOOL);
                 $xoops->tpl()->assign('class_of', AlumniLocale::A_CLASS_OF);
-                $xoops->tpl()->assign('moderated_lang', AlumniLocale::A_MODERATED);
-                $xoops->tpl()->assign('moderated_lang', XoopsLocale::A_EDIT);
-                $xoops->tpl()->assign('studies_lang', AlumniLocale::A_STUDIES);
-                $xoops->tpl()->assign('activities_lang', AlumniLocale::A_ACTIVITIES);
-                $xoops->tpl()->assign('extrainfo_lang', AlumniLocale::A_EXTRAINFO);
-                $xoops->tpl()->assign('occ_lang', AlumniLocale::A_OCC);
+                $xoops->tpl()->assign('moderatedLang', AlumniLocale::A_MODERATED);
+                $xoops->tpl()->assign('moderatedLang', XoopsLocale::A_EDIT);
+                $xoops->tpl()->assign('studiesLang', AlumniLocale::A_STUDIES);
+                $xoops->tpl()->assign('activitiesLang', AlumniLocale::A_ACTIVITIES);
+                $xoops->tpl()->assign('extrainfoLang', AlumniLocale::A_EXTRAINFO);
+                $xoops->tpl()->assign('occLang', AlumniLocale::A_OCC);
             }
             unset($listing);
 

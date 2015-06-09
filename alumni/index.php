@@ -7,7 +7,7 @@
 include __DIR__ . '/header.php';
 
 $moduleDirName = basename(__DIR__);
-$main_lang     = '_MA_' . strtoupper($moduleDirName);
+$mainLang     = '_MA_' . strtoupper($moduleDirName);
 require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
 $myts      = MyTextSanitizer::getInstance();
 $xoops     = Xoops::getInstance();
@@ -41,25 +41,25 @@ $xoops->header('module:alumni/alumni_index.tpl');
 Xoops::getInstance()->header();
 //$xoops->tpl() = $xoops->tpl();
 $xoops->tpl()->assign('xmid', $xoopsModule->getVar('mid'));
-$xoops->tpl()->assign('add_from', constant($main_lang . '_ADDFROM') . ' ' . $xoopsConfig['sitename']);
-$xoops->tpl()->assign('add_from_title', constant($main_lang . '_ADDFROM'));
+$xoops->tpl()->assign('add_from', constant($mainLang . '_ADDFROM') . ' ' . $xoopsConfig['sitename']);
+$xoops->tpl()->assign('add_from_title', constant($mainLang . '_ADDFROM'));
 $xoops->tpl()->assign('add_from_sitename', $xoopsConfig['sitename']);
-$xoops->tpl()->assign('add_from_title', constant($main_lang . '_ADDFROM'));
-$xoops->tpl()->assign('class_of', constant($main_lang . '_CLASSOF'));
-$xoops->tpl()->assign('front_intro', constant($main_lang . '_FINTRO'));
+$xoops->tpl()->assign('add_from_title', constant($mainLang . '_ADDFROM'));
+$xoops->tpl()->assign('class_of', constant($mainLang . '_CLASSOF'));
+$xoops->tpl()->assign('front_intro', constant($mainLang . '_FINTRO'));
 
 if ($xoops->getModuleConfig('' . $moduleDirName . '_offer_search') == '1') {
 
     $xoops->tpl()->assign('offer_search', true);
-    $xoops->tpl()->assign('search_listings', constant($main_lang . '_SEARCH_LISTINGS'));
-    $xoops->tpl()->assign('match', constant($main_lang . '_MATCH'));
-    $xoops->tpl()->assign('all_words', constant($main_lang . '_ALL_WORDS'));
-    $xoops->tpl()->assign('any_words', constant($main_lang . '_ANY_WORDS'));
-    $xoops->tpl()->assign('exact_match', constant($main_lang . '_EXACT_MATCH'));
-    $xoops->tpl()->assign('byyear', constant($main_lang . '_SEARCH_BYYEAR'));
-    $xoops->tpl()->assign('bycategory', constant($main_lang . '_BYCATEGORY'));
-    $xoops->tpl()->assign('keywords', constant($main_lang . '_SEARCH_KEYWORDS'));
-    $xoops->tpl()->assign('search', constant($main_lang . '_SEARCH'));
+    $xoops->tpl()->assign('search_listings', constant($mainLang . '_SEARCH_LISTINGS'));
+    $xoops->tpl()->assign('match', constant($mainLang . '_MATCH'));
+    $xoops->tpl()->assign('all_words', constant($mainLang . '_ALL_WORDS'));
+    $xoops->tpl()->assign('any_words', constant($mainLang . '_ANY_WORDS'));
+    $xoops->tpl()->assign('exact_match', constant($mainLang . '_EXACT_MATCH'));
+    $xoops->tpl()->assign('byyear', constant($mainLang . '_SEARCH_BYYEAR'));
+    $xoops->tpl()->assign('bycategory', constant($mainLang . '_BYCATEGORY'));
+    $xoops->tpl()->assign('keywords', constant($mainLang . '_SEARCH_KEYWORDS'));
+    $xoops->tpl()->assign('search', constant($mainLang . '_SEARCH'));
 
     $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
 
@@ -219,13 +219,13 @@ if ($xoops->getModuleConfig('' . $moduleDirName . '_moderated') == '1') {
         if ($xoops->user->isAdmin()) {
             $xoops->tpl()->assign('user_admin', true);
 
-            $xoops->tpl()->assign('admin_block', constant($main_lang . '_ADMINCADRE'));
+            $xoops->tpl()->assign('admin_block', constant($mainLang . '_ADMINCADRE'));
             if ($moderate_rows == 0) {
-                $xoops->tpl()->assign('confirm_ads', constant($main_lang . '_NO_ALUM'));
+                $xoops->tpl()->assign('confirm_ads', constant($mainLang . '_NO_ALUM'));
 
             } else {
-                $xoops->tpl()->assign('confirm_ads', constant($main_lang . '_THEREIS') . ' $moderate_rows  ' . constant($main_lang . '_WAIT') . "<br /><a href=\"admin/alumni.php?op=list_moderated\">" . constant($main_lang . '_SEEIT') . "</a>");
-                $xoops->tpl()->assign('total_confirm', constant($main_lang . '_AND') . ' $moderate_rows ' . constant($main_lang . '_WAIT3'));
+                $xoops->tpl()->assign('confirm_ads', constant($mainLang . '_THEREIS') . ' $moderate_rows  ' . constant($mainLang . '_WAIT') . "<br /><a href=\"admin/alumni.php?op=list_moderated\">" . constant($mainLang . '_SEEIT') . "</a>");
+                $xoops->tpl()->assign('total_confirm', constant($mainLang . '_AND') . ' $moderate_rows ' . constant($mainLang . '_WAIT3'));
             }
 
         }
@@ -239,18 +239,18 @@ $criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN')
 $criteria->setLimit($xoops->getModuleConfig('' . $moduleDirName . '_per_page'));
 $numrows = $alumniListingHandler->getCount($criteria);
 
-$xoops->tpl()->assign('total_listings', constant($main_lang . '_ACTUALY') . ' $numrows ' . constant($main_lang . '_LISTINGS') . ' ' . constant($main_lang . '_INCAT') . ' $numcat ' . constant($main_lang . '_CAT2'));
+$xoops->tpl()->assign('total_listings', constant($mainLang . '_ACTUALY') . ' $numrows ' . constant($mainLang . '_LISTINGS') . ' ' . constant($mainLang . '_INCAT') . ' $numcat ' . constant($mainLang . '_CAT2'));
 
-$xoops->tpl()->assign('last_head', constant($main_lang . '_THE') . ' ' . $xoops->getModuleConfig('' . $moduleDirName . '_newalumni') . ' ' . constant($main_lang . '_LASTADD'));
-$xoops->tpl()->assign('last_head_name', constant($main_lang . '_NAME2'));
-$xoops->tpl()->assign('last_head_school', constant($main_lang . '_SCHOOL2'));
-$xoops->tpl()->assign('last_head_studies', constant($main_lang . '_STUDIES'));
-$xoops->tpl()->assign('last_head_year', constant($main_lang . '_YEAR'));
-$xoops->tpl()->assign('last_head_date', constant($main_lang . '_DATE'));
-$xoops->tpl()->assign('last_head_local', constant($main_lang . '_LOCAL2'));
-$xoops->tpl()->assign('last_head_views', constant($main_lang . '_VIEW'));
-$xoops->tpl()->assign('last_head_photo', constant($main_lang . '_PHOTO'));
-$xoops->tpl()->assign('last_head_photo2', constant($main_lang . '_PHOTO2'));
+$xoops->tpl()->assign('last_head', constant($mainLang . '_THE') . ' ' . $xoops->getModuleConfig('' . $moduleDirName . '_newalumni') . ' ' . constant($mainLang . '_LASTADD'));
+$xoops->tpl()->assign('last_head_name', constant($mainLang . '_NAME2'));
+$xoops->tpl()->assign('last_head_school', constant($mainLang . '_SCHOOL2'));
+$xoops->tpl()->assign('last_head_studies', constant($mainLang . '_STUDIES'));
+$xoops->tpl()->assign('last_head_year', constant($mainLang . '_YEAR'));
+$xoops->tpl()->assign('last_head_date', constant($mainLang . '_DATE'));
+$xoops->tpl()->assign('last_head_local', constant($mainLang . '_LOCAL2'));
+$xoops->tpl()->assign('last_head_views', constant($mainLang . '_VIEW'));
+$xoops->tpl()->assign('last_head_photo', constant($mainLang . '_PHOTO'));
+$xoops->tpl()->assign('last_head_photo2', constant($mainLang . '_PHOTO2'));
 
 $listing_arr = $listingHandler->getAll($criteria);
 
@@ -301,7 +301,7 @@ foreach (array_keys($listing_arr) as $i) {
     $date = ($useroffset * 3600) + $date;
     if ($xoops->user) {
         if ($xoops->user->isAdmin()) {
-            $a_item['admin'] = "<a href='admin/alumni.php?op=edit_listing&amp;lid=$lid'><img src='assets/images/modif.gif' border=0 alt=\"" . constant($main_lang . '_MODADMIN') . "\" /></a>";
+            $a_item['admin'] = "<a href='admin/alumni.php?op=edit_listing&amp;lid=$lid'><img src='assets/images/modif.gif' border=0 alt=\"" . constant($mainLang . '_MODADMIN') . "\" /></a>";
         }
     }
 
@@ -316,10 +316,10 @@ foreach (array_keys($listing_arr) as $i) {
     }
 
     if ($photo) {
-        $a_item['photo'] = "<a href=\"javascript:CLA('display-image.php?lid=$lid')\"><img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/photo.gif\" border=\"0\" width=\"15\" height=\"11\" alt='" . constant($main_lang . '_IMGPISP') . "' /></a>";
+        $a_item['photo'] = "<a href=\"javascript:CLA('display-image.php?lid=$lid')\"><img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/photo.gif\" border=\"0\" width=\"15\" height=\"11\" alt='" . constant($mainLang . '_IMGPISP') . "' /></a>";
     }
     if ($photo2) {
-        $a_item['photo2'] = "<a href=\"javascript:CLA('display-image2.php?lid=$lid')\"><img src=\"assets/images/photo.gif\" border=\"0\" width=\"15\" height=\"11\" alt='" . constant($main_lang . '_IMGPISP') . "' /></a>";
+        $a_item['photo2'] = "<a href=\"javascript:CLA('display-image2.php?lid=$lid')\"><img src=\"assets/images/photo.gif\" border=\"0\" width=\"15\" height=\"11\" alt='" . constant($mainLang . '_IMGPISP') . "' /></a>";
     }
 
     $a_item['views'] = $view;

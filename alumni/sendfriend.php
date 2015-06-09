@@ -4,7 +4,7 @@ $xoops = Xoops::getInstance();
 //$alumni = Alumni::getInstance();
 $myts          = MyTextSanitizer::getInstance();
 $moduleDirName = basename(__DIR__);
-//$main_lang =  '_' . strtoupper( $moduleDirName ) ;
+//$mainLang =  '_' . strtoupper( $moduleDirName ) ;
 
 if (!empty($_POST['submit'])) {
 
@@ -94,9 +94,9 @@ if (!empty($_POST['submit'])) {
         $tags['YMAIL']              = $ymail;
         $tags['FNAME']              = $fname;
         $tags['FMAIL']              = $fmail;
-        $tags['HELLO']              = constant($main_lang . '_HELLO');
+        $tags['HELLO']              = constant($mainLang . '_HELLO');
         $tags['LID']                = $lid;
-        $tags['CLASSOF']            = constant($main_lang . '_CLASSOF');
+        $tags['CLASSOF']            = constant($mainLang . '_CLASSOF');
         $tags['NAME']               = $name;
         $tags['MNAME']              = $mname;
         $tags['LNAME']              = $lname;
@@ -104,14 +104,14 @@ if (!empty($_POST['submit'])) {
         $tags['STUDIES']            = $studies;
         $tags['TOWN']               = $town;
         $tags['YEAR']               = $year;
-        $tags['OTHER']              = '' . constant($main_lang . '_INTERESS') . ' ' . $xoopsConfig['sitename'] . '';
+        $tags['OTHER']              = '' . constant($mainLang . '_INTERESS') . ' ' . $xoopsConfig['sitename'] . '';
         $tags['LISTINGS']           = '' . XOOPS_URL . "/modules/{$moduleDirName}/";
         $tags['LINK_URL']           = '' . XOOPS_URL . "/modules/{$moduleDirName}/listing.php?lid=" . addslashes($lid) . '';
-        $tags['THINKS_INTERESTING'] = '' . constant($main_lang . '_MESSAGE') . '';
-        $tags['YOU_CAN_VIEW_BELOW'] = '' . constant($main_lang . '_YOU_CAN_VIEW_BELOW') . '';
-        $tags['WEBMASTER']          = constant($main_lang . '_WEBMASTER');
-        $tags['NO_REPLY']           = constant($main_lang . '_NOREPLY');
-        $subject                    = '' . constant($main_lang . '_SUBJET') . ' ' . $xoopsConfig['sitename'] . '';
+        $tags['THINKS_INTERESTING'] = '' . constant($mainLang . '_MESSAGE') . '';
+        $tags['YOU_CAN_VIEW_BELOW'] = '' . constant($mainLang . '_YOU_CAN_VIEW_BELOW') . '';
+        $tags['WEBMASTER']          = constant($mainLang . '_WEBMASTER');
+        $tags['NO_REPLY']           = constant($mainLang . '_NOREPLY');
+        $subject                    = '' . constant($mainLang . '_SUBJET') . ' ' . $xoopsConfig['sitename'] . '';
         //	$xoopsMailer = $xoops->getMailer();
         //	$xoopsMailer->multimailer->isHTML(true);
         //	$xoopsMailer->useMail();
@@ -128,7 +128,7 @@ if (!empty($_POST['submit'])) {
         $xoopsMailer->send();
         echo $xoopsMailer->getErrors();
 
-        $xoops->redirect('index.php', 3, constant($main_lang . '_ALUM_SEND'));
+        $xoops->redirect('index.php', 3, constant($mainLang . '_ALUM_SEND'));
         exit();
     }
 
@@ -150,26 +150,26 @@ if (!empty($_POST['submit'])) {
     $listing_2_send->getVar('lname');
 
     ob_start();
-    $form = new XoopsThemeForm(constant($main_lang . '_SENDTO'), 'sendfriend_form', 'sendfriend.php');
+    $form = new XoopsThemeForm(constant($mainLang . '_SENDTO'), 'sendfriend_form', 'sendfriend.php');
     $form->setExtra('enctype="multipart/form-data"');
     //    $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
-    $form->addElement(new XoopsFormLabel(constant($main_lang . '_LISTING_SEND'), $listing_2_send->getVar('name') . ' ' . $listing_2_send->getVar('mname') . ' ' . $listing_2_send->getVar('lname') . ''));
+    $form->addElement(new XoopsFormLabel(constant($mainLang . '_LISTING_SEND'), $listing_2_send->getVar('name') . ' ' . $listing_2_send->getVar('mname') . ' ' . $listing_2_send->getVar('lname') . ''));
     if ($xoopsUser) {
         $idd  = $xoopsUser->getVar('name', 'E');
         $idde = $xoopsUser->getVar('email', 'E');
     }
 
-    $form->addElement(new XoopsFormText(constant($main_lang . '_NAME'), 'yname', 30, 50, $idd), true);
-    $form->addElement(new XoopsFormText(constant($main_lang . '_MAIL'), 'ymail', 30, 60, $idde), true);
-    $form->addElement(new XoopsFormText(constant($main_lang . '_NAMEFR'), 'fname', 30, 60, ''), true);
-    $form->addElement(new XoopsFormText(constant($main_lang . '_MAILFR'), 'fmail', 30, 60, ''), true);
+    $form->addElement(new XoopsFormText(constant($mainLang . '_NAME'), 'yname', 30, 50, $idd), true);
+    $form->addElement(new XoopsFormText(constant($mainLang . '_MAIL'), 'ymail', 30, 60, $idde), true);
+    $form->addElement(new XoopsFormText(constant($mainLang . '_NAMEFR'), 'fname', 30, 60, ''), true);
+    $form->addElement(new XoopsFormText(constant($mainLang . '_MAILFR'), 'fmail', 30, 60, ''), true);
 
     if ($xoops->getModuleConfig('alumni_use_captcha') == '1' && !$xoops->user->isAdmin()) {
         $form->addElement(new XoopsFormCaptcha());
     }
 
     $form->addElement(new XoopsFormHidden('lid', $lid), false);
-    $form->addElement(new XoopsFormButton('', 'submit', constant($main_lang . '_SUBMIT'), 'submit'));
+    $form->addElement(new XoopsFormButton('', 'submit', constant($mainLang . '_SUBMIT'), 'submit'));
     $form->display();
     $xoopsTpl->assign('sendfriend_form', ob_get_contents());
 

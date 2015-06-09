@@ -30,7 +30,7 @@ include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/alumni_tree.php"
 $cattree = new AlumniObjectTree($cats, 'cid', 'pid');
 
 if ('0' == $cat_rows) {
-    echo constant($modinfo_lang . '_MUST_ADD_CAT');
+    echo constant($modinfoLang . '_MUST_ADD_CAT');
 } else {
 
     $perm_desc = '';
@@ -38,7 +38,7 @@ if ('0' == $cat_rows) {
 
         case 'alumni_view':
         default:
-            $title_of_form = constant($modinfo_lang . '_VIEWFORM');
+            $title_of_form = constant($modinfoLang . '_VIEWFORM');
             $perm_name     = 'alumni_view';
             $restriction   = '';
             $anonymous     = true;
@@ -47,7 +47,7 @@ if ('0' == $cat_rows) {
 
         case 'alumni_submit':
         default:
-            $title_of_form = constant($modinfo_lang . '_SUBMITFORM');
+            $title_of_form = constant($modinfoLang . '_SUBMITFORM');
             $perm_name     = 'alumni_submit';
             $restriction   = '';
             $anonymous     = false;
@@ -55,7 +55,7 @@ if ('0' == $cat_rows) {
             break;
 
         case 'alumni_premium':
-            $title_of_form = constant($modinfo_lang . '_PREMIUM');
+            $title_of_form = constant($modinfoLang . '_PREMIUM');
             $perm_name     = 'alumni_premium';
             $restriction   = '';
             $anonymous     = false;
@@ -66,9 +66,9 @@ if ('0' == $cat_rows) {
     $opform    = new XoopsSimpleForm('', 'opform', 'groupperm.php', 'get');
     $op_select = new XoopsFormSelect('', 'op', $op);
     $op_select->setExtra('onchange="document.forms.opform.submit()"');
-    $op_select->addOption('alumni_view', constant($modinfo_lang . '_VIEWFORM'));
-    $op_select->addOption('alumni_submit', constant($modinfo_lang . '_SUBMITFORM'));
-    $op_select->addOption('alumni_premium', constant($modinfo_lang . '_PREMIUM'));
+    $op_select->addOption('alumni_view', constant($modinfoLang . '_VIEWFORM'));
+    $op_select->addOption('alumni_submit', constant($modinfoLang . '_SUBMITFORM'));
+    $op_select->addOption('alumni_premium', constant($modinfoLang . '_PREMIUM'));
     $opform->addElement($op_select);
     $opform->display();
 

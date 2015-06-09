@@ -28,8 +28,8 @@ if (!empty($_POST['submit'])) {
     $sname         = (isset($_REQUEST['sname'])) ? $_REQUEST['sname'] : null;
     $semail        = (isset($_REQUEST['semail'])) ? $_REQUEST['semail'] : null;
     $listing       = (isset($_REQUEST['listing'])) ? $_REQUEST['listing'] : null;
-    $subject       = constant($main_lang . '_CONTACTALUMNI');
-    $admin_subject = constant($main_lang . '_CONTACTADMIN');
+    $subject       = constant($mainLang . '_CONTACTALUMNI');
+    $admin_subject = constant($mainLang . '_CONTACTADMIN');
 
     $module_id            = $xoops->module->getVar('mid');
     $groups               = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -61,16 +61,16 @@ if (!empty($_POST['submit'])) {
     $xoopsMailer->assign('SEMAIL', $semail);
     $xoopsMailer->assign('SUBJECT', $subject);
     $xoopsMailer->assign('BODY', $body);
-    $xoopsMailer->assign('FROM', constant($main_lang . '_FROM'));
+    $xoopsMailer->assign('FROM', constant($mainLang . '_FROM'));
     $xoopsMailer->assign('SUBMITTER', $submitter);
-    $xoopsMailer->assign('HELLO', constant($main_lang . '_HELLO'));
+    $xoopsMailer->assign('HELLO', constant($mainLang . '_HELLO'));
     $xoopsMailer->assign('LISTING', $listing);
-    $xoopsMailer->assign('REPLY_TO', constant($main_lang . '_CANREPLY'));
-    $xoopsMailer->assign('HAVE_REPLY', constant($main_lang . '_REPLYTO'));
-    $xoopsMailer->assign('FROMSITE', constant($main_lang . '_FROMSITE'));
-    $xoopsMailer->assign('AT', constant($main_lang . '_TO'));
-    $xoopsMailer->assign('WEBMASTER', constant($main_lang . '_WEBMASTER'));
-    $xoopsMailer->assign('NO_REPLY', constant($main_lang . '_NOREPLY'));
+    $xoopsMailer->assign('REPLY_TO', constant($mainLang . '_CANREPLY'));
+    $xoopsMailer->assign('HAVE_REPLY', constant($mainLang . '_REPLYTO'));
+    $xoopsMailer->assign('FROMSITE', constant($mainLang . '_FROMSITE'));
+    $xoopsMailer->assign('AT', constant($mainLang . '_TO'));
+    $xoopsMailer->assign('WEBMASTER', constant($mainLang . '_WEBMASTER'));
+    $xoopsMailer->assign('NO_REPLY', constant($mainLang . '_NOREPLY'));
     $xoopsMailer->setToEmails($email);
     $xoopsMailer->setFromEmail($xoops->getConfig('adminmail'));
     $xoopsMailer->setFromName($xoops->getConfig('sitename'));
@@ -89,17 +89,17 @@ if (!empty($_POST['submit'])) {
     $xoopsMailer2->assign('SUBJECT', $subject);
     $xoopsMailer2->assign('BODY', $body);
     $xoopsMailer2->assign('IPADDRESS', $ipaddress);
-    $xoopsMailer2->assign('FROM', constant($main_lang . '_FROM'));
+    $xoopsMailer2->assign('FROM', constant($mainLang . '_FROM'));
     $xoopsMailer2->assign('SUBMITTER', $submitter);
-    $xoopsMailer2->assign('HELLO', constant($main_lang . '_HELLO'));
+    $xoopsMailer2->assign('HELLO', constant($mainLang . '_HELLO'));
     $xoopsMailer2->assign('LISTING', $listing);
-    $xoopsMailer2->assign('ADMIN_COPY', constant($main_lang . '_ADMIN_COPY'));
-    $xoopsMailer2->assign('REPLY_TO', constant($main_lang . '_CANREPLY'));
-    $xoopsMailer2->assign('HAVE_REPLY', constant($main_lang . '_REPLYTO'));
-    $xoopsMailer2->assign('FROMSITE', constant($main_lang . '_FROMSITE'));
-    $xoopsMailer2->assign('AT', constant($main_lang . '_TO'));
-    $xoopsMailer2->assign('WEBMASTER', constant($main_lang . '_WEBMASTER'));
-    $xoopsMailer2->assign('NO_REPLY', constant($main_lang . '_NOREPLY'));
+    $xoopsMailer2->assign('ADMIN_COPY', constant($mainLang . '_ADMIN_COPY'));
+    $xoopsMailer2->assign('REPLY_TO', constant($mainLang . '_CANREPLY'));
+    $xoopsMailer2->assign('HAVE_REPLY', constant($mainLang . '_REPLYTO'));
+    $xoopsMailer2->assign('FROMSITE', constant($mainLang . '_FROMSITE'));
+    $xoopsMailer2->assign('AT', constant($mainLang . '_TO'));
+    $xoopsMailer2->assign('WEBMASTER', constant($mainLang . '_WEBMASTER'));
+    $xoopsMailer2->assign('NO_REPLY', constant($mainLang . '_NOREPLY'));
     $xoopsMailer2->setToEmails($xoops->getConfig('adminmail'));
     $xoopsMailer2->setFromEmail($xoops->getConfig('adminmail'));
     $xoopsMailer2->setFromName($xoops->getConfig('sitename'));
@@ -108,7 +108,7 @@ if (!empty($_POST['submit'])) {
     $xoopsMailer2->send();
     $xoopsMailer2->getErrors();
 
-    $xoops->redirect('index.php', 3, constant($main_lang . '_MESSEND'));
+    $xoops->redirect('index.php', 3, constant($mainLang . '_MESSEND'));
 
 } else {
 
@@ -141,20 +141,20 @@ if (!empty($_POST['submit'])) {
 
         $semail = $xoops->user->getVar('email');
     }
-    $sendform = new XoopsThemeForm(constant($main_lang . '_CONTACTAUTOR') . ' ' . $listing, 'sendform', $_SERVER['PHP_SELF'] . '?lid=$lid', 'POST');
-    $sendform->addElement(new XoopsFormLabel(constant($main_lang . '_SUBJECT'), $listing));
-    $sendform->addElement(new XoopsFormText(constant($main_lang . '_YOURNAME'), 'sname', 50, 100, $sname), true);
-    $sendform->addElement(new XoopsFormText(constant($main_lang . '_YOUREMAIL'), 'semail', 50, 50, $semail), true);
-    $sendform->addElement(new XoopsFormTextArea(constant($main_lang . '_YOURMESSAGE'), 'body', '', 5, 50, ''));
+    $sendform = new XoopsThemeForm(constant($mainLang . '_CONTACTAUTOR') . ' ' . $listing, 'sendform', $_SERVER['PHP_SELF'] . '?lid=$lid', 'POST');
+    $sendform->addElement(new XoopsFormLabel(constant($mainLang . '_SUBJECT'), $listing));
+    $sendform->addElement(new XoopsFormText(constant($mainLang . '_YOURNAME'), 'sname', 50, 100, $sname), true);
+    $sendform->addElement(new XoopsFormText(constant($mainLang . '_YOUREMAIL'), 'semail', 50, 50, $semail), true);
+    $sendform->addElement(new XoopsFormTextArea(constant($mainLang . '_YOURMESSAGE'), 'body', '', 5, 50, ''));
     if ($xoops->getModuleConfig('alumni_use_captcha') == '1' && !$xoops->user->isAdmin()) {
         $sendform->addElement(new XoopsFormCaptcha());
     }
-    $sendform->addElement(new XoopsFormLabel(constant($main_lang . '_YOUR_IP'), "<img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/ip_image.php\" alt=\"\" /><br />" . constant($main_lang . '_IP_LOGGED') . ""));
+    $sendform->addElement(new XoopsFormLabel(constant($mainLang . '_YOUR_IP'), "<img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/ip_image.php\" alt=\"\" /><br />" . constant($mainLang . '_IP_LOGGED') . ""));
 
     $sendform->addElement(new XoopsFormHidden('listing', $listing), false);
     $sendform->addElement(new XoopsFormHidden('email', $email), false);
     $sendform->addElement(new XoopsFormHidden('lid', $lid), false);
-    $sendform->addElement(new XoopsFormButton('', 'submit', constant($main_lang . '_SUBMIT'), 'submit'));
+    $sendform->addElement(new XoopsFormButton('', 'submit', constant($mainLang . '_SUBMIT'), 'submit'));
     $sendform->display();
 
     Xoops::getInstance()->footer();

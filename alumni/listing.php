@@ -13,7 +13,7 @@
 include __DIR__ . '/header.php';
 
 $moduleDirName = basename(__DIR__);
-$main_lang     = '_MA_' . strtoupper($moduleDirName);
+$mainLang     = '_MA_' . strtoupper($moduleDirName);
 require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
 $myts      = MyTextSanitizer::getInstance();
 $xoops     = Xoops::getInstance();
@@ -67,7 +67,7 @@ switch ($op) {
         $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
         $catObj                  = $alumniCategoriesHandler->get($listingObj->getVar('cid'));
 
-        $homePath         = "<a href='" . ALUMNI_URL . "/index.php'>" . constant($main_lang . '_MAIN') . "</a>&nbsp;:&nbsp;";
+        $homePath         = "<a href='" . ALUMNI_URL . "/index.php'>" . constant($mainLang . '_MAIN') . "</a>&nbsp;:&nbsp;";
         $itemPath         = "<a href='" . ALUMNI_URL . "/categories.php?cid=" . $catObj->getVar("cid") . "'>" . $catObj->getVar("title") . "</a>";
         $path             = '';
         $myParent         = $catObj->getVar('pid');
@@ -126,34 +126,34 @@ switch ($op) {
                 $recordexist = true;
             }
 
-            $xoops->tpl()->assign('add_from', constant($main_lang . '_ADDFROM') . ' ' . $xoopsConfig['sitename']);
-            $xoops->tpl()->assign('add_from_title', constant($main_lang . '_ADDFROM'));
+            $xoops->tpl()->assign('add_from', constant($mainLang . '_ADDFROM') . ' ' . $xoopsConfig['sitename']);
+            $xoops->tpl()->assign('add_from_title', constant($mainLang . '_ADDFROM'));
             $xoops->tpl()->assign('add_from_sitename', $xoopsConfig['sitename']);
-            $xoops->tpl()->assign('class_of', constant($main_lang . '_CLASSOF'));
+            $xoops->tpl()->assign('class_of', constant($mainLang . '_CLASSOF'));
             $xoops->tpl()->assign('listing_exists', $recordexist);
             $count = 0;
             $x     = 0;
             $i     = 0;
 
-            $printA = "<a href=\"print.php?op=PrintAlum&amp;lid=" . addslashes($lid) . "\" target=\"_blank\"><img src=\"assets/images/print.gif\" border=0 alt=\"" . constant($main_lang . '_PRINT') . "\" width=15 height=11 /></a>&nbsp;";
-            $mailA  = "<a href=\"sendfriend.php?op=SendFriend&amp;lid=$lid\"><img src=\"../{$moduleDirName}/assets/images/friend.gif\" border=\"0\" alt=\"" . constant($main_lang . '_FRIENDSEND') . "\" width=\"15\" height=\"11\" /></a>";
+            $printA = "<a href=\"print.php?op=PrintAlum&amp;lid=" . addslashes($lid) . "\" target=\"_blank\"><img src=\"assets/images/print.gif\" border=0 alt=\"" . constant($mainLang . '_PRINT') . "\" width=15 height=11 /></a>&nbsp;";
+            $mailA  = "<a href=\"sendfriend.php?op=SendFriend&amp;lid=$lid\"><img src=\"../{$moduleDirName}/assets/images/friend.gif\" border=\"0\" alt=\"" . constant($mainLang . '_FRIENDSEND') . "\" width=\"15\" height=\"11\" /></a>";
             if ($usid > 0) {
-                $xoops->tpl()->assign('submitter', constant($main_lang . '_FROM') . "<a href='" . XOOPS_URL . "/userinfo.php?uid=" . addslashes($usid) . "'>$submitter</a>");
+                $xoops->tpl()->assign('submitter', constant($mainLang . '_FROM') . "<a href='" . XOOPS_URL . "/userinfo.php?uid=" . addslashes($usid) . "'>$submitter</a>");
             } else {
-                $xoops->tpl()->assign('submitter', constant($main_lang . '_FROM') . "$submitter");
+                $xoops->tpl()->assign('submitter', constant($mainLang . '_FROM') . "$submitter");
             }
 
             $xoops->tpl()->assign('print', '$printA');
             $xoops->tpl()->assign('sfriend', '$mailA');
-            $xoops->tpl()->assign('read', '$view ' . constant($main_lang . '_VIEW2'));
+            $xoops->tpl()->assign('read', '$view ' . constant($mainLang . '_VIEW2'));
 
             if ($xoops->isUser()) {
                 $calusern = $xoops->user->getVar('uid', 'E');
                 if ($usid == $calusern) {
-                    $xoops->tpl()->assign('modify', "<a href=\"listing.php?op=edit_listing&amp;lid=" . addslashes($lid) . "\">" . constant($main_lang . '_MODIFY') . "</a>  |  <a href=\"listing.php?op=delete_listing&amp;lid=" . addslashes($lid) . "\">" . constant($main_lang . '_DELETE') . "</a>");
+                    $xoops->tpl()->assign('modify', "<a href=\"listing.php?op=edit_listing&amp;lid=" . addslashes($lid) . "\">" . constant($mainLang . '_MODIFY') . "</a>  |  <a href=\"listing.php?op=delete_listing&amp;lid=" . addslashes($lid) . "\">" . constant($mainLang . '_DELETE') . "</a>");
                 }
                 if ($xoops->user->isAdmin()) {
-                    $xoops->tpl()->assign('admin', "<a href=\"admin/alumni.php?op=edit_listing&amp;lid=" . addslashes($lid) . "\"><img src=\"assets/images/modif.gif\" border=0 alt=\"" . constant($main_lang . '_MODADMIN') . "\" /></a>");
+                    $xoops->tpl()->assign('admin', "<a href=\"admin/alumni.php?op=edit_listing&amp;lid=" . addslashes($lid) . "\"><img src=\"assets/images/modif.gif\" border=0 alt=\"" . constant($mainLang . '_MODADMIN') . "\" /></a>");
                 }
             }
 
@@ -165,28 +165,28 @@ switch ($op) {
             $xoops->tpl()->assign('school', $school);
             $xoops->tpl()->assign('year', $year);
             $xoops->tpl()->assign('studies', $studies);
-            $xoops->tpl()->assign('name_head', constant($main_lang . '_NAME2'));
-            $xoops->tpl()->assign('class_of', constant($main_lang . '_CLASSOF'));
-            $xoops->tpl()->assign('mname_head', constant($main_lang . '_MNAME'));
-            $xoops->tpl()->assign('lname_head', constant($main_lang . '_LNAME'));
-            $xoops->tpl()->assign('school_head', constant($main_lang . '_SCHOOL'));
-            $xoops->tpl()->assign('year_head', constant($main_lang . '_YEAR'));
-            $xoops->tpl()->assign('studies_head', constant($main_lang . '_STUDIES'));
+            $xoops->tpl()->assign('name_head', constant($mainLang . '_NAME2'));
+            $xoops->tpl()->assign('class_of', constant($mainLang . '_CLASSOF'));
+            $xoops->tpl()->assign('mname_head', constant($mainLang . '_MNAME'));
+            $xoops->tpl()->assign('lname_head', constant($mainLang . '_LNAME'));
+            $xoops->tpl()->assign('school_head', constant($mainLang . '_SCHOOL'));
+            $xoops->tpl()->assign('year_head', constant($mainLang . '_YEAR'));
+            $xoops->tpl()->assign('studies_head', constant($mainLang . '_STUDIES'));
             $xoops->tpl()->assign('local_town', $town);
-            $xoops->tpl()->assign('local_head', constant($main_lang . '_LOCAL'));
-            $xoops->tpl()->assign('alumni_mustlogin', constant($main_lang . '_MUSTLOGIN'));
-            $xoops->tpl()->assign('photo_head', constant($main_lang . '_GPHOTO'));
-            $xoops->tpl()->assign('photo2_head', constant($main_lang . '_RPHOTO2'));
+            $xoops->tpl()->assign('local_head', constant($mainLang . '_LOCAL'));
+            $xoops->tpl()->assign('alumni_mustlogin', constant($mainLang . '_MUSTLOGIN'));
+            $xoops->tpl()->assign('photo_head', constant($mainLang . '_GPHOTO'));
+            $xoops->tpl()->assign('photo2_head', constant($mainLang . '_RPHOTO2'));
             $xoops->tpl()->assign('activities', $activities1);
             $xoops->tpl()->assign('extrainfo', $myts->displayTarea($extrainfo, 1));
-            $xoops->tpl()->assign('activities_head', constant($main_lang . '_ACTIVITIES'));
-            $xoops->tpl()->assign('extrainfo_head', constant($main_lang . '_EXTRAINFO'));
+            $xoops->tpl()->assign('activities_head', constant($mainLang . '_ACTIVITIES'));
+            $xoops->tpl()->assign('extrainfo_head', constant($mainLang . '_EXTRAINFO'));
 
             if ($email) {
-                $xoops->tpl()->assign('contact_head', constant($main_lang . '_CONTACT'));
-                $xoops->tpl()->assign('contact_email', "<a href=\"contact.php?lid=$lid\">" . constant($main_lang . '_BYMAIL2') . "</a>");
+                $xoops->tpl()->assign('contact_head', constant($mainLang . '_CONTACT'));
+                $xoops->tpl()->assign('contact_email', "<a href=\"contact.php?lid=$lid\">" . constant($mainLang . '_BYMAIL2') . "</a>");
             }
-            $xoops->tpl()->assign('contact_occ_head', constant($main_lang . '_OCC'));
+            $xoops->tpl()->assign('contact_occ_head', constant($mainLang . '_OCC'));
             $xoops->tpl()->assign('contact_occ', '$occ');
 
             $xoops->tpl()->assign('photo', '');
@@ -198,9 +198,9 @@ switch ($op) {
             if ($photo2) {
                 $xoops->tpl()->assign('photo2', "<img src=\"photos/now_photo/$photo2\" alt=\"\" width=\"125\" />");
             }
-            $xoops->tpl()->assign('date', constant($main_lang . '_DATE2') . " $date ");
+            $xoops->tpl()->assign('date', constant($mainLang . '_DATE2') . " $date ");
 
-            $xoops->tpl()->assign('link_main', "<a href=\"../{$moduleDirName}/\">" . constant($main_lang . '_MAIN') . '</a>');
+            $xoops->tpl()->assign('link_main', "<a href=\"../{$moduleDirName}/\">" . constant($mainLang . '_MAIN') . '</a>');
         }
         $xoops->tpl()->assign('no_listing', 'no listing');
 
@@ -344,9 +344,9 @@ switch ($op) {
 
         if ($new_id = $listingHandler->insert($obj)) {
             if ($xoops->getModuleConfig('alumni_moderated') == '1') {
-                $xoops->redirect('index.php', 3, constant($main_lang . '_MODERATE'));
+                $xoops->redirect('index.php', 3, constant($mainLang . '_MODERATE'));
             } else {
-                $xoops->redirect('listing.php?lid=$new_id', 3, constant($main_lang . '_NOMODERATE'));
+                $xoops->redirect('listing.php?lid=$new_id', 3, constant($mainLang . '_NOMODERATE'));
             }
             //notifications
             if ($lid == 0 && $xoops->isActiveModule('notifications')) {
@@ -378,12 +378,12 @@ switch ($op) {
                 $xoops->redirect('index.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             if ($listingHandler->delete($obj)) {
-                $xoops->redirect('index.php', 3, constant($main_lang . '_FORMDELOK'));
+                $xoops->redirect('index.php', 3, constant($mainLang . '_FORMDELOK'));
             } else {
                 echo $obj->getHtmlErrors();
             }
         } else {
-            $xoops->confirm(array('ok' => 1, 'lid' => $_REQUEST['lid'], 'op' => 'delete_listing'), $_SERVER['REQUEST_URI'], sprintf(constant($main_lang . '_FORMSUREDEL'), $obj->getVar('lid')));
+            $xoops->confirm(array('ok' => 1, 'lid' => $_REQUEST['lid'], 'op' => 'delete_listing'), $_SERVER['REQUEST_URI'], sprintf(constant($mainLang . '_FORMSUREDEL'), $obj->getVar('lid')));
         }
         break;
 }

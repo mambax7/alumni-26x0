@@ -24,9 +24,9 @@ include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 include_once __DIR__ . '/include/common.php';
 
 $moduleDirName = basename(__DIR__);
-$modinfo_lang  = '_MI_' . strtoupper($moduleDirName);
-$main_lang     = '_MA_' . strtoupper($moduleDirName);
-$block_lang    = '_MB_' . strtoupper($moduleDirName);
+$modinfoLang  = '_MI_' . strtoupper($moduleDirName);
+$mainLang     = '_MA_' . strtoupper($moduleDirName);
+$blocksLang    = '_MB_' . strtoupper($moduleDirName);
 
 // Get main instance
 XoopsLoad::load('system', 'system');

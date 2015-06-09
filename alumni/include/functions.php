@@ -92,43 +92,43 @@ function alumni_convertorderbyin($orderby)
 function alumni_convertorderbytrans($orderby)
 {
 
-    global $main_lang;
+    global $mainLang;
 
     if ($orderby == 'view ASC') {
-        $orderbyTrans = '' . constant($main_lang . '_POPULARITYLTOM') . '';
+        $orderbyTrans = '' . constant($mainLang . '_POPULARITYLTOM') . '';
     }
     if ($orderby == 'view DESC') {
-        $orderbyTrans = '' . constant($main_lang . '_POPULARITYMTOL') . '';
+        $orderbyTrans = '' . constant($mainLang . '_POPULARITYMTOL') . '';
     }
     if ($orderby == 'lname ASC') {
-        $orderbyTrans = '' . constant($main_lang . '_NAMEATOZ') . '';
+        $orderbyTrans = '' . constant($mainLang . '_NAMEATOZ') . '';
     }
     if ($orderby == 'lname DESC') {
-        $orderbyTrans = '' . constant($main_lang . '_NAMEZTOA') . '';
+        $orderbyTrans = '' . constant($mainLang . '_NAMEZTOA') . '';
     }
     if ($orderby == 'school ASC') {
-        $orderbyTrans = '' . constant($main_lang . '_SCHOOLATOZ') . '';
+        $orderbyTrans = '' . constant($mainLang . '_SCHOOLATOZ') . '';
     }
     if ($orderby == 'school DESC') {
-        $orderbyTrans = '' . constant($main_lang . '_SCHOOLZTOA') . '';
+        $orderbyTrans = '' . constant($mainLang . '_SCHOOLZTOA') . '';
     }
     if ($orderby == 'studies ASC') {
-        $orderbyTrans = '' . constant($main_lang . '_STUDIESATOZ') . '';
+        $orderbyTrans = '' . constant($mainLang . '_STUDIESATOZ') . '';
     }
     if ($orderby == 'studies DESC') {
-        $orderbyTrans = '' . constant($main_lang . '_STUDIESZTOA') . '';
+        $orderbyTrans = '' . constant($mainLang . '_STUDIESZTOA') . '';
     }
     if ($orderby == 'year ASC') {
-        $orderbyTrans = '' . constant($main_lang . '_YEAROLD') . '';
+        $orderbyTrans = '' . constant($mainLang . '_YEAROLD') . '';
     }
     if ($orderby == 'year DESC') {
-        $orderbyTrans = '' . constant($main_lang . '_YEARNEW') . '';
+        $orderbyTrans = '' . constant($mainLang . '_YEARNEW') . '';
     }
     if ($orderby == 'date ASC') {
-        $orderbyTrans = '' . constant($main_lang . '_DATEOLD') . '';
+        $orderbyTrans = '' . constant($mainLang . '_DATEOLD') . '';
     }
     if ($orderby == 'date DESC') {
-        $orderbyTrans = '' . constant($main_lang . '_DATENEW') . '';
+        $orderbyTrans = '' . constant($mainLang . '_DATENEW') . '';
     }
 
     return $orderbyTrans;
@@ -209,10 +209,10 @@ function alumni_filechecks()
     global $xoopsModule, $xoopsConfig;
 
     $moduleDirName = basename(dirname(__DIR__));
-    $admin_lang    = '_AM_' . strtoupper($moduleDirName);
+    $adminLang    = '_AM_' . strtoupper($moduleDirName);
 
     echo '<fieldset>';
-    echo "<legend style=\"color: #990000; font-weight: bold;\">" . constant($admin_lang . '_FILECHECKS') . '</legend>';
+    echo "<legend style=\"color: #990000; font-weight: bold;\">" . constant($adminLang . '_FILECHECKS') . '</legend>';
 
     $photodir      = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/photo';
     $photothumbdir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/photo/thumbs';
@@ -258,19 +258,19 @@ function alumni_filechecks()
     /**
      * Some info.
      */
-    $uploads = (ini_get('file_uploads')) ? $admin_lang . '_UPLOAD_ON' : $admin_lang . '_UPLOAD_OFF';
+    $uploads = (ini_get('file_uploads')) ? $adminLang . '_UPLOAD_ON' : $adminLang . '_UPLOAD_OFF';
     echo '<br />';
     echo '<ul>';
-    echo '<li>' . constant($admin_lang . '_UPLOADMAX') . '<b>' . ini_get('upload_max_filesize') . '</b></li>';
-    echo '<li>' . constant($admin_lang . '_POSTMAX') . '<b>' . ini_get('post_max_size') . '</b></li>';
-    echo '<li>' . constant($admin_lang . '_UPLOADS') . '<b>' . $uploads . '</b></li>';
+    echo '<li>' . constant($adminLang . '_UPLOADMAX') . '<b>' . ini_get('upload_max_filesize') . '</b></li>';
+    echo '<li>' . constant($adminLang . '_POSTMAX') . '<b>' . ini_get('post_max_size') . '</b></li>';
+    echo '<li>' . constant($adminLang . '_UPLOADS') . '<b>' . $uploads . '</b></li>';
 
     $gdinfo = gd_info();
     if (function_exists('gd_info')) {
-        echo '<li>' . constant($admin_lang . '_GDIMGSPPRT') . '<b>' . constant($admin_lang . '_GDIMGON') . '</b></li>';
-        echo '<li>' . constant($admin_lang . '_GDIMGVRSN') . '<b>' . $gdinfo['GD Version'] . '</b></li>';
+        echo '<li>' . constant($adminLang . '_GDIMGSPPRT') . '<b>' . constant($adminLang . '_GDIMGON') . '</b></li>';
+        echo '<li>' . constant($adminLang . '_GDIMGVRSN') . '<b>' . $gdinfo['GD Version'] . '</b></li>';
     } else {
-        echo '<li>' . constant($admin_lang . '_GDIMGSPPRT') . '<b>' . constant($admin_lang . '_GDIMGOFF') . '</b></li>';
+        echo '<li>' . constant($adminLang . '_GDIMGSPPRT') . '<b>' . constant($adminLang . '_GDIMGOFF') . '</b></li>';
     }
     echo '</ul>';
 

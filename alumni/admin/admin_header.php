@@ -31,8 +31,8 @@ $helper = Alumni::getInstance();
 $xoops  = $helper->xoops();
 
 $moduleDirName = basename(dirname(__DIR__));
-$modinfo_lang  = '_MI_' . strtoupper($moduleDirName);
-$admin_lang    = '_AM_' . strtoupper($moduleDirName);
+$modinfoLang  = '_MI_' . strtoupper($moduleDirName);
+$adminLang    = '_AM_' . strtoupper($moduleDirName);
 
 //$request = Xoops_Request::getInstance();
 $alumniListingHandler    = $xoops->getModuleHandler('alumni_listing', 'alumni');

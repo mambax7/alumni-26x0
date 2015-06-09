@@ -58,10 +58,10 @@
         
         <tr class="tablesorter-childRow">
       <td colspan="8">
-        <div><{$studies_lang}> : <{$listing.studies}></div>
-        <div><{$activities_lang}> : <{$listing.activities}></div>
-        <div><{$extrainfo_lang}> : <{$listing.extrainfo}></div>
-         <div><{$occ_lang}> : <{$listing.occ}></div>
+        <div><{$studiesLang}> : <{$listing.studies}></div>
+        <div><{$activitiesLang}> : <{$listing.activities}></div>
+        <div><{$extrainfoLang}> : <{$listing.extrainfo}></div>
+         <div><{$occLang}> : <{$listing.occ}></div>
         
         
             </td>

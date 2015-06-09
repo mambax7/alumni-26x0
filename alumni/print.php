@@ -18,7 +18,7 @@ $myts = MyTextSanitizer::getInstance();
 function PrintAlum($lid = 0)
 {
 
-    global $xoopsConfig, $xoopsUser, $xoopsDB, $xoopsModuleConfig, $useroffset, $myts, $xoopsLogger, $moduleDirName, $main_lang, $xoops;
+    global $xoopsConfig, $xoopsUser, $xoopsDB, $xoopsModuleConfig, $useroffset, $myts, $xoopsLogger, $moduleDirName, $mainLang, $xoops;
 
     $currenttheme = $xoopsConfig['theme_set'];
     $alumni       = Alumni::getInstance();
@@ -91,48 +91,48 @@ function PrintAlum($lid = 0)
     <table border=0 width=640 cellpadding=0 cellspacing=1 bgcolor=\"#000000\"><tr><td>
     <table border=0 width=100% cellpadding=8 cellspacing=1 bgcolor=\"#FFFFFF\"><tr><td>";
 
-        echo "<table width=100% border=0 valign=top><tr><td><b>$name&nbsp;$mname&nbsp;$lname<br /> $school " . constant($main_lang . '_CLASSOF') . " $year</b>";
+        echo "<table width=100% border=0 valign=top><tr><td><b>$name&nbsp;$mname&nbsp;$lname<br /> $school " . constant($mainLang . '_CLASSOF') . " $year</b>";
         echo '</td>
 	      </tr>';
 
         if ($studies) {
             echo "<tr>
-      <td><b>" . constant($main_lang . '_STUDIES') . "</b><div style=\"text-align:justify;\">$studies</div><p>";
+      <td><b>" . constant($mainLang . '_STUDIES') . "</b><div style=\"text-align:justify;\">$studies</div><p>";
             echo '</td>
 	      </tr>';
         }
 
         if ($activities) {
-            echo "<tr><td><b>" . constant($main_lang . '_ACTIVITIES') . "</b><div style=\"text-align:justify;\">$activities</div><p>";
+            echo "<tr><td><b>" . constant($mainLang . '_ACTIVITIES') . "</b><div style=\"text-align:justify;\">$activities</div><p>";
             echo '</td>
 	      </tr>';
         }
 
         if ($occ) {
-            echo "<tr><td><b>" . constant($main_lang . '_OCC') . "</b><div style=\"text-align:justify;\">$occ</div><p>";
+            echo "<tr><td><b>" . constant($mainLang . '_OCC') . "</b><div style=\"text-align:justify;\">$occ</div><p>";
             echo '</td>
 	      </tr>';
         }
 
         if ($town) {
-            echo "<tr><td><b>" . constant($main_lang . '_TOWN') . "</b><div style=\"text-align:justify;\">$town</div>";
+            echo "<tr><td><b>" . constant($mainLang . '_TOWN') . "</b><div style=\"text-align:justify;\">$town</div>";
             echo '</td></tr>';
         }
         echo "</table><table width=\"100%\" border=0 valign=top>";
         if ($photo) {
-            echo "<tr><td width=\"40%\" valign=\"top\"><b>" . constant($main_lang . '_GPHOTO') . "</b><br /><br /><img src=\"photos/grad_photo/$photo\" width='125' border=0></td>";
+            echo "<tr><td width=\"40%\" valign=\"top\"><b>" . constant($mainLang . '_GPHOTO') . "</b><br /><br /><img src=\"photos/grad_photo/$photo\" width='125' border=0></td>";
         }
 
         if ($photo2) {
-            echo "<td width=\"60%\" valign=\"top\"><b>" . constant($main_lang . '_RPHOTO') . "</b><br /><br />&nbsp;&nbsp;&nbsp;<img src=\"photos/now_photo/$photo2\" width='125' border=0></td></tr>";
+            echo "<td width=\"60%\" valign=\"top\"><b>" . constant($mainLang . '_RPHOTO') . "</b><br /><br />&nbsp;&nbsp;&nbsp;<img src=\"photos/now_photo/$photo2\" width='125' border=0></td></tr>";
         }
         echo '</table><table border=0>';
-        echo '<tr><td><b>' . constant($main_lang . '_DATE2') . " $date <br />";
+        echo '<tr><td><b>' . constant($mainLang . '_DATE2') . " $date <br />";
         echo '</td>
 	</tr></table>
 </td></tr></table></td></tr></table>
     <br /><br /><center>
-    ' . constant($main_lang . '_EXTRANN') . ' <b>' . $xoopsConfig['sitename'] . '</b><br />
+    ' . constant($mainLang . '_EXTRANN') . ' <b>' . $xoopsConfig['sitename'] . '</b><br />
     <a href="' . XOOPS_URL . "/modules/{$moduleDirName}/\">" . XOOPS_URL . "/modules/{$moduleDirName}/</a>
     </td></tr></table>
     </body>
