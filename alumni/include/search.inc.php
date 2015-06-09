@@ -17,7 +17,7 @@
 // ------------------------------------------------------------------------- //
 
 $moduleDirName = basename(dirname(__DIR__));
-$xoops     = Xoops::getInstance();
+$xoops         = Xoops::getInstance();
 require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
 include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php");
 
@@ -30,16 +30,16 @@ $queries = array();
 $query   = $request->asStr('query', '');
 $start   = $request->asInt('start', '0');
 
-function alumni_search($queries, $andor, $limit, $start, $userid, $by_cat) {
+function alumni_search($queries, $andor, $limit, $start, $userid, $by_cat)
+{
     global $by_cat, $xoops, $query;
 
-
-    $alumni          = Alumni::getInstance();
-    $module_id       = $xoops->module->getVar('mid');
-    $listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-    $groups          = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $alumni_ids      = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
-    $criteria        = new CriteriaCompo();
+    $alumni         = Alumni::getInstance();
+    $module_id      = $xoops->module->getVar('mid');
+    $listingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    $groups         = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $alumni_ids     = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
+    $criteria       = new CriteriaCompo();
     $criteria->add(new Criteria('valid', 1, '='));
     $criteria->add(new Criteria('date', time(), '<='));
     $criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
@@ -68,15 +68,15 @@ function alumni_search($queries, $andor, $limit, $start, $userid, $by_cat) {
     $criteria->setOrder('DESC');
     $criteria->setStart($start);
 
-    $numrows     = $listing_Handler->getCount();
-    $this_search = $listing_Handler->getall($criteria);
+    $numrows     = $listingHandler->getCount();
+    $this_search = $listingHandler->getAll($criteria);
 
     $ret = array();
     $k   = 0;
 
     foreach ($this_search as $obj) {
 
-        $ret[$k]['image'] = 'images/cat/default.gif';
+        $ret[$k]['image'] = 'assets/images/cat/default.gif';
         $ret[$k]['link']  = 'listing.php?lid=' . $obj->getVar('lid') . '';
         $ret[$k]['title'] = $obj->getVar('name') . ' ' . $obj->getVar('mname') . ' ' . $obj->getVar('lname') . '   ---   ' . $obj->getVar('school') . '
 		---   ' . $obj->getVar('year');

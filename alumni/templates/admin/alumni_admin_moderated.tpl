@@ -1,5 +1,5 @@
 ﻿
-<{includeq file="admin:system/admin_navigation.html"}>
+<{includeq file="admin:system/admin_navigation.tpl"}>
 
 
 <{if $listing_count == true}>

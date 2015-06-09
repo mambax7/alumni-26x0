@@ -22,21 +22,20 @@ include __DIR__ . '/admin_header.php';
 //$xoops = Xoops::getInstance();
 $xoops->header();
 
-$listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+$listingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
 
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('valid', 1));
-$listing_valid = $listing_Handler->getCount($criteria);
+$listing_valid = $listingHandler->getCount($criteria);
 //	unset($criteria);
 
 $moderate_criteria = new CriteriaCompo();
 $moderate_criteria->add(new Criteria('valid', 0, '='));
-$moderate_count = $listing_Handler->getCount($moderate_criteria);
+$moderate_count = $listingHandler->getCount($moderate_criteria);
 //	unset($moderate_criteria);
 
 $indexAdmin = new Xoops\Module\Admin();
 $indexAdmin->displayNavigation('index.php');
-
 
 $indexAdmin->addInfoBox(AlumniLocale::LISTINGS, 'listing');
 $indexAdmin->addInfoBoxLine(sprintf(AlumniLocale::TOTAL_LISTINGS, $moderate_count + $listing_valid), 'listing');
@@ -46,8 +45,7 @@ $indexAdmin->addInfoBoxLine(sprintf(AlumniLocale::TOTAL_NOT_VALID, $moderate_cou
 $extensions = array(
     'comments'      => 'extension',
     'notifications' => 'extension',
-    'xcaptcha'      => 'extension'
-);
+    'xcaptcha'      => 'extension');
 foreach ($extensions as $module => $type) {
     $indexAdmin->addConfigBoxLine(array($module, 'warning'), $type);
 }
@@ -55,7 +53,6 @@ foreach ($extensions as $module => $type) {
 //$indexAdmin->addConfigBoxLine(array('comments', 'warning'), 'extension');
 //$indexAdmin->addConfigBoxLine(array('notifications', 'warning'), 'extension');
 //$indexAdmin->addConfigBoxLine(array('xcaptcha', 'warning'), 'extension');
-
 
 $indexAdmin->displayIndex();
 //alumni_filechecks();

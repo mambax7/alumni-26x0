@@ -19,9 +19,12 @@
  */
 
 use Xoops\Module\Plugin\PluginAbstract;
-use Xmf\Metagen;
 
-class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface {
+/**
+ * Class AlumniSearchPlugin
+ */
+class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
+{
     /**
      * search - search
      *
@@ -40,33 +43,23 @@ class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
      *               'image' => icon for search display
      *
      */
-    public function search($queries, $andor, $limit, $offset, $userid) {
+    public function search($queries, $andor, $limit, $offset, $userid)
+    {
         $andor = strtolower($andor) == 'and' ? 'and' : 'or';
         $time  = time();
 
         $qb = \Xoops::getInstance()->db()->createXoopsQueryBuilder();
         $eb = $qb->expr();
-        $qb->select('DISTINCT *')
-           ->fromPrefix('alumni_listing')
-           ->where($eb->neq('valid', '1'))
-            //           ->andWhere($eb->neq('date', $time, "!="))
-           ->orderBy('date', 'DESC')
-           ->setFirstResult($offset)
-           ->setMaxResults($limit);
+        $qb->select('DISTINCT *')->fromPrefix('alumni_listing')->where($eb->neq('valid', '1'))//           ->andWhere($eb->neq('date', $time, "!="))
+           ->orderBy('date', 'DESC')->setFirstResult($offset)->setMaxResults($limit);
         if (is_array($queries) && !empty($queries)) {
             $queryParts = array();
             foreach ($queries as $i => $q) {
                 $qterm = ':qterm' . $i;
                 $qb->setParameter($qterm, '%' . $q . '%', \PDO::PARAM_STR);
-                $queryParts[] = $eb->orX(
-                    $eb->like('name', $qterm),
-                    $eb->like('mname', $qterm),
-                    $eb->like('lname', $qterm),
-                    $eb->like('school', $qterm),
-                    $eb->like('year', $qterm)
-                );
+                $queryParts[] = $eb->orX($eb->like('name', $qterm), $eb->like('mname', $qterm), $eb->like('lname', $qterm), $eb->like('school', $qterm), $eb->like('year', $qterm));
             }
-            if ($andor == 'and') {
+            if ('and' == $andor) {
                 $qb->andWhere(call_user_func_array(array($eb, 'andX'), $queryParts));
             } else {
                 $qb->andWhere(call_user_func_array(array($eb, 'orX'), $queryParts));
@@ -92,7 +85,6 @@ class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
             //    $ret[$i]['content'] = $myrow['content_text'] . $myrow['content_shorttext'];
             $ret[$i]['uid'] = $myrow['usid'];
             $i++;
-
 
             //$items[] = array(
             //               'title' => $myrow['name']." ".$myrow['mname']." ".$myrow['lname']."   ---   ".$myrow['school']." ---   ".$myrow['year'],

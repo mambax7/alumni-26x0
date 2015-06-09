@@ -29,7 +29,8 @@ defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
  * @subpackage core
  * @author     Kazumi Ono <onokazu@xoops.org>
  */
-class AlumniObjectTree extends XoopsObjectTree {
+class AlumniObjectTree extends XoopsObjectTree
+{
     /**
      * @var string
      */
@@ -43,7 +44,7 @@ class AlumniObjectTree extends XoopsObjectTree {
     /**
      * @var null|string
      */
-    private $_rootId = null;
+    private $_rootId;
 
     /**
      * @var array
@@ -63,7 +64,8 @@ class AlumniObjectTree extends XoopsObjectTree {
      * @param string $parentId  field name of parent object ID
      * @param string $rootId    field name of root object ID
      */
-    public function __construct(&$objectArr, $myId, $parentId, $rootId = null) {
+    public function __construct($objectArr, $myId, $parentId, $rootId = null)
+    {
         $this->_objects  = $objectArr;
         $this->_myId     = $myId;
         $this->_parentId = $parentId;
@@ -78,7 +80,8 @@ class AlumniObjectTree extends XoopsObjectTree {
      *
      * @access private
      */
-    private function _initialize() {
+    private function _initialize()
+    {
         /* @var $object XoopsObject */
         foreach ($this->_objects as $object) {
             $key1                          = $object->getVar($this->_myId);
@@ -97,7 +100,8 @@ class AlumniObjectTree extends XoopsObjectTree {
      *
      * @return array Associative array comprising the tree
      */
-    public function alumni_getTree() {
+    public function alumni_getTree()
+    {
         return $this->_tree;
     }
 
@@ -107,7 +111,8 @@ class AlumniObjectTree extends XoopsObjectTree {
      * @param  string $key ID of the object to retrieve
      * @return object Object within the tree
      */
-    public function alumni_getByKey($key) {
+    public function alumni_getByKey($key)
+    {
         return $this->_tree[$key]['obj'];
     }
 
@@ -117,7 +122,8 @@ class AlumniObjectTree extends XoopsObjectTree {
      * @param  string $key ID of the parent object
      * @return array  Array of children of the parent
      */
-    public function alumni_getFirstChild($key) {
+    public function alumni_getFirstChild($key)
+    {
         $ret = array();
         if (isset($this->_tree[$key]['child'])) {
             foreach ($this->_tree[$key]['child'] as $childkey) {
@@ -128,7 +134,6 @@ class AlumniObjectTree extends XoopsObjectTree {
         return $ret;
     }
 
-
     /**
      * returns an array of all child objects of an object specified by its id
      *
@@ -136,7 +141,8 @@ class AlumniObjectTree extends XoopsObjectTree {
      * @param  array  $ret (Empty when called from client) Array of children from previous recursions.
      * @return array  Array of child nodes.
      */
-    public function alumni_getAllChild($key, $ret = array()) {
+    public function alumni_getAllChild($key, $ret = array())
+    {
         if (isset($this->_tree[$key]['child'])) {
             foreach ($this->_tree[$key]['child'] as $childkey) {
                 $ret[$childkey] = $this->_tree[$childkey]['obj'];
@@ -159,7 +165,8 @@ class AlumniObjectTree extends XoopsObjectTree {
      * @param  int    $uplevel (empty when called from outside) level of recursion
      * @return array  Array of parent nodes.
      */
-    public function alumni_getAllParent($key, $ret = array(), $uplevel = 1) {
+    public function alumni_getAllParent($key, $ret = array(), $uplevel = 1)
+    {
         if (isset($this->_tree[$key]['parent']) && isset($this->_tree[$this->_tree[$key]['parent']]['obj'])) {
             $ret[$uplevel] = $this->_tree[$this->_tree[$key]['parent']]['obj'];
             $parents       = $this->alumni_getAllParent($this->_tree[$key]['parent'], $ret, $uplevel + 1);
@@ -184,7 +191,8 @@ class AlumniObjectTree extends XoopsObjectTree {
      *
      * @return void
      */
-    private function alumni_makeSelBoxOptions($fieldName, $selected, $key, &$ret, $prefix_orig, $prefix_curr = '') {
+    private function alumni_makeSelBoxOptions($fieldName, $selected, $key, &$ret, $prefix_orig, $prefix_curr = '')
+    {
         if ($key > 0) {
             /* @var $object XoopsObject */
             $object = $this->_tree[$key]['obj'];
@@ -206,6 +214,7 @@ class AlumniObjectTree extends XoopsObjectTree {
     /**
      * Make a select box with options from the tree
      *
+     * @param          $name
      * @param  string  $fieldName      Name of the member variable from the
      *                                 node objects that should be used as the title for the options.
      * @param  string  $prefix         String to indent deeper levels
@@ -213,9 +222,10 @@ class AlumniObjectTree extends XoopsObjectTree {
      * @param  bool    $addEmptyOption Set TRUE to add an empty option with value "0" at the top of the hierarchy
      * @param  integer $key            ID of the object to display as the root of select options
      * @param  string  $extra
-     * @return string  HTML select box
+     * @return string HTML select box
      */
-    public function alumni_makeSelBox($name, $fieldName, $prefix = '-', $selected = '', $addEmptyOption = false, $key = 0, $extra = '') {
+    public function alumni_makeSelBox($name, $fieldName, $prefix = '-', $selected = '', $addEmptyOption = false, $key = 0, $extra = '')
+    {
         $xoops = Xoops::getInstance();
         $ret   = '<select name="' . $name . '" id="' . $name . '" ' . $extra . '>';
         if (false != $addEmptyOption) {
@@ -235,7 +245,8 @@ class AlumniObjectTree extends XoopsObjectTree {
      * @param  integer $key       ID of the object to display as the root of the array
      * @return array
      */
-    public function alumni_makeArrayTree($fieldName, $prefix = '-', $key = 0) {
+    public function alumni_makeArrayTree($fieldName, $prefix = '-', $key = 0)
+    {
         $ret = array();
         $this->alumni_makeArrayTreeOptions($fieldName, $key, $ret, $prefix);
 
@@ -248,12 +259,13 @@ class AlumniObjectTree extends XoopsObjectTree {
      * @param string  $fieldName   Name of the member variable from the
      *                             node objects that should be used as the column.
      * @param integer $key         ID of the object to display as the root of the array
+     * @param         $ret
      * @param string  $prefix_orig String to indent deeper levels (origin)
      * @param string  $prefix_curr String to indent deeper levels (current)
      *
-     * @return void
      */
-    public function alumni_makeArrayTreeOptions($fieldName, $key, &$ret, $prefix_orig, $prefix_curr = '') {
+    public function alumni_makeArrayTreeOptions($fieldName, $key, &$ret, $prefix_orig, $prefix_curr = '')
+    {
         if ($key > 0) {
             $value       = $this->_tree[$key]['obj']->getVar($this->_myId);
             $ret[$value] = $prefix_curr . $this->_tree[$key]['obj']->getVar($fieldName);

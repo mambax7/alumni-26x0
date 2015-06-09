@@ -31,15 +31,15 @@ if (!empty($_POST['submit'])) {
     $subject       = constant($main_lang . '_CONTACTALUMNI');
     $admin_subject = constant($main_lang . '_CONTACTADMIN');
 
-    $module_id              = $xoops->module->getVar('mid');
-    $groups                 = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $alumni_ids             = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
-    $alumni_listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-    $listing_criteria       = new CriteriaCompo();
+    $module_id            = $xoops->module->getVar('mid');
+    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $alumni_ids           = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
+    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    $listing_criteria     = new CriteriaCompo();
     $listing_criteria->add(new Criteria('lid', $lid, '='));
     $listing_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-    $numrows     = $alumni_listing_Handler->getCount($listing_criteria);
-    $listing_arr = $alumni_listing_Handler->getall($listing_criteria);
+    $numrows     = $alumniListingHandler->getCount($listing_criteria);
+    $listing_arr = $alumniListingHandler->getAll($listing_criteria);
     foreach (array_keys($listing_arr) as $i) {
 
         $name      = $listing_arr[$i]->getVar('name');
@@ -116,15 +116,15 @@ if (!empty($_POST['submit'])) {
     include __DIR__ . '/header.php';
     $xoops = Xoops::getInstance();
     //	Xoops::getInstance()->header();
-    $module_id              = $xoops->module->getVar('mid');
-    $groups                 = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $alumni_ids             = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
-    $alumni_listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-    $listing_criteria       = new CriteriaCompo();
+    $module_id            = $xoops->module->getVar('mid');
+    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $alumni_ids           = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
+    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    $listing_criteria     = new CriteriaCompo();
     $listing_criteria->add(new Criteria('lid', $lid, '='));
     $listing_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-    $numrows     = $alumni_listing_Handler->getCount($listing_criteria);
-    $listing_arr = $alumni_listing_Handler->getall($listing_criteria);
+    $numrows     = $alumniListingHandler->getCount($listing_criteria);
+    $listing_arr = $alumniListingHandler->getAll($listing_criteria);
     unset($listing_criteria);
     foreach (array_keys($listing_arr) as $i) {
         $name      = $listing_arr[$i]->getVar('name');

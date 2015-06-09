@@ -8,10 +8,11 @@ $moduleDirName = basename(dirname(__DIR__));
 
 require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
 
-$xoops                  = Xoops::getInstance();
-$alumni_listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+$xoops                = Xoops::getInstance();
+$alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
 
-function alumni_ShowImg() {
+function alumni_ShowImg()
+{
     global $moduleDirName;
 
     echo "<script type=\"text/javascript\">\n";
@@ -20,13 +21,14 @@ function alumni_ShowImg() {
     echo "if (!document.images)\n";
     echo "return\n";
     echo "document.images.avatar.src=\n";
-    echo "'" . XOOPS_URL . "/modules/{$moduleDirName}/images/cat/' + document.imcat.img.options[document.imcat.img.selectedIndex].value\n";
+    echo "'" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/cat/' + document.imcat.img.options[document.imcat.img.selectedIndex].value\n";
     echo "}\n\n";
     echo "//-->\n";
     echo "</script>\n";
 }
 
-function alumni_ShowImg2() {
+function alumni_ShowImg2()
+{
     global $moduleDirName;
 
     echo "<script type=\"text/javascript\">\n";
@@ -35,14 +37,15 @@ function alumni_ShowImg2() {
     echo "if (!document.images)\n";
     echo "return\n";
     echo "document.images.scphoto.src=\n";
-    echo "'" . XOOPS_URL . "/modules/{$moduleDirName}/images/schools/' + document.imcat.scphoto.options[document.imcat.scphoto.selectedIndex].value\n";
+    echo "'" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/schools/' + document.imcat.scphoto.options[document.imcat.scphoto.selectedIndex].value\n";
     echo "}\n\n";
     echo "//-->\n";
     echo "</script>\n";
 }
 
 //Reusable Link Sorting Functions
-function alumni_convertorderbyin($orderby) {
+function alumni_convertorderbyin($orderby)
+{
     switch (trim($orderby)) {
         case 'nameA':
             $orderby = 'lname ASC';
@@ -86,7 +89,8 @@ function alumni_convertorderbyin($orderby) {
     return $orderby;
 }
 
-function alumni_convertorderbytrans($orderby) {
+function alumni_convertorderbytrans($orderby)
+{
 
     global $main_lang;
 
@@ -130,7 +134,8 @@ function alumni_convertorderbytrans($orderby) {
     return $orderbyTrans;
 }
 
-function alumni_convertorderbyout($orderby) {
+function alumni_convertorderbyout($orderby)
+{
     if ($orderby == 'lname ASC') {
         $orderby = 'nameA';
     }
@@ -171,38 +176,40 @@ function alumni_convertorderbyout($orderby) {
     return $orderby;
 }
 
-function alumni_newlinkgraphic($cid) {
+function alumni_newlinkgraphic($cid)
+{
     global $xoops, $moduleDirName;
     $alumni    = Alumni::getInstance();
     $module_id = $xoops->module->getVar('mid');
     // get permitted id
-    $groups                 = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $alumni_ids             = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
-    $alumni_listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-    $criteria               = new CriteriaCompo();
+    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $alumni_ids           = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
+    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    $criteria             = new CriteriaCompo();
     $criteria->add(new Criteria('cid', $cid, '='));
     $criteria->add(new Criteria('valid', 1, '='));
     $criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-    $numrows     = $alumni_listing_Handler->getCount($criteria);
-    $listing_arr = $alumni_listing_Handler->getall($criteria);
+    $numrows     = $alumniListingHandler->getCount($criteria);
+    $listing_arr = $alumniListingHandler->getAll($criteria);
     foreach (array_keys($listing_arr) as $i) {
         $date      = $listing_arr[$i]->getVar('date');
         $count     = 1;
         $new       = '';
         $startdate = (time() - (86400 * $count));
         if ($startdate < $date) {
-            $new = "&nbsp;<img src=\"" . XOOPS_URL . '/modules/' . $moduleDirName . "/images/newred.gif\" alt=\"\" />";
+            $new = "&nbsp;<img src=\"" . XOOPS_URL . '/modules/' . $moduleDirName . "/assets/images/newred.gif\" alt=\"\" />";
         }
 
         return $new;
     }
 }
 
-function alumni_filechecks() {
+function alumni_filechecks()
+{
     global $xoopsModule, $xoopsConfig;
 
     $moduleDirName = basename(dirname(__DIR__));
-    $admin_lang = '_AM_' . strtoupper($moduleDirName);
+    $admin_lang    = '_AM_' . strtoupper($moduleDirName);
 
     echo '<fieldset>';
     echo "<legend style=\"color: #990000; font-weight: bold;\">" . constant($admin_lang . '_FILECHECKS') . '</legend>';

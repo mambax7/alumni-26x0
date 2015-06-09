@@ -1,8 +1,7 @@
 <?php
 
-$moduleDirName  = basename(dirname(dirname(__DIR__)));
-$admin_lang = '_AM_' . strtoupper($moduleDirName);
-
+$moduleDirName = basename(dirname(dirname(__DIR__)));
+$admin_lang    = '_AM_' . strtoupper($moduleDirName);
 
 define($admin_lang . '_CONF', 'Alumni Configuration');
 define($admin_lang . '_ADDON', 'Addons');
@@ -98,7 +97,7 @@ define($admin_lang . '_ORDRECLASS', 'School Order :');
 define($admin_lang . '_ORDREALPHA', 'Sort alphabetically');
 define($admin_lang . '_ORDREPERSO', 'Personalised Order');
 define($admin_lang . '_BIGCAT', 'Main Category');
-define($admin_lang . '_HELP1', '<b>To add a School :</b> click on the image <img src=\'' . XOOPS_URL . '/modules/jobs/images/plus.gif\' border=0 width=10 height=10 alt=\'Add a School\'> alongside the School you want to add the School under.<p><b>To change or delete a School :</b> click on the name of the School');
+define($admin_lang . '_HELP1', '<b>To add a School :</b> click on the image <img src=\'' . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/plus.gif" . '\' border=0 width=10 height=10 alt=\'Add a School\'> alongside the School you want to add the School under.<p><b>To change or delete a School :</b> click on the name of the School');
 define($admin_lang . '_HELP2', '<b>School Order :</b> integer in brackets corresponds to the order within the superior School or of the principal School. Negative integers can be used.: -1');
 
 // fichier pref.php //
@@ -207,7 +206,6 @@ define($admin_lang . '_SUBMITTER', 'Submitter :');
 define($admin_lang . '_SUBMIT', 'Submit');
 
 // Added for
-
 
 define($admin_lang . '_FORMOK', 'Added successfully');
 define($admin_lang . '_FORMDELOK', 'Deleted successfully');

@@ -14,11 +14,11 @@ $lid = (int)($_REQUEST['lid']);
 global $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsDB, $xoops_footer, $xoopsLogger;
 $currenttheme = $xoopsConfig['theme_set'];
 
-$alumni_listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-$listing_criteria       = new CriteriaCompo();
+$alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+$listing_criteria     = new CriteriaCompo();
 $listing_criteria->add(new Criteria('lid', $lid, '='));
-$numrows     = $alumni_listing_Handler->getCount($listing_criteria);
-$listing_arr = $alumni_listing_Handler->get($lid);
+$numrows     = $alumniListingHandler->getCount($listing_criteria);
+$listing_arr = $alumniListingHandler->get($lid);
 
 if ($numrows > '0') {
     $photo = $listing_arr->getvar('photo');

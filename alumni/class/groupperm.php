@@ -22,7 +22,11 @@
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class AlumniGroupPermHandler extends XoopsGroupPermHandler {
+/**
+ * Class AlumniGroupPermHandler
+ */
+class AlumniGroupPermHandler extends XoopsGroupPermHandler
+{
     /**
      * Check permission
      *
@@ -34,11 +38,17 @@ class AlumniGroupPermHandler extends XoopsGroupPermHandler {
      *
      * @return bool
      */
-    public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $trueifadmin = true) {
+    public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $trueifadmin = true)
+    {
         return parent::checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid, $trueifadmin);
     }
 
-    public function updatePerms($cid, $groups = array()) {
+    /**
+     * @param       $cid
+     * @param array $groups
+     */
+    public function updatePerms($cid, $groups = array())
+    {
         $module_id = Alumni::getInstance()->getModule()->getVar('mid');
 
         $groups_exists = parent::getGroupIds('alumni_view', $cid, $module_id);
@@ -56,9 +66,8 @@ class AlumniGroupPermHandler extends XoopsGroupPermHandler {
         $groups2_delete = array_diff(array_values($groups2_exists), $groups);
         $groups2_add    = array_diff($groups, array_values($groups2_exists));
 
-
         // delete classifieds_view
-        if (count($groups_delete) != 0) {
+        if (0 != count($groups_delete)) {
             $criteria = $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('gperm_itemid', $cid));
             $criteria->add(new Criteria('gperm_modid', $module_id));
@@ -68,9 +77,8 @@ class AlumniGroupPermHandler extends XoopsGroupPermHandler {
             }
         }
 
-
         // delete classifieds_view
-        if (count($groups1_delete) != 0) {
+        if (0 != count($groups1_delete)) {
             $criteria = $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('gperm_itemid', $cid));
             $criteria->add(new Criteria('gperm_modid', $module_id));
@@ -81,7 +89,7 @@ class AlumniGroupPermHandler extends XoopsGroupPermHandler {
         }
 
         // delete classifieds_view
-        if (count($groups2_delete) != 0) {
+        if (0 != count($groups2_delete)) {
             $criteria = $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('gperm_itemid', $cid));
             $criteria->add(new Criteria('gperm_modid', $module_id));
@@ -92,26 +100,25 @@ class AlumniGroupPermHandler extends XoopsGroupPermHandler {
         }
 
         // Add classifieds_view
-        if (count($groups_add) != 0) {
+        if (0 != count($groups_add)) {
             foreach ($groups_add as $group_id) {
                 parent::addRight('alumni_view', $cid, $group_id, $module_id);
             }
         }
 
         // Add classifieds_submit
-        if (count($groups1_add) != 0) {
+        if (0 != count($groups1_add)) {
             foreach ($groups1_add as $group_id) {
                 parent::addRight('alumni_submit', $cid, $group_id, $module_id);
             }
         }
 
         // Add classifieds_submit
-        if (count($groups2_add) != 0) {
+        if (0 != count($groups2_add)) {
             foreach ($groups2_add as $group_id) {
                 parent::addRight('alumni_premium', $cid, $group_id, $module_id);
             }
         }
-
 
     }
 }

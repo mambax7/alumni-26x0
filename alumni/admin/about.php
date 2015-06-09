@@ -1,6 +1,6 @@
 <?php
 /**
- * Marquee module
+ * Alumni module
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -16,7 +16,6 @@
  * @author              XOOPS Development Team
  * @version             $Id $
  **/
-use Xoops\Core\Request;
 
 include_once __DIR__ . '/admin_header.php';
 

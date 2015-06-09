@@ -20,15 +20,29 @@ defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 $moduleDirName = basename(dirname(dirname(__DIR__)));
 include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/alumni_tree.php");
 
-class AlumniSearchForm extends XoopsThemeForm {
+/**
+ * Class AlumniSearchForm
+ */
+class AlumniSearchForm extends XoopsThemeForm
+{
     /**
      * We are not using this for objects but we need to override the constructor
      * @param null $obj
      */
-    public function __construct($obj = null) {
+    public function __construct($obj = null)
+    {
     }
 
-    public function alumni_getSearchFrom($andor, $queries, $mids, $mid, $bycat) {
+    /**
+     * @param $andor
+     * @param $queries
+     * @param $mids
+     * @param $mid
+     * @param $bycat
+     * @return $this
+     */
+    public function alumni_getSearchFrom($andor, $queries, $mids, $mid, $bycat)
+    {
         $xoops  = Xoops::getInstance();
         $alumni = Alumni::getInstance();
         // create form
@@ -38,30 +52,26 @@ class AlumniSearchForm extends XoopsThemeForm {
         $this->addElement(new XoopsFormText(XoopsLocale::KEYWORDS, 'query', 30, 255, htmlspecialchars(stripslashes(implode(' ', $queries)), ENT_QUOTES)), true);
         $type_select = new XoopsFormSelect(XoopsLocale::TYPE, 'andor', $andor);
         $type_select->addOptionArray(array(
-                                         'AND' => XoopsLocale::ALL_AND, 'OR' => XoopsLocale::ANY_OR, 'exact' => XoopsLocale::EXACT_MATCH
-                                     ));
+                                         'AND'   => XoopsLocale::ALL_AND,
+                                         'OR'    => XoopsLocale::ANY_OR,
+                                         'exact' => XoopsLocale::EXACT_MATCH));
         $this->addElement($type_select);
-
 
         //   if (isset($_REQUEST['by_cat'])) {
         //      $by_cat = $_REQUEST['by_cat'];
         //       $by_cat = ((int)($by_cat) > 0) ? (int)($by_cat) : 0 ;
         //       }
 
-
         //     $by_cat = $request->asInt('by_cat','');
-
+        $by_cat = '';
         if (!empty($_GET['by_cat'])) {
             $by_cat = (int)($_GET['by_cat']);
         } elseif (!empty($_POST['by_cat'])) {
             $by_cat = (int)($_POST['by_cat']);
-        } else {
-            $by_cat = '';
         }
 
-
-        $alumni_categories_Handler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-        $search                    = Search::getInstance();
+        $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
+        $search                  = Search::getInstance();
         //      $xoops = $helper->xoops();
         $module_id = $xoops->module->getVar('mid');
 
@@ -72,7 +82,7 @@ class AlumniSearchForm extends XoopsThemeForm {
         $criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
         $criteria->setOrder($xoops->getModuleConfig('alumni_csortorder'));
 
-        $category_arr = $alumni_categories_Handler->getall($criteria);
+        $category_arr = $alumniCategoriesHandler->getAll($criteria);
 
         foreach (array_keys($category_arr) as $i) {
             $cid   = $category_arr[$i]->getVar('cid');
@@ -82,15 +92,12 @@ class AlumniSearchForm extends XoopsThemeForm {
             //$cat_select = new XoopsFormSelect(_ALUMNI_CATEGORIES, 'title', $title);
             //$cat_select->addOption('title', $title);
 
-
         }
-
 
         //           $cattree = new AlumniObjectTree($category_arr, 'cid', 'pid');
 
         //       $this->addElement(new XoopsFormLabel(_ALUMNI_CAT, $cattree->alumni_makeSelBox('bycat', 'title', '-', $by_cat, true)));
         //       $this->addElement(new XoopsFormHidden('bycat', $bycat));
-
 
         $categories      = $alumni->getCategoryHandler()->getCategoriesForSearch();
         $category_select = new XoopsFormSelect(AlumniLocale::L_ALUMNI_CATEGORIES, 'by_cat', $by_cat);
@@ -101,15 +108,14 @@ class AlumniSearchForm extends XoopsThemeForm {
         }
         $this->addElement($category_select);
 
-
         if (!empty($mids)) {
             $mods_checkbox = new XoopsFormCheckBox(XoopsLocale::SEARCH_IN, 'mids[]', $mids);
         } else {
             $mods_checkbox = new XoopsFormCheckBox(XoopsLocale::SEARCH_IN, 'mids[]', $mid);
         }
         if (empty($modules)) {
-            $gperm_handler     = $xoops->getHandlerGroupperm();
-            $available_modules = $gperm_handler->getItemIds('module_read', $xoops->getUserGroups());
+            $groupPermHandler  = $xoops->getHandlerGroupperm();
+            $available_modules = $groupPermHandler->getItemIds('module_read', $xoops->getUserGroups());
             $available_plugins = Xoops\Module\Plugin::getPlugins('search');
 
             //todo, would be nice to have the module ids availabe also
@@ -118,8 +124,8 @@ class AlumniSearchForm extends XoopsThemeForm {
             if (isset($available_modules) && !empty($available_modules)) {
                 $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
             }
-            $module_handler = $xoops->getHandlerModule();
-            $mods_checkbox->addOptionArray($module_handler->getNameList($criteria));
+            $moduleHandler = $xoops->getHandlerModule();
+            $mods_checkbox->addOptionArray($moduleHandler->getNameList($criteria));
         } else {
             /* @var $module XoopsModule */
             $module_array = array();

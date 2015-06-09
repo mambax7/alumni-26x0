@@ -87,11 +87,11 @@
 <!--  <{if $show_nav == true}><{assign var='imgstyle' value='border:0; '}>
 
       <div align="center"><{$lang_sortby}>  <{$lang_name}> (<a href="categories.php?cid=<{$cat}>&orderby=nameA"><img title="<{$lang_nameatoz}>" style="<{$imgstyle}>" src=
-        <{if $sort_active == 'nameA'}>"images/up_active.gif"" /><{else}>"images/up.gif" /><{/if}></a><a href="categories.php?cid=<{$cat}>&orderby=nameD"><img title="<{$lang_nameztoa}>" style="<{$imgstyle}>" src=
-        <{if $sort_active == 'nameD'}>"images/down_active.gif"" /><{else}>"images/down.gif" /><{/if}>
+        <{if $sort_active == 'nameA'}>"assets/images/up_active.gif"" /><{else}>"assets/images/up.gif" /><{/if}></a><a href="categories.php?cid=<{$cat}>&orderby=nameD"><img title="<{$lang_nameztoa}>" style="<{$imgstyle}>" src=
+        <{if $sort_active == 'nameD'}>"assets/images/down_active.gif"" /><{else}>"assets/images/down.gif" /><{/if}>
 <{$lang_date}> (<a href="categories.php?cid=<{$cat}>&orderby=dateA"><img title="<{$lang_dateold}>" style="<{$imgstyle}>" src=
-        <{if $sort_active == 'dateA' || $show_active == 'dateA'}>"images/up_active.gif"" /><{else}>"images/up.gif" /><{/if}></a><a href="catview.php?cid=<{$cat}>&orderby=dateD"><img title="<{$lang_datenew}>" style="<{$imgstyle}>" src=
-        <{if $sort_active == 'dateD' || $show_active == 'dateD'}>"images/down_active.gif"" /><{else}>"images/down.gif" /><{/if}></a>
+        <{if $sort_active == 'dateA' || $show_active == 'dateA'}>"assets/images/up_active.gif"" /><{else}>"assets/images/up.gif" /><{/if}></a><a href="catview.php?cid=<{$cat}>&orderby=dateD"><img title="<{$lang_datenew}>" style="<{$imgstyle}>" src=
+        <{if $sort_active == 'dateD' || $show_active == 'dateD'}>"assets/images/down_active.gif"" /><{else}>"assets/images/down.gif" /><{/if}></a>
       <br /><b><{$lang_cursortedby}></b>
       <hr / width="97%">
       </div>

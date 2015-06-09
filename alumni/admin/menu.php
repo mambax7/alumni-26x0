@@ -14,26 +14,27 @@ $modinfo_lang = '_MI_' . strtoupper($moduleDirName);
 
 //$adminmenu = array();
 
-$i                      = 0;
-$adminmenu[$i]['title'] = constant($modinfo_lang . '_ADMENU1');
-$adminmenu[$i]['link']  = 'admin/index.php';
-$adminmenu[$i]['icon']  = 'home.png';
+$adminmenu[] = array(
+    'title' => constant($modinfo_lang . '_ADMENU1'),
+    'link'  => 'admin/index.php',
+    'icon'  => 'home.png');
 
-++$i;
-$adminmenu[$i]['title'] = constant($modinfo_lang . '_ADMENU5');
-$adminmenu[$i]['link']  = 'admin/alumni.php';
-$adminmenu[$i]['icon']  = 'manage.png';
-++$i;
-$adminmenu[$i]['title'] = constant($modinfo_lang . '_ADMENU2');
-$adminmenu[$i]['link']  = 'admin/alumni_categories.php';
-$adminmenu[$i]['icon']  = 'category.png';
+$adminmenu[] = array(
+    'title' => constant($modinfo_lang . '_ADMENU5'),
+    'link'  => 'admin/alumni.php',
+    'icon'  => 'manage.png');
 
-++$i;
-$adminmenu[$i]['title'] = constant($modinfo_lang . '_ADMENU3');
-$adminmenu[$i]['link']  = 'admin/permissions.php';
-$adminmenu[$i]['icon']  = 'permissions.png';
+$adminmenu[] = array(
+    'title' => constant($modinfo_lang . '_ADMENU2'),
+    'link'  => 'admin/alumni_categories.php',
+    'icon'  => 'category.png');
 
-++$i;
-$adminmenu[$i]['title'] = constant($modinfo_lang . '_ADMENU7');
-$adminmenu[$i]['link']  = 'admin/about.php';
-$adminmenu[$i]['icon']  = 'about.png';
+$adminmenu[] = array(
+    'title' => constant($modinfo_lang . '_ADMENU3'),
+    'link'  => 'admin/permissions.php',
+    'icon'  => 'permissions.png');
+
+$adminmenu[] = array(
+    'title' => constant($modinfo_lang . '_ADMENU7'),
+    'link'  => 'admin/about.php',
+    'icon'  => 'about.png');

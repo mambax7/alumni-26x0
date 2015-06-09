@@ -2,7 +2,7 @@
 include __DIR__ . '/header.php';
 $xoops = Xoops::getInstance();
 //$alumni = Alumni::getInstance();
-$myts      = MyTextSanitizer::getInstance();
+$myts          = MyTextSanitizer::getInstance();
 $moduleDirName = basename(__DIR__);
 //$main_lang =  '_' . strtoupper( $moduleDirName ) ;
 
@@ -34,15 +34,15 @@ if (!empty($_POST['submit'])) {
     $module_id = $xoops->module->getVar('mid');
 
     // get permitted id
-    $groups                 = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $alumni_ids             = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
-    $alumni_listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-    $listing_criteria       = new CriteriaCompo();
+    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $alumni_ids           = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
+    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    $listing_criteria     = new CriteriaCompo();
     $listing_criteria->add(new Criteria('lid', $lid, '='));
     $listing_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-    $numrows = $alumni_listing_Handler->getCount($listing_criteria);
+    $numrows = $alumniListingHandler->getCount($listing_criteria);
 
-    $listing_arr = $alumni_listing_Handler->getall($listing_criteria);
+    $listing_arr = $alumniListingHandler->getAll($listing_criteria);
     unset($listing_criteria);
     foreach (array_keys($listing_arr) as $i) {
         $lid        = $listing_arr[$i]->getVar('lid');
@@ -142,8 +142,8 @@ if (!empty($_POST['submit'])) {
 
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    $alumni_listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-    $listing_2_send         = $alumni_listing_Handler->get($_REQUEST['lid']);
+    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    $listing_2_send       = $alumniListingHandler->get($_REQUEST['lid']);
 
     $listing_2_send->getVar('name');
     $listing_2_send->getVar('mname');

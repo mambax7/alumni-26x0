@@ -23,9 +23,10 @@
 include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 include_once __DIR__ . '/include/common.php';
 
-$moduleDirName    = basename(__DIR__);
-$modinfo_lang = '_MI_' . strtoupper($moduleDirName);
-$main_lang = '_MA_' . strtoupper($moduleDirName);
+$moduleDirName = basename(__DIR__);
+$modinfo_lang  = '_MI_' . strtoupper($moduleDirName);
+$main_lang     = '_MA_' . strtoupper($moduleDirName);
+$block_lang    = '_MB_' . strtoupper($moduleDirName);
 
 // Get main instance
 XoopsLoad::load('system', 'system');
@@ -36,10 +37,10 @@ $helper = Alumni::getInstance();
 //$xoops = Xoops::getInstance();
 $xoops = $helper->xoops();
 // Get handler
-$category_Handler = $helper->getCategoryHandler();
-$listing_Handler  = $helper->getListingHandler();
+$categoryHandler = $helper->getCategoryHandler();
+$listingHandler  = $helper->getListingHandler();
 
-$gperm_Handler = $helper->getGrouppermHandler();
+$groupPermHandler = $helper->getGrouppermHandler();
 
 //permission
 $groups = $xoops->getUserGroups();

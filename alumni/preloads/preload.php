@@ -26,13 +26,14 @@ use Xoops\Core\PreloadItem;
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          trabis <lusopoemas@gmail.com>
  */
-class AlumniPreload extends PreloadItem {
-    static function eventCoreIncludeCommonClassmaps($args) {
+class AlumniPreload extends PreloadItem
+{
+    static function eventCoreIncludeCommonClassmaps($args)
+    {
         $path = dirname(__DIR__);
         XoopsLoad::addMap(array(
                               'alumnimetagen' => $path . '/class/metagen.php',
-                              'alumni'        => $path . '/class/helper.php',
-                              //    'alumniutils' => $path . '/class/utils.php',
+                              'alumni'        => $path . '/class/helper.php', //    'alumniutils' => $path . '/class/utils.php',
                               //     'alumniblockform' => $path . '/class/blockform.php',
                           ));
     }

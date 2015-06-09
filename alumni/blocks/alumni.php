@@ -9,18 +9,21 @@ defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 include_once dirname(__DIR__) . '/include/common.php';
 $xoops  = Xoops::getInstance();
 $alumni = Alumni::getInstance();
-function alumni_show($options) {
 
-    $blockdirname = basename(dirname(__DIR__));
-    $blocks_lang  = '_MB_' . strtoupper($blockdirname);
+function alumni_show($options)
+{
 
-    global $xoops, $helper, $blockdirname, $block_lang, $alumni;
+    $blockDirName = basename(dirname(__DIR__));
+    $block_lang   = '_MB_' . strtoupper($blockDirName);
+    $modinfo_lang = '_MI_' . strtoupper($blockDirName);
 
-    $block                  = array();
-    $myts                   = MyTextSanitizer::getInstance();
-    $alumni_listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    global $xoops, $helper, $alumni;
 
-    $listings = $alumni_listing_Handler->getListingPublished(0, $options[1], $options[0], 'DESC');
+    $block                = array();
+    $myts                 = MyTextSanitizer::getInstance();
+    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+
+    $listings = $alumniListingHandler->getListingPublished(0, $options[1], $options[0], 'DESC');
     foreach (array_keys($listings) as $l) {
 
         $a_item = array();
@@ -39,21 +42,22 @@ function alumni_show($options) {
         $a_item['view']   = $view;
         $a_item['id']     = $listings[$l]->getVar('lid');
         $a_item['cid']    = $listings[$l]->getVar('cid');
-        $a_item['link']   = '<a href="' . XOOPS_URL . "/modules/{$moduleDirName}/listing.php?lid=" . addslashes($listings[$l]->getVar('lid')) . "\"><b>$year<br />$name $mname $lname</b></a>";
+        $a_item['link']   = '<a href="' . XOOPS_URL . "/modules/{$blockDirName}/listing.php?lid=" . addslashes($listings[$l]->getVar('lid')) . "\"><b>$year<br />$name $mname $lname</b></a>";
 
         $block['items'][] = $a_item;
     }
-    $block['lang_title'] = $blocks_lang . '_ITEM';
-    $block['lang_date']  = $blocks_lang . '_DATE';
-    $block['link']       = "<a href=\"" . XOOPS_URL . "/modules/{$moduleDirName}/index.php\"><b>" . $blocks_lang . '_ALL_LISTINGS' . "</b></a></div>";
+    $block['lang_title'] = constant($block_lang . '_ITEM');
+    $block['lang_date']  = constant($block_lang . '_DATE');
+    $block['link']       = "<a href=\"" . XOOPS_URL . "/modules/{$blockDirName}/index.php\"><b>" . constant($block_lang . '_ALL_LISTINGS') . "</b></a></div>";
 
     return $block;
 }
 
-function alumni_edit($options) {
+function alumni_edit($options)
+{
     global $xoopsDB;
-    $blockdirname = basename(dirname(dirname(__FILE__)));
-    $block_lang   = '_MB_' . strtoupper($blockdirname);
+    $blockDirName = basename(dirname(__DIR__));
+    $block_lang   = '_MB_' . strtoupper($blockDirName);
 
     $form = constant($block_lang . '_ORDER') . "&nbsp;<select name='options[]'>";
     $form .= "<option value='date'";

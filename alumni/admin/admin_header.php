@@ -18,8 +18,6 @@
  * @version      $Id $
  */
 
-use Xoops\Core\Request;
-
 include_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 include_once dirname(__DIR__) . '/include/common.php';
 //include_once XOOPS_ROOT_PATH . '/include/cp_header.php';
@@ -37,10 +35,10 @@ $modinfo_lang  = '_MI_' . strtoupper($moduleDirName);
 $admin_lang    = '_AM_' . strtoupper($moduleDirName);
 
 //$request = Xoops_Request::getInstance();
-$alumni_listing_Handler    = $xoops->getModuleHandler('alumni_listing', 'alumni');
-$alumni_categories_Handler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-$alumni_gperm_Handler      = $helper->getGrouppermHandler();
-$module_id                 = $helper->getModule()->getVar('mid');
+$alumniListingHandler    = $xoops->getModuleHandler('alumni_listing', 'alumni');
+$alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
+$alumniGrouppermHandler  = $helper->getGrouppermHandler();
+$module_id               = $helper->getModule()->getVar('mid');
 
 XoopsLoad::loadFile($xoops->path(XOOPS_ROOT_PATH . '/include/cp_header.php'));
 // Define Stylesheet

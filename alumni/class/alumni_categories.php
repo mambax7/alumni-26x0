@@ -22,9 +22,13 @@ use Xoops\Core\Database\Connection;
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class alumni_categories extends XoopsObject {
+/**
+ * Class alumni_categories
+ */
+class alumni_categories extends XoopsObject
+{
 
-    public $alumni = null;
+    public $alumni;
 
     /**
      * @var array
@@ -32,7 +36,11 @@ class alumni_categories extends XoopsObject {
     public $_categoryPath = false;
 
     //Constructor
-    public function __construct() {
+    /**
+     *
+     */
+    public function __construct()
+    {
         //		$this->XoopsObject();
         //		$this->alumni = Alumni::getInstance();
         $this->initVar('cid', XOBJ_DTYPE_INT, null, false, 11);
@@ -52,15 +60,20 @@ class alumni_categories extends XoopsObject {
         $this->initVar('ordre', XOBJ_DTYPE_INT, null, false, 5);
     }
 
-    public function getForm($action = false) {
+    /**
+     * @param bool $action
+     * @return XoopsThemeForm
+     */
+    public function getForm($action = false)
+    {
         global $xoopsDB;
         $xoops = Xoops::getInstance();
         if ($action === false) {
             $action = $_SERVER['REQUEST_URI'];
         }
 
-        $moduleDirName  = basename(dirname(__DIR__));
-        $admin_lang = '_AM_' . strtoupper($moduleDirName);
+        $moduleDirName = basename(dirname(__DIR__));
+        $admin_lang    = '_AM_' . strtoupper($moduleDirName);
 
         $title = $this->isNew() ? sprintf(constant($admin_lang . '_CATEGORY_ADD')) : sprintf(constant($admin_lang . '_CATEGORY_EDIT'));
 
@@ -69,10 +82,9 @@ class alumni_categories extends XoopsObject {
         $form = new XoopsThemeForm($title, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
 
-
         include_once(XOOPS_ROOT_PATH . '/class/tree.php');
-        $alumni_category_Handler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-        $arr                     = $alumni_category_Handler->getall();
+        $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
+        $arr                     = $alumniCategoriesHandler->getAll();
         //$mytree = new XoopsObjectTree($arr, 'category_id', 'category_pid');
         $mytree = new XoopsObjectTree($arr, 'cid', 'pid');
 
@@ -80,8 +92,8 @@ class alumni_categories extends XoopsObject {
         $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_CATEGORY_TITLE'), 'title', 50, 255, $this->getVar('title')), true);
         //$form->addElement(new XoopsFormTextArea(_AM_TEST1_CATEGORY_DESC, 'category_desc', $this->getVar('category_desc'), 4, 47), true);
 
-        $img                         = $this->getVar('img') ? $this->getVar('img') : 'default.gif';
-        $uploadirectory_category_img = "/modules/{$moduleDirName}/images/cat";
+        $img                         = $this->getVar('img') ?: 'default.gif';
+        $uploadirectory_category_img = "/modules/{$moduleDirName}/assets/images/cat";
         $imgtray_category_img        = new Xoops\Form\ElementTray(constant($admin_lang . '_IMGCAT'), '<br />');
         $imgpath_category_img        = sprintf(constant($admin_lang . '_FORMIMAGE_PATH'), $uploadirectory_category_img);
         $imageselect_category_img    = new Xoops\Form\Select($imgpath_category_img, 'img', $img);
@@ -102,7 +114,7 @@ class alumni_categories extends XoopsObject {
         $form->addElement(new Xoops\Form\Text(constant($admin_lang . '_ORDER'), 'ordre', 50, 255, $this->getVar('ordre')), false);
         $form->addElement(new Xoops\Form\Label(constant($admin_lang . '_IFSCHOOL'), ''));
 
-        $photo_old            = $this->getVar('scphoto') ? $this->getVar('scphoto') : '';
+        $photo_old            = $this->getVar('scphoto') ?: '';
         $uploadirectory_photo = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/school_photos";
         $imgtray_photo        = new Xoops\Form\ElementTray(constant($admin_lang . '_SCPHOTO'), '<br />');
         $imgpath_photo        = sprintf(constant($admin_lang . '_FORMIMAGE_PATH'), $uploadirectory_photo);
@@ -132,12 +144,18 @@ class alumni_categories extends XoopsObject {
         return $form;
     }
 
-    public function getPathFromId($id = null, $path = '') {
+    /**
+     * @param null   $id
+     * @param string $path
+     * @return string
+     */
+    public function getPathFromId($id = null, $path = '')
+    {
         $id   = isset($id) ? (int)($id) : $this->cid;
         $myts =& MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($this->title);
         $path = "/{$name}{$path}";
-        if ($this->pid != 0) {
+        if (0 != $this->pid) {
             $path = $this->getPathFromId($this->pid, $path);
         }
 
@@ -145,25 +163,39 @@ class alumni_categories extends XoopsObject {
     }
 }
 
+/**
+ * Class AlumniAlumni_categoriesHandler
+ */
+class AlumniAlumni_categoriesHandler extends XoopsPersistableObjectHandler
+{
 
-class AlumniAlumni_categoriesHandler extends XoopsPersistableObjectHandler {
+    public $alumni;
 
-    public $alumni = null;
-
-    public function __construct(Connection $db = null) {
+    /**
+     * @param Connection $db
+     */
+    public function __construct(Connection $db = null)
+    {
         parent::__construct($db, 'alumni_categories', 'alumni_categories', 'cid', 'title');
 
     }
 
-    public function getSubCatArray($by_cat, $level, $cat_array, $cat_result) {
+    /**
+     * @param $by_cat
+     * @param $level
+     * @param $cat_array
+     * @param $cat_result
+     */
+    public function getSubCatArray($by_cat, $level, $cat_array, $cat_result)
+    {
         global $theresult;
         $spaces = '';
-        for ($j = 0; $j < $level; $j++) {
+        for ($j = 0; $j < $level; ++$j) {
             $spaces .= '--';
         }
         $theresult[$by_cat['cid']] = $spaces . $by_cat['title'];
         if (isset($cat_array[$by_cat['cid']])) {
-            $level = $level + 1;
+            $level = ++$level;
             foreach ($cat_array[$by_cat['cid']] as $cat) {
                 $this->getSubCatArray($cat, $level, $cat_array, $cat_result);
             }
@@ -173,7 +205,8 @@ class AlumniAlumni_categoriesHandler extends XoopsPersistableObjectHandler {
     /**
      * @return array
      */
-    public function &getCategoriesForSearch() {
+    public function &getCategoriesForSearch()
+    {
         global $theresult, $xoops, $alumni;
         $xoops     = Xoops::getInstance();
         $module_id = $alumni->getModule()->mid();
@@ -182,9 +215,9 @@ class AlumniAlumni_categoriesHandler extends XoopsPersistableObjectHandler {
         $criteria->setSort('cid');
         $criteria->setOrder('ASC');
         if (!$xoops->isAdmin()) {
-            $gperm_handler        = $xoops->gethandler('groupperm');
+            $groupPermHandler     = $xoops->gethandler('groupperm');
             $groups               = is_object($xoops->isUser()) ? $$xoops->isUser()->getGroups() : XOOPS_GROUP_ANONYMOUS;
-            $allowedCategoriesIds = $gperm_handler->getItemIds('alumni_view', $groups, $module_id);
+            $allowedCategoriesIds = $groupPermHandler->getItemIds('alumni_view', $groups, $module_id);
             if (count($allowedCategoriesIds) > 0) {
                 $criteria->add(new Criteria('cid', '(' . implode(',', $allowedCategoriesIds) . ')', 'IN'));
             } else {
@@ -192,7 +225,7 @@ class AlumniAlumni_categoriesHandler extends XoopsPersistableObjectHandler {
             }
         }
         $categories = $this->getAll($criteria, array('cid', 'pid', 'title'), false, false);
-        if (count($categories) == 0) {
+        if (0 == count($categories)) {
             return $ret;
         }
         $cat_array = array();

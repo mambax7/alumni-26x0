@@ -19,27 +19,37 @@
  * @version         $Id: $
  */
 
-use Xoops\Module\Plugin\PluginAbstract;
-use Xmf\Metagen;
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+$by_cat = '';
 if (!empty($_GET['by_cat'])) {
     $by_cat = $_GET['by_cat'];
 } elseif (!empty($_POST['by_cat'])) {
     $by_cat = $_POST['by_cat'];
-} else {
-    $by_cat = "";
 }
 
-class AlumniSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements SearchPluginInterface {
-    public function search($queries, $andor, $limit, $start, $uid) {
+/**
+ * Class AlumniSearchPlugin
+ */
+class AlumniSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements SearchPluginInterface
+{
+    /**
+     * @param string[] $queries
+     * @param string   $andor
+     * @param int      $limit
+     * @param int      $start
+     * @param type     $uid
+     * @return array
+     */
+    public function search($queries, $andor, $limit, $start, $uid)
+    {
         $xoops = Xoops::getInstance();
         global $xoopsDB, $by_cat;
         $sql = 'SELECT lid, usid, name, mname, lname, school, year, date FROM ' . $xoopsDB->prefix('alumni_listing') . " WHERE valid='1' AND date<=" . time() . '';
 
-        if ($uid != 0) {
+        if (0 != $uid) {
             $sql .= ' AND usid=' . (int)($uid);
         }
-        if ($by_cat != '') {
+        if ('' != $by_cat) {
             $sql .= " AND (cid LIKE '$by_cat')";
         }
         if (is_array($queries) && $count = count($queries)) {

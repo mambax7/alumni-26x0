@@ -74,7 +74,6 @@ class AlumniLocaleEn_US /*extends XoopsLocaleEn_US*/
     const A_MNAME_2          = 'Middle/Maiden Name :';
     const A_LNAME_2          = 'Last Name :';
 
-
     const A_SCHOOL       = 'School';
     const A_SCHOOL_2     = 'School :';
     const A_CLASS_OF     = 'Class of';
@@ -124,7 +123,6 @@ class AlumniLocaleEn_US /*extends XoopsLocaleEn_US*/
     const PERMISSIONS_SUBMIT  = 'Submit permissions';
     const PERMISSIONS_PREMIUM = 'Premium permissions';
 
-
     // Admin Tabs form
     const TAB_MAIN        = 'Main';
     const TAB_METAS       = 'Metas';
@@ -141,9 +139,7 @@ class AlumniLocaleEn_US /*extends XoopsLocaleEn_US*/
     // Print
     const PRINT_COMES = 'This listing comes from';
 
-
     // Configuration
-
 
     // Block configuration
     const CONF_BLOCK_MODE     = 'Mode';

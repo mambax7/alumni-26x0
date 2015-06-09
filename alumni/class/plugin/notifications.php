@@ -25,23 +25,25 @@ include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php"
 
 //include_once (XOOPS_ROOT_PATH . '/modules/jobs/include/resume_functions.php');
 
-
-class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract implements NotificationsPluginInterface {
+/**
+ * Class AlumniNotificationsPlugin
+ */
+class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract implements NotificationsPluginInterface
+{
     /**
      * @param string $category
      * @param int    $item_id
      *
      * @return array
      */
-    public function item($category, $item_id) {
-
+    public function item($category, $item_id)
+    {
 
         $xoops   = Xoops::getInstance();
         $item    = array();
         $item_id = (int)$item_id;
 
-
-        if ($category == 'global') {
+        if ('global' == $category) {
             $item['name'] = '';
             $item['url']  = '';
 
@@ -50,7 +52,7 @@ class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
 
         global $xoopsDB, $moduleDirName;
 
-        if ($category == 'category') {
+        if ('category' == $category) {
 
             // Assume we have a valid topid id
             $sql = 'SELECT title  FROM ' . $xoopsDB->prefix('alumni_categories') . ' WHERE cid = ' . $item_id . ' limit 1';
@@ -64,7 +66,7 @@ class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
             return $item;
         }
 
-        if ($category == 'listing') {
+        if ('listing' == $category) {
             // Assume we have a valid post id
             $sql          = 'SELECT title FROM ' . $xoopsDB->prefix('alumni_listing') . ' WHERE lid = ' . $item_id . ' LIMIT 1';
             $result       = $xoopsDB->query($sql);
@@ -82,7 +84,8 @@ class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
     /**
      * @return array
      */
-    public function categories() {
+    public function categories()
+    {
         $moduleDirName = basename(dirname(dirname(__DIR__)));
         $modinfo_lang  = '_MI_' . strtoupper($moduleDirName);
 
@@ -106,16 +109,16 @@ class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
         $ret[3]['item_name']      = 'lid';
         $ret[3]['allow_bookmark'] = 1;
 
-
         return $ret;
     }
 
     /**
      * @return array
      */
-    public function events() {
-        $moduleDirName    = basename(dirname(dirname(__DIR__)));
-        $modinfo_lang = '_MI_' . strtoupper($moduleDirName);
+    public function events()
+    {
+        $moduleDirName = basename(dirname(dirname(__DIR__)));
+        $modinfo_lang  = '_MI_' . strtoupper($moduleDirName);
 
         $ret = array();
 
@@ -141,7 +144,6 @@ class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
         return $ret;
     }
 
-
     /**
      * @param string $category
      * @param int    $item_id
@@ -149,7 +151,8 @@ class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
      *
      * @return array
      */
-    public function tags($category, $item_id, $event) {
+    public function tags($category, $item_id, $event)
+    {
         return array();
     }
 }

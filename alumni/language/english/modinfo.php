@@ -1,9 +1,9 @@
 <?php
 // Module Info
 
-$moduleDirName    = basename(dirname(dirname(__DIR__)));
-$modinfo_lang = '_MI_' . strtoupper($moduleDirName);
-$admin_lang   = '_AM_' . strtoupper($moduleDirName);
+$moduleDirName = basename(dirname(dirname(__DIR__)));
+$modinfo_lang  = '_MI_' . strtoupper($moduleDirName);
+$admin_lang    = '_AM_' . strtoupper($moduleDirName);
 
 // The name of this module
 define($modinfo_lang . '_NAME', 'Alumni');
@@ -14,8 +14,8 @@ define($modinfo_lang . '_MENUADD', 'Add Your Listing');
 define($modinfo_lang . '_DESC', 'Alumni Module');
 
 // Names of blocks for this module (Not all module has blocks)
-define($modinfo_lang . '_BNAME', 'Alumni Block');
-define($modinfo_lang . '_BNAME_DESC', 'Shows Alumni Block');
+define($modinfo_lang . '_BNAME', 'Alumni Block2');
+define($modinfo_lang . '_BNAME_DESC', 'Shows Alumni Block2');
 // Names of admin menu items
 define($modinfo_lang . '_ADMENU1', 'Home');
 define($modinfo_lang . '_ADMENU2', 'Categories : Schools');
@@ -81,7 +81,6 @@ define($modinfo_lang . '_MUST_ADD_CAT', 'You must add a category first.');
 
 // Notification event descriptions and mail templates
 
-
 define($modinfo_lang . '_CATEGORY_NOTIFY', 'Category');
 define($modinfo_lang . '_CATEGORY_NOTIFYDSC', 'Notification options that apply to the current category.');
 define($modinfo_lang . '_NOTIFY', 'Listing');
@@ -138,6 +137,5 @@ define($modinfo_lang . '_OFFER_SEARCH', 'Offer search within listings');
 define($modinfo_lang . '_OFFER_SEARCH_DESC', 'Select yes to provide a search box');
 
 // ADDED FOR 3.1
-
 
 define($modinfo_lang . '_USE_CAPTCHA_DESC', '');

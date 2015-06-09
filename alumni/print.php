@@ -9,13 +9,14 @@
 // ------------------------------------------------------------------------- //
 
 include __DIR__ . '/header.php';
-$xoops     = Xoops::getInstance();
+$xoops         = Xoops::getInstance();
 $moduleDirName = basename(__DIR__);
 require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
 //include(XOOPS_ROOT_PATH."/modules/{$moduleDirName}/include/functions.php");
 $myts = MyTextSanitizer::getInstance();
 
-function PrintAlum($lid = 0) {
+function PrintAlum($lid = 0)
+{
 
     global $xoopsConfig, $xoopsUser, $xoopsDB, $xoopsModuleConfig, $useroffset, $myts, $xoopsLogger, $moduleDirName, $main_lang, $xoops;
 
@@ -25,15 +26,15 @@ function PrintAlum($lid = 0) {
     $module_id = $xoops->module->getVar('mid');
 
     // get permitted id
-    $groups                 = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $alumni_ids             = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
-    $alumni_listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-    $listing_criteria       = new CriteriaCompo();
+    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $alumni_ids           = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
+    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    $listing_criteria     = new CriteriaCompo();
     $listing_criteria->add(new Criteria('lid', $lid, '='));
     $listing_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-    $numrows = $alumni_listing_Handler->getCount($listing_criteria);
+    $numrows = $alumniListingHandler->getCount($listing_criteria);
 
-    $listing_arr = $alumni_listing_Handler->getall($listing_criteria);
+    $listing_arr = $alumniListingHandler->getAll($listing_criteria);
     unset($listing_criteria);
     foreach (array_keys($listing_arr) as $i) {
         $lid        = $listing_arr[$i]->getVar('lid');

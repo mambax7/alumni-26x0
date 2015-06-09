@@ -21,13 +21,18 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class Alumni extends Xoops\Module\Helper\HelperAbstract {
+/**
+ * Class Alumni
+ */
+class Alumni extends Xoops\Module\Helper\HelperAbstract
+{
     /**
      * Init the module
      *
      * @return null|void
      */
-    public function init() {
+    public function init()
+    {
         $this->setDirname('alumni');
         //$this->setDebug(true);
         //    $this->loadLanguage('modinfo');
@@ -36,60 +41,69 @@ class Alumni extends Xoops\Module\Helper\HelperAbstract {
     /**
      * @return Alumni
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         return parent::getInstance();
     }
 
     /**
      * @return AlumniAlumni_listingHandler
      */
-    public function getListingHandler() {
+    public function getListingHandler()
+    {
         return $this->getHandler('alumni_listing');
     }
 
     /**
      * @return AlumniAlumni_categoriesHandler
      */
-    public function getCategoryHandler() {
+    public function getCategoryHandler()
+    {
         return $this->getHandler('alumni_categories');
     }
 
     /**
      * @return AlumniPermissionHandler
      */
-    public function getPermissionHandler() {
+    public function getPermissionHandler()
+    {
         return $this->getHandler('permission');
     }
 
     /**
      * @return AlumniFileHandler
      */
-//    public function getFileHandler() {
-//        return $this->getHandler('file');
-//    }
+    //    public function getFileHandler() {
+    //        return $this->getHandler('file');
+    //    }
 
     /**
      * @return AluAlumniMimetypeHandler
      */
-//    public function getMimetypeHandler() {
-//        return $this->getHandler('mimetype');
-//    }
+    //    public function getMimetypeHandler() {
+    //        return $this->getHandler('mimetype');
+    //    }
 
     /**
      * @return AlumniRatingHandler
      */
-//    public function getRatingHandler() {
-//        return $this->getHandler('rating');
-//    }
+    //    public function getRatingHandler() {
+    //        return $this->getHandler('rating');
+    //    }
 
     /**
      * @return AlumniGroupPermHandler
      */
-    public function getGrouppermHandler() {
+    public function getGrouppermHandler()
+    {
         return $this->getHandler('groupperm');
     }
 
-    public function getUserId() {
+    /**
+     * @return int|mixed
+     */
+    public function getUserId()
+    {
         if ($this->xoops()->isUser()) {
             return $this->xoops()->user->getVar('uid');
         }

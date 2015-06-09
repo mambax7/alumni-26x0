@@ -1,6 +1,6 @@
 <?php
 $moduleDirName = basename(dirname(dirname(__DIR__)));
-$main_lang = '_MA_' . strtoupper($moduleDirName);
+$main_lang     = '_MA_' . strtoupper($moduleDirName);
 
 define($main_lang . '_ADDON', 'Addon');
 define($main_lang . '_LISTINGS', 'Alumni Listings');
@@ -264,7 +264,6 @@ define($main_lang . '_STUDIES2', 'Studies');
 define($main_lang . '_SUBMITTER', 'Name :');
 
 // ADDED FOR 3.1
-
 
 define($main_lang . '_SUBMIT', 'Submit');
 define($main_lang . '_MODERATE', 'Your Alumni Listing will be queued for approval');

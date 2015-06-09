@@ -37,8 +37,8 @@ switch ($op) {
 
         $indexAdmin->renderButton('left', '');
 
-        $listing_count = $alumni_listing_Handler->countAlumni();
-        $listing_arr   = $alumni_listing_Handler->getall();
+        $listing_count = $alumniListingHandler->countAlumni();
+        $listing_arr   = $alumniListingHandler->getAll();
 
         // Assign Template variables
         $xoops->tpl()->assign('listing_count', $listing_count);
@@ -79,7 +79,7 @@ switch ($op) {
                 $newcount   = $xoops->getModuleConfig('' . $moduleDirName . '_countday');
                 $startdate  = (time() - (86400 * $newcount));
                 if ($startdate < $date) {
-                    $newitem        = "<img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/images/newred.gif\" />";
+                    $newitem        = "<img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/newred.gif\" />";
                     $listing['new'] = $newitem;
                 }
                 if ($xoopsUser) {
@@ -120,14 +120,14 @@ switch ($op) {
     case 'new_listing':
         //    xoops_cp_header();
 
-        //$alumni_listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+        //$alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
 
         $xoops->header();
         $indexAdmin = new Xoops\Module\Admin();
         $indexAdmin->displayNavigation('alumni.php');
         $indexAdmin->addItemButton(constant($admin_lang . '_CATEGORYLIST'), 'alumni.php');
         echo $indexAdmin->renderButton('left', '');
-        $obj  = $alumni_listing_Handler->create();
+        $obj  = $alumniListingHandler->create();
         $form = $obj->getAdminForm();
         $form->display();
         break;
@@ -148,10 +148,10 @@ switch ($op) {
         $date = time();
 
         if (isset($_REQUEST['lid'])) {
-            $obj = $alumni_listing_Handler->get($_REQUEST['lid']);
+            $obj = $alumniListingHandler->get($_REQUEST['lid']);
             $obj->setVar('lid', $_REQUEST['lid']);
         } else {
-            $obj = $alumni_listing_Handler->create();
+            $obj = $alumniListingHandler->create();
         }
 
         $destination = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
@@ -175,10 +175,10 @@ switch ($op) {
         }
 
         if (isset($_REQUEST['cid'])) {
-            $cat_name                  = '';
-            $alumni_categories_Handler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-            $catObj                    = $alumni_categories_Handler->get($_REQUEST['cid']);
-            $cat_name                  = $catObj->getVar('title');
+            $cat_name                = '';
+            $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
+            $catObj                  = $alumniCategoriesHandler->get($_REQUEST['cid']);
+            $cat_name                = $catObj->getVar('title');
         }
 
         $obj->setVar('cid', $_REQUEST['cid']);
@@ -251,18 +251,18 @@ switch ($op) {
             }
         }
 
-        if ($alumni_listing_Handler->insert($obj)) {
+        if ($alumniListingHandler->insert($obj)) {
             $xoops->redirect('alumni.php', 3, constant($admin_lang . '_FORMOK'));
 
             //notifications
-            if (0 == $lid  && $xoops->isActiveModule('notifications')) {
-                $notification_handler = Notifications::getInstance()->getHandlerNotification();
-                $tags                 = array();
-                $tags['MODULE_NAME']  = 'alumni';
-                $tags['ITEM_NAME']    = $request->asStr('lname', '');
-                $tags['ITEM_URL']     = XOOPS_URL . "/modules/{$moduleDirName}/listing.php?lid=" . $new_id;
-                $notification_handler->triggerEvent('global', 0, 'newlisting', $tags);
-                $notification_handler->triggerEvent('item', $new_id, 'newlisting', $tags);
+            if (0 == $lid && $xoops->isActiveModule('notifications')) {
+                $notificationHandler = Notifications::getInstance()->getHandlerNotification();
+                $tags                = array();
+                $tags['MODULE_NAME'] = 'alumni';
+                $tags['ITEM_NAME']   = $request->asStr('lname', '');
+                $tags['ITEM_URL']    = XOOPS_URL . "/modules/{$moduleDirName}/listing.php?lid=" . $new_id;
+                $notificationHandler->triggerEvent('global', 0, 'newlisting', $tags);
+                $notificationHandler->triggerEvent('item', $new_id, 'newlisting', $tags);
             }
         }
 
@@ -277,19 +277,19 @@ switch ($op) {
         $indexAdmin->addItemButton(constant($admin_lang . '_ADD_LINK'), 'alumni.php?op=new_listing', 'add');
         $indexAdmin->addItemButton(constant($admin_lang . '_LISTINGLIST'), 'alumni.php', 'list');
         echo $indexAdmin->renderButton('left', '');
-        $obj  = $alumni_listing_Handler->get($_REQUEST['lid']);
+        $obj  = $alumniListingHandler->get($_REQUEST['lid']);
         $form = $obj->getAdminForm();
         $form->display();
         break;
 
     case 'delete_listing':
         $xoops->header();
-        $obj = $alumni_listing_Handler->get($_REQUEST['lid']);
+        $obj = $alumniListingHandler->get($_REQUEST['lid']);
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 $xoops->redirect('alumni.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ($alumni_listing_Handler->delete($obj)) {
+            if ($alumniListingHandler->delete($obj)) {
                 $xoops->redirect('alumni.php', 3, constant($admin_lang . '_FORMDELOK'));
             } else {
                 echo $obj->getHtmlErrors();
@@ -302,9 +302,9 @@ switch ($op) {
     case 'update_status':
         $lid = $request->asInt('lid', 0);
         if ($lid > 0) {
-            $obj = $alumni_listing_Handler->get($lid);
+            $obj = $alumniListingHandler->get($lid);
             $obj->setVar('valid', 1);
-            if ($alumni_listing_Handler->insert($obj)) {
+            if ($alumniListingHandler->insert($obj)) {
                 $xoops->redirect('alumni.php?op=list_moderated', 3, constant($admin_lang . '_LISTING_VALIDATED'));
             }
             echo $obj->getHtmlErrors();
@@ -312,7 +312,7 @@ switch ($op) {
         break;
 
     case 'list_moderated':
-        $xoops->header('alumni_admin_moderated.html');
+        $xoops->header('alumni_admin_moderated.tpl');
         $indexAdmin = new Xoops\Module\Admin();
         $indexAdmin->renderNavigation('alumni.php');
 
@@ -325,7 +325,7 @@ switch ($op) {
         $xoTheme->addStylesheet(ALUMNI_URL . '/media/jquery/css/theme.blue.css');
         $xoTheme->addStylesheet(ALUMNI_URL . '/media/jquery/tablesorter-master/addons/pager/jquery.tablesorter.pager.css');
 
-        $listing_Handler   = $xoops->getModuleHandler('alumni_listing', 'alumni');
+        $listingHandler    = $xoops->getModuleHandler('alumni_listing', 'alumni');
         $alumni            = Alumni::getInstance();
         $module_id         = $xoops->module->getVar('mid');
         $groups            = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -333,8 +333,8 @@ switch ($op) {
         $moderate_criteria = new CriteriaCompo();
         $moderate_criteria->add(new Criteria('valid', 0, '='));
         $moderate_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-        $listing_count = $listing_Handler->getCount($moderate_criteria);
-        $listing_arr   = $listing_Handler->getall($moderate_criteria);
+        $listing_count = $listingHandler->getCount($moderate_criteria);
+        $listing_arr   = $listingHandler->getAll($moderate_criteria);
 
         // Assign Template variables
         $xoops->tpl()->assign('listing_count', $listing_count);
@@ -376,7 +376,7 @@ switch ($op) {
                 $newcount  = $xoops->getModuleConfig('' . $moduleDirName . '_countday');
                 $startdate = (time() - (86400 * $newcount));
                 if ($startdate < $date) {
-                    $newitem        = "<img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/images/newred.gif\" />";
+                    $newitem        = "<img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/newred.gif\" />";
                     $listing['new'] = $newitem;
                 }
                 if ($xoopsUser) {

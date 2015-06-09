@@ -20,15 +20,26 @@
  */
 
 use Xoops\Module\Plugin\PluginAbstract;
-use Xmf\Metagen;
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/common.php");
 
-class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface {
-    public function search($queries, $andor, $limit, $offset, $uid) {
+/**
+ * Class AlumniSearchPlugin
+ */
+class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
+{
+    /**
+     * @param string[] $queries
+     * @param string   $andor
+     * @param int      $limit
+     * @param int      $offset
+     * @param type     $uid
+     * @return array
+     */
+    public function search($queries, $andor, $limit, $offset, $uid)
+    {
         global $by_cat, $xoops, $query;
-
 
         if (isset($_REQUEST['by_cat'])) {
             $by_cat = $_REQUEST['by_cat'];
@@ -41,11 +52,11 @@ class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
         $action = $_REQUEST['action'];
         //	$query = $request->asStr('query');
         //	$queries = array();
-        $module_id       = $xoops->module->getVar('mid');
-        $listing_Handler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-        $groups          = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-        $alumni_ids      = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
-        $criteria        = new CriteriaCompo();
+        $module_id      = $xoops->module->getVar('mid');
+        $listingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+        $groups         = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $alumni_ids     = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
+        $criteria       = new CriteriaCompo();
         $criteria->setStart($offset);
         $criteria->setLimit($limit);
         $criteria->setSort('date');
@@ -53,7 +64,7 @@ class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
         $criteria->add(new Criteria('valid', 1, '='));
         $criteria->add(new Criteria('date', time(), '<='));
         $criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-        if ($uid != 0) {
+        if (0 != $uid) {
             $criteria->add(new Criteria('usid', $uid, '='));
         }
 
@@ -65,20 +76,18 @@ class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
         $queries = array($query);
         //	$count = count($queries);
 
-
         $queries = implode('+', $queries);
-        $count   = count($queries);
+        //        $count   = count($queries);
         //	$i=1;
         //     $queries = clone($criteria);
         //	for ($i = 0; $i < $count; $i ++) {
 
-
         //if ($queries) {
+        $queriesCount     = count($queries);
         $criteriaKeywords = new CriteriaCompo();
-        for ($x = 0; $x < count($queries); $x++) {
+        for ($x = 0; $x < $queriesCount; ++$x) {
 
             //foreach ($queries as $key => $value) {
-
 
             $thisSearchTerm  = count($queries) > 0 ? $queries[$x] : '';
             $criteriaKeyword = new CriteriaCompo();
@@ -97,15 +106,15 @@ class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
         unset($criteriaKeywords);
 
         //	}
-        $numrows     = $listing_Handler->getCount();
-        $this_search = $listing_Handler->getObjects($criteria, true);
+        $numrows     = $listingHandler->getCount();
+        $this_search = $listingHandler->getObjects($criteria, true);
 
         $ret = array();
         $k   = 0;
 
         foreach (array_keys($this_search) as $i) {
 
-            $ret[$k]['image'] = 'images/cat/default.gif';
+            $ret[$k]['image'] = 'assets/images/cat/default.gif';
             $ret[$k]['link']  = 'listing.php?lid=' . $this_search[$i]->getVar('lid') . '';
             $ret[$k]['title'] = $this_search[$i]->getVar('name') . ' ' . $this_search[$i]->getVar('mname') . ' ' . $this_search[$i]->getVar('lname') . '   ---   ' . $this_search[$i]->getVar('school') . '
 		---   ' . $this_search[$i]->getVar('year');

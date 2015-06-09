@@ -64,8 +64,8 @@ if ($action == 'results') {
     }
 }
 
-$gperm_handler     = $xoops->getHandlerGroupperm();
-$available_modules = $gperm_handler->getItemIds('module_read', $xoops->getUserGroups());
+$groupPermHandler  = $xoops->getHandlerGroupperm();
+$available_modules = $groupPermHandler->getItemIds('module_read', $xoops->getUserGroups());
 $available_plugins = \Xoops\Module\Plugin::getPlugins('search');
 
 if ($action == 'search') {
@@ -113,11 +113,11 @@ if ($action != 'showallbyuser') {
 
 switch ($action) {
     case 'results':
-        $module_handler = $xoops->getHandlerModule();
-        $criteria       = new CriteriaCompo();
+        $moduleHandler = $xoops->getHandlerModule();
+        $criteria      = new CriteriaCompo();
         $criteria->add(new Criteria('dirname', "('" . implode("','", array_keys($available_plugins)) . "')", 'IN'));
         //       $criteria->add(new Criteria('mid', $xmid));
-        $modules = $module_handler->getObjectsArray($criteria, true);
+        $modules = $moduleHandler->getObjectsArray($criteria, true);
         if (empty($mids) || !is_array($mids)) {
             unset($mids);
             $mids = array_keys($modules);
@@ -142,7 +142,6 @@ switch ($action) {
             $result_count2 = count($results2);
             $mid           = $module->getVar('mid');
 
-
             if ($count > 0) {
                 $xoops->tpl()->assign('sr_showing', sprintf(constant($main_lang . '_SHOWING'), $start + 1, $start + $count));
                 $xoops->tpl()->assign('showing_of', AlumniLocale::OF . "&nbsp;$result_count2");
@@ -150,10 +149,10 @@ switch ($action) {
             $xoops->tpl()->assign('in_category', '');
             $xoops->tpl()->assign('cat_name', '');
             if (!empty($by_cat)) {
-                $cat_name                  = '';
-                $alumni_categories_Handler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-                $catObj                    = $alumni_categories_Handler->get($by_cat);
-                $cat_name                  = $catObj->getVar('title');
+                $cat_name                = '';
+                $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
+                $catObj                  = $alumniCategoriesHandler->get($by_cat);
+                $cat_name                = $catObj->getVar('title');
                 $xoops->tpl()->assign('in_category', constant($main_lang . '_INCATEGORY'));
                 $xoops->tpl()->assign('cat_name', "<b> :  &nbsp;&nbsp; $cat_name</b>");
             }
@@ -212,8 +211,8 @@ switch ($action) {
         $xoops->tpl()->assign('ignored_words', sprintf(_MD_SEARCH_IGNOREDWORDS, $search->getConfig('keyword_min')));
         $xoops->tpl()->assign('ignored_queries', $ignored_queries);
 
-        $module_handler = $xoops->getHandlerModule();
-        $module         = $xoops->getModuleById($mid);
+        $moduleHandler = $xoops->getHandlerModule();
+        $module        = $xoops->getModuleById($mid);
         /* @var $plugin SearchPluginInterface */
         $plugin   = \Xoops\Module\Plugin::getPlugin($module->getVar('dirname'), 'search');
         $results  = $plugin->search($queries, $andor, 20, $start, $uid);
@@ -235,14 +234,13 @@ switch ($action) {
             $xoops->tpl()->assign('showing_of', constant($main_lang . '_OF') . "&nbsp;$count2");
 
             if (!empty($by_cat)) {
-                $cat_name                  = '';
-                $alumni_categories_Handler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-                $catObj                    = $alumni_categories_Handler->get($by_cat);
-                $cat_name                  = $catObj->getVar('title');
+                $cat_name                = '';
+                $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
+                $catObj                  = $alumniCategoriesHandler->get($by_cat);
+                $cat_name                = $catObj->getVar('title');
                 $xoops->tpl()->assign('in_category', constant($main_lang . '_INCATEGORY'));
                 $xoops->tpl()->assign('cat_name', "<b> :  &nbsp;&nbsp; $cat_name</b>");
             }
-
 
             $res = array();
             for ($i = 0; $i < $count; ++$i) {
