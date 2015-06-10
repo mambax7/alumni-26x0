@@ -21,7 +21,7 @@ $op    = Request::getString('op', 'alumni_view');
 $xoops->header();
 $admin_page = new Xoops\Module\Admin();
 $admin_page->displayNavigation('groupperm.php');
-$module_id               = $xoops->module->getVar('mid');
+$moduleId                = $xoops->module->getVar('mid');
 $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
 $cats                    = $alumniCategoriesHandler->getAll();
 $cat_rows                = $alumniCategoriesHandler->getCount();
@@ -41,7 +41,7 @@ if ('0' == $cat_rows) {
             $perm_name     = 'alumni_view';
             $restriction   = '';
             $anonymous     = true;
-            $form          = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/groupperm.php', $anonymous);
+            $form          = new XoopsGroupPermForm($title_of_form, $moduleId, $perm_name, $perm_desc, 'admin/groupperm.php', $anonymous);
             break;
 
         case 'alumni_submit':
@@ -50,7 +50,7 @@ if ('0' == $cat_rows) {
             $perm_name     = 'alumni_submit';
             $restriction   = '';
             $anonymous     = false;
-            $form          = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/groupperm.php', $anonymous);
+            $form          = new XoopsGroupPermForm($title_of_form, $moduleId, $perm_name, $perm_desc, 'admin/groupperm.php', $anonymous);
             break;
 
         case 'alumni_premium':
@@ -58,17 +58,17 @@ if ('0' == $cat_rows) {
             $perm_name     = 'alumni_premium';
             $restriction   = '';
             $anonymous     = false;
-            $form          = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/groupperm.php', $anonymous);
+            $form          = new XoopsGroupPermForm($title_of_form, $moduleId, $perm_name, $perm_desc, 'admin/groupperm.php', $anonymous);
             break;
     }
 
-    $opform    = new XoopsSimpleForm('', 'opform', 'groupperm.php', 'get');
-    $op_select = new XoopsFormSelect('', 'op', $op);
-    $op_select->setExtra('onchange="document.forms.opform.submit()"');
-    $op_select->addOption('alumni_view', constant($modinfoLang . '_VIEWFORM'));
-    $op_select->addOption('alumni_submit', constant($modinfoLang . '_SUBMITFORM'));
-    $op_select->addOption('alumni_premium', constant($modinfoLang . '_PREMIUM'));
-    $opform->addElement($op_select);
+    $opform   = new XoopsSimpleForm('', 'opform', 'groupperm.php', 'get');
+    $opSelect = new XoopsFormSelect('', 'op', $op);
+    $opSelect->setExtra('onchange="document.forms.opform.submit()"');
+    $opSelect->addOption('alumni_view', constant($modinfoLang . '_VIEWFORM'));
+    $opSelect->addOption('alumni_submit', constant($modinfoLang . '_SUBMITFORM'));
+    $opSelect->addOption('alumni_premium', constant($modinfoLang . '_PREMIUM'));
+    $opform->addElement($opSelect);
     $opform->display();
 
     foreach (array_keys($cats) as $i) {

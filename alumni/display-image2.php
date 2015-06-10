@@ -15,13 +15,13 @@ global $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsDB, $xoops_footer, $xoopsLog
 $currenttheme = $xoopsConfig['theme_set'];
 
 $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-$listing_criteria     = new CriteriaCompo();
-$listing_criteria->add(new Criteria('lid', $lid, '='));
-$numrows     = $alumniListingHandler->getCount($listing_criteria);
-$listing_arr = $alumniListingHandler->get($lid);
+$listingCriteria      = new CriteriaCompo();
+$listingCriteria->add(new Criteria('lid', $lid, '='));
+$numrows      = $alumniListingHandler->getCount($listingCriteria);
+$listingArray = $alumniListingHandler->get($lid);
 
 if ($numrows > '0') {
-    $photo2 = $listing_arr->getvar('photo2');
+    $photo2 = $listingArray->getvar('photo2');
     echo '<center><br /><br /><img src="photos/now_photo/$photo2" border=0></center>';
 }
 

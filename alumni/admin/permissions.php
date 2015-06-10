@@ -21,6 +21,8 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include __DIR__ . '/admin_header.php';
 // Get main instance
 $system = System::getInstance();
@@ -72,17 +74,17 @@ if ('0' == $cat_rows) {
             break;
     }
 
-    $opform    = new Xoops\Form\SimpleForm('', 'opform', 'permissions.php', 'get');
-    $op_select = new Xoops\Form\Select('', 'op', $op);
-    $op_select->setExtra('onchange="document.forms.opform.submit()"');
-    $op_select->addOption('alumni_view', AlumniLocale::PERMISSIONS_VIEW);
-    $op_select->addOption('alumni_submit', AlumniLocale::PERMISSIONS_SUBMIT);
-    $op_select->addOption('alumni_premium', AlumniLocale::PERMISSIONS_PREMIUM);
-    $opform->addElement($op_select);
+    $opform   = new Xoops\Form\SimpleForm('', 'opform', 'permissions.php', 'get');
+    $opSelect = new Xoops\Form\Select('', 'op', $op);
+    $opSelect->setExtra('onchange="document.forms.opform.submit()"');
+    $opSelect->addOption('alumni_view', AlumniLocale::PERMISSIONS_VIEW);
+    $opSelect->addOption('alumni_submit', AlumniLocale::PERMISSIONS_SUBMIT);
+    $opSelect->addOption('alumni_premium', AlumniLocale::PERMISSIONS_PREMIUM);
+    $opform->addElement($opSelect);
     $opform->display();
 
-    $module_id = $xoops->module->getVar('mid');
-    $form      = new Xoops\Form\GroupPermissionForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php', $anonymous);
+    $moduleId = $xoops->module->getVar('mid');
+    $form     = new Xoops\Form\GroupPermissionForm($title_of_form, $moduleId, $perm_name, $perm_desc, 'admin/permissions.php', $anonymous);
 
     foreach (array_keys($cats) as $i) {
         $cid     = $cats[$i]->getVar('cid');

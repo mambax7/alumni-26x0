@@ -30,19 +30,28 @@ $queries = array();
 $query   = Request::getString('query', '');
 $start   = Request::getInt('start', '0');
 
+/**
+ * @param $queries
+ * @param $andor
+ * @param $limit
+ * @param $start
+ * @param $userid
+ * @param $by_cat
+ * @return array
+ */
 function alumni_search($queries, $andor, $limit, $start, $userid, $by_cat)
 {
     global $by_cat, $xoops, $query;
 
     $alumni         = Alumni::getInstance();
-    $module_id      = $xoops->module->getVar('mid');
+    $moduleId       = $xoops->module->getVar('mid');
     $listingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
     $groups         = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $alumni_ids     = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
+    $alumniIds      = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
     $criteria       = new CriteriaCompo();
     $criteria->add(new Criteria('valid', 1, '='));
     $criteria->add(new Criteria('date', time(), '<='));
-    $criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
+    $criteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
     if ($userid != 0) {
         $criteria->add(new Criteria('usid', $userid, '='));
     }

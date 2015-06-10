@@ -50,12 +50,12 @@ class AlumniSearchForm extends XoopsThemeForm
 
         // create form elements
         $this->addElement(new XoopsFormText(XoopsLocale::KEYWORDS, 'query', 30, 255, htmlspecialchars(stripslashes(implode(' ', $queries)), ENT_QUOTES)), true);
-        $type_select = new XoopsFormSelect(XoopsLocale::TYPE, 'andor', $andor);
-        $type_select->addOptionArray(array(
-                                         'AND'   => XoopsLocale::ALL_AND,
-                                         'OR'    => XoopsLocale::ANY_OR,
-                                         'exact' => XoopsLocale::EXACT_MATCH));
-        $this->addElement($type_select);
+        $typeSelect = new XoopsFormSelect(XoopsLocale::TYPE, 'andor', $andor);
+        $typeSelect->addOptionArray(array(
+                                        'AND'   => XoopsLocale::ALL_AND,
+                                        'OR'    => XoopsLocale::ANY_OR,
+                                        'exact' => XoopsLocale::EXACT_MATCH));
+        $this->addElement($typeSelect);
 
         //   if (isset($_REQUEST['by_cat'])) {
         //      $by_cat = $_REQUEST['by_cat'];
@@ -73,38 +73,38 @@ class AlumniSearchForm extends XoopsThemeForm
         $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
         $search                  = Search::getInstance();
         //      $xoops = $helper->xoops();
-        $module_id = $xoops->module->getVar('mid');
+        $moduleId = $xoops->module->getVar('mid');
 
         // get permitted id
-        $groups     = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-        $alumni_ids = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
-        $criteria   = new CriteriaCompo();
-        $criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
+        $groups    = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $alumniIds = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
+        $criteria  = new CriteriaCompo();
+        $criteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
         $criteria->setOrder($xoops->getModuleConfig('alumni_csortorder'));
 
-        $category_arr = $alumniCategoriesHandler->getAll($criteria);
+        $categoryArray = $alumniCategoriesHandler->getAll($criteria);
 
-        foreach (array_keys($category_arr) as $i) {
-            $cid   = $category_arr[$i]->getVar('cid');
-            $pid   = $category_arr[$i]->getVar('pid');
-            $title = $category_arr[$i]->getVar('title');
+        foreach (array_keys($categoryArray) as $i) {
+            $cid   = $categoryArray[$i]->getVar('cid');
+            $pid   = $categoryArray[$i]->getVar('pid');
+            $title = $categoryArray[$i]->getVar('title');
 
-            //$cat_select = new XoopsFormSelect(_ALUMNI_CATEGORIES, 'title', $title);
-            //$cat_select->addOption('title', $title);
+            //$catSelect = new XoopsFormSelect(_ALUMNI_CATEGORIES, 'title', $title);
+            //$catSelect->addOption('title', $title);
         }
 
-        //           $cattree = new AlumniObjectTree($category_arr, 'cid', 'pid');
+        //           $cattree = new AlumniObjectTree($categoryArray, 'cid', 'pid');
 
         //       $this->addElement(new XoopsFormLabel(_ALUMNI_CAT, $cattree->alumni_makeSelBox('bycat', 'title', '-', $by_cat, true)));
         //       $this->addElement(new XoopsFormHidden('bycat', $bycat));
 
-        $categories      = $alumni->getCategoryHandler()->getCategoriesForSearch();
-        $category_select = new XoopsFormSelect(AlumniLocale::L_ALUMNI_CATEGORIES, 'by_cat', $by_cat);
+        $categories     = $alumni->getCategoryHandler()->getCategoriesForSearch();
+        $categorySelect = new XoopsFormSelect(AlumniLocale::L_ALUMNI_CATEGORIES, 'by_cat', $by_cat);
         foreach ($categories as $cid => $title) {
-            $category_select->addOption('0', XoopsLocale::ALL);
-            $category_select->addOptionArray(array($cid => $title));
+            $categorySelect->addOption('0', XoopsLocale::ALL);
+            $categorySelect->addOptionArray(array($cid => $title));
         }
-        $this->addElement($category_select);
+        $this->addElement($categorySelect);
 
         if (!empty($mids)) {
             $mods_checkbox = new XoopsFormCheckBox(XoopsLocale::SEARCH_IN, 'mids[]', $mids);

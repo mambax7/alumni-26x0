@@ -91,42 +91,42 @@ class alumni_categories extends XoopsObject
         $form->addElement(new Xoops\Form\Text(constant($adminLang . '_CATEGORY_TITLE'), 'title', 50, 255, $this->getVar('title')), true);
         //$form->addElement(new XoopsFormTextArea(_AM_TEST1_CATEGORY_DESC, 'category_desc', $this->getVar('category_desc'), 4, 47), true);
 
-        $img                         = $this->getVar('img') ?: 'default.gif';
-        $uploadirectory_category_img = "/modules/{$moduleDirName}/assets/images/cat";
-        $imgtray_category_img        = new Xoops\Form\ElementTray(constant($adminLang . '_IMGCAT'), '<br />');
-        $imgpath_category_img        = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadirectory_category_img);
-        $imageselect_category_img    = new Xoops\Form\Select($imgpath_category_img, 'img', $img);
-        $image_array_category_img    = XoopsLists:: getImgListAsArray(XOOPS_ROOT_PATH . $uploadirectory_category_img);
+        $img                          = $this->getVar('img') ?: 'default.gif';
+        $uploadDirectoryCategoryImage = "/modules/{$moduleDirName}/assets/images/cat";
+        $imageTrayCategoryImage       = new Xoops\Form\ElementTray(constant($adminLang . '_IMGCAT'), '<br />');
+        $imagePathCategoryImage       = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadDirectoryCategoryImage);
+        $imageSelectCategoryImage     = new Xoops\Form\Select($imagePathCategoryImage, 'img', $img);
+        $image_array_category_img     = XoopsLists:: getImgListAsArray(XOOPS_ROOT_PATH . $uploadDirectoryCategoryImage);
         foreach ($image_array_category_img as $image_category_img) {
-            $imageselect_category_img->addOption("$image_category_img", $image_category_img);
+            $imageSelectCategoryImage->addOption("$image_category_img", $image_category_img);
         }
-        $imageselect_category_img->setExtra("onchange='showImgSelected(\"image_category_img\", \"img\", \"" . $uploadirectory_category_img . "\", \"\", \"" . XOOPS_URL . "\")'");
-        $imgtray_category_img->addElement($imageselect_category_img, false);
-        $imgtray_category_img->addElement(new Xoops\Form\Label('', '<br /><img src=\'' . XOOPS_URL . '/' . $uploadirectory_category_img . '/' . $img . "' name='image_category_img' id='image_category_img' alt='' />"));
+        $imageSelectCategoryImage->setExtra("onchange='showImgSelected(\"image_category_img\", \"img\", \"" . $uploadDirectoryCategoryImage . "\", \"\", \"" . XOOPS_URL . "\")'");
+        $imageTrayCategoryImage->addElement($imageSelectCategoryImage, false);
+        $imageTrayCategoryImage->addElement(new Xoops\Form\Label('', '<br /><img src=\'' . XOOPS_URL . '/' . $uploadDirectoryCategoryImage . '/' . $img . "' name='image_category_img' id='image_category_img' alt='' />"));
 
-        $fileseltray_category_img = new Xoops\Form\ElementTray('', '<br />');
-        $fileseltray_category_img->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'img', $xoops->getModuleConfig('alumni_photomax')), false);
-        $fileseltray_category_img->addElement(new Xoops\Form\Label(''), false);
-        $imgtray_category_img->addElement($fileseltray_category_img);
-        $form->addElement($imgtray_category_img);
+        $fileSelectTrayCategoryImage = new Xoops\Form\ElementTray('', '<br />');
+        $fileSelectTrayCategoryImage->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'img', $xoops->getModuleConfig('alumni_photomax')), false);
+        $fileSelectTrayCategoryImage->addElement(new Xoops\Form\Label(''), false);
+        $imageTrayCategoryImage->addElement($fileSelectTrayCategoryImage);
+        $form->addElement($imageTrayCategoryImage);
 
         $form->addElement(new Xoops\Form\Text(constant($adminLang . '_ORDER'), 'ordre', 50, 255, $this->getVar('ordre')), false);
         $form->addElement(new Xoops\Form\Label(constant($adminLang . '_IFSCHOOL'), ''));
 
         $photo_old            = $this->getVar('scphoto') ?: '';
-        $uploadirectory_photo = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/school_photos";
-        $imgtray_photo        = new Xoops\Form\ElementTray(constant($adminLang . '_SCPHOTO'), '<br />');
-        $imgpath_photo        = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadirectory_photo);
-        $fileseltray_photo    = new Xoops\Form\ElementTray('', '<br />');
-        $fileseltray_photo->addElement(new XoopsFormFile(constant($adminLang . '_FORMUPLOAD'), 'scphoto', $xoops->getModuleConfig('alumni_photomax')), false);
+        $uploadDirectoryPhoto = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/school_photos";
+        $imageTrayPhoto       = new Xoops\Form\ElementTray(constant($adminLang . '_SCPHOTO'), '<br />');
+        $imagePathPhoto       = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadDirectoryPhoto);
+        $fileSelectTrayPhoto  = new Xoops\Form\ElementTray('', '<br />');
+        $fileSelectTrayPhoto->addElement(new XoopsFormFile(constant($adminLang . '_FORMUPLOAD'), 'scphoto', $xoops->getModuleConfig('alumni_photomax')), false);
         if ($photo_old) {
-            $fileseltray_photo->addElement(new Xoops\Form\Label(constant($adminLang . '_ACTUALPICT'), '<a href="../photos/school_photos/' . $photo_old . '">' . $photo_old . '</a>', false));
-            $imgtray_checkbox = new Xoops\Form\CheckBox('', 'del_photo', 0);
-            $imgtray_checkbox->addOption(1, constant($adminLang . '_DELPICT'));
-            $fileseltray_photo->addElement($imgtray_checkbox);
+            $fileSelectTrayPhoto->addElement(new Xoops\Form\Label(constant($adminLang . '_ACTUALPICT'), '<a href="../photos/school_photos/' . $photo_old . '">' . $photo_old . '</a>', false));
+            $imageTrayCheckbox = new Xoops\Form\CheckBox('', 'del_photo', 0);
+            $imageTrayCheckbox->addOption(1, constant($adminLang . '_DELPICT'));
+            $fileSelectTrayPhoto->addElement($imageTrayCheckbox);
         }
-        $imgtray_photo->addElement($fileseltray_photo);
-        $form->addElement($imgtray_photo);
+        $imageTrayPhoto->addElement($fileSelectTrayPhoto);
+        $form->addElement($imageTrayPhoto);
         $form->addElement(new Xoops\Form\Hidden('photo_old', $photo_old));
         $form->addElement(new Xoops\Form\Text(constant($adminLang . '_SCADDRESS'), 'scaddress', 50, 255, $this->getVar('scaddress')), false);
         $form->addElement(new Xoops\Form\Text(constant($adminLang . '_SCADDRESS2'), 'scaddress2', 50, 255, $this->getVar('scaddress2')), false);
@@ -205,16 +205,16 @@ class AlumniAlumni_categoriesHandler extends XoopsPersistableObjectHandler
     public function &getCategoriesForSearch()
     {
         global $theresult, $xoops, $alumni;
-        $xoops     = Xoops::getInstance();
-        $module_id = $alumni->getModule()->mid();
-        $ret       = array();
-        $criteria  = new CriteriaCompo();
+        $xoops    = Xoops::getInstance();
+        $moduleId = $alumni->getModule()->mid();
+        $ret      = array();
+        $criteria = new CriteriaCompo();
         $criteria->setSort('cid');
         $criteria->setOrder('ASC');
         if (!$xoops->isAdmin()) {
             $groupPermHandler     = $xoops->gethandler('groupperm');
             $groups               = is_object($xoops->isUser()) ? $$xoops->isUser()->getGroups() : XOOPS_GROUP_ANONYMOUS;
-            $allowedCategoriesIds = $groupPermHandler->getItemIds('alumni_view', $groups, $module_id);
+            $allowedCategoriesIds = $groupPermHandler->getItemIds('alumni_view', $groups, $moduleId);
             if (count($allowedCategoriesIds) > 0) {
                 $criteria->add(new Criteria('cid', '(' . implode(',', $allowedCategoriesIds) . ')', 'IN'));
             } else {

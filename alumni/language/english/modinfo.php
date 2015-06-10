@@ -2,8 +2,8 @@
 // Module Info
 
 $moduleDirName = basename(dirname(dirname(__DIR__)));
-$modinfoLang  = '_MI_' . strtoupper($moduleDirName);
-$adminLang    = '_AM_' . strtoupper($moduleDirName);
+$modinfoLang   = '_MI_' . strtoupper($moduleDirName);
+$adminLang     = '_AM_' . strtoupper($moduleDirName);
 
 // The name of this module
 define($modinfoLang . '_NAME', 'Alumni');
@@ -129,10 +129,10 @@ define($modinfoLang . '_INDEX_CODE', 'Extra Index Page Code');
 define($modinfoLang . '_INDEX_CODE_DESC', 'Put your adsense or other code here');
 define($modinfoLang . '_USE_INDEX_CODE', 'Use Extra Index Page Code');
 define($modinfoLang . '_USE_INDEX_CODE_DESC', 'Put additional code between listings<br />on the index page<br />and the categories page.<br /><br />Banners, Adsense code, etc...');
-define($modinfoLang . '_INDEX_CODE_PLACE', 'Code will show in this place in the list ');
-define($modinfoLang . '_INDEX_CODE_PLACE_DESC', 'Ex. If you choose 4 there will be 3 listings before this code.<br /> Code will be displayed in the 4th slot.');
-define($modinfoLang . '_USE_BANNER', 'Use Xoops Banner Code');
-define($modinfoLang . '_USE_BANNER_DESC', 'Will allow you to insert xoopsbanners in between listings.<br />If you choose Yes<br />Do Not insert any code below');
+define($modinfoLang . '_indexCodePlace', 'Code will show in this place in the list ');
+define($modinfoLang . '_indexCodePlace_DESC', 'Ex. If you choose 4 there will be 3 listings before this code.<br /> Code will be displayed in the 4th slot.');
+define($modinfoLang . '_useBanner', 'Use Xoops Banner Code');
+define($modinfoLang . '_useBanner_DESC', 'Will allow you to insert xoopsbanners in between listings.<br />If you choose Yes<br />Do Not insert any code below');
 define($modinfoLang . '_OFFER_SEARCH', 'Offer search within listings');
 define($modinfoLang . '_OFFER_SEARCH_DESC', 'Select yes to provide a search box');
 

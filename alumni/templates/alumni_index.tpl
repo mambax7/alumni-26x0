@@ -157,9 +157,9 @@
 
 
 <{foreach from=$items item=item name=items}>
-    <{if $use_extra_code == 1}>
-        <{if ($smarty.foreach.items.index % $index_code_place == 0) && !($smarty.foreach.items.first)}>
-            <{if $use_banner == 1}>
+    <{if $useExtraCode == 1}>
+        <{if ($smarty.foreach.items.index % $indexCodePlace == 0) && !($smarty.foreach.items.first)}>
+            <{if $useBanner == 1}>
                 <table>
                     <tr>
                         <td align="center"><br/><{$index_banner}></td>
@@ -168,7 +168,7 @@
             <{else}>
                 <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
                     <tr>
-                        <td align="center"><{$index_extra_code}></td>
+                        <td align="center"><{$indexExtraCode}></td>
                     </tr>
                 </table>
             <{/if}><{/if}><{/if}>

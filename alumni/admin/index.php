@@ -29,10 +29,10 @@ $criteria->add(new Criteria('valid', 1));
 $listing_valid = $listingHandler->getCount($criteria);
 //	unset($criteria);
 
-$moderate_criteria = new CriteriaCompo();
-$moderate_criteria->add(new Criteria('valid', 0, '='));
-$moderate_count = $listingHandler->getCount($moderate_criteria);
-//	unset($moderate_criteria);
+$moderateCriteria = new CriteriaCompo();
+$moderateCriteria->add(new Criteria('valid', 0, '='));
+$moderate_count = $listingHandler->getCount($moderateCriteria);
+//	unset($moderateCriteria);
 
 $indexAdmin = new Xoops\Module\Admin();
 $indexAdmin->displayNavigation('index.php');

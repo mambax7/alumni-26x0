@@ -44,6 +44,10 @@ function alumni_ShowImg2()
 }
 
 //Reusable Link Sorting Functions
+/**
+ * @param $orderby
+ * @return string
+ */
 function alumni_convertorderbyin($orderby)
 {
     switch (trim($orderby)) {
@@ -89,6 +93,10 @@ function alumni_convertorderbyin($orderby)
     return $orderby;
 }
 
+/**
+ * @param $orderby
+ * @return string
+ */
 function alumni_convertorderbytrans($orderby)
 {
     global $mainLang;
@@ -133,6 +141,10 @@ function alumni_convertorderbytrans($orderby)
     return $orderbyTrans;
 }
 
+/**
+ * @param $orderby
+ * @return string
+ */
 function alumni_convertorderbyout($orderby)
 {
     if ($orderby == 'lname ASC') {
@@ -175,23 +187,27 @@ function alumni_convertorderbyout($orderby)
     return $orderby;
 }
 
+/**
+ * @param $cid
+ * @return string
+ */
 function alumni_newlinkgraphic($cid)
 {
     global $xoops, $moduleDirName;
-    $alumni    = Alumni::getInstance();
-    $module_id = $xoops->module->getVar('mid');
+    $alumni   = Alumni::getInstance();
+    $moduleId = $xoops->module->getVar('mid');
     // get permitted id
     $groups               = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $alumni_ids           = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
+    $alumniIds            = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
     $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
     $criteria             = new CriteriaCompo();
     $criteria->add(new Criteria('cid', $cid, '='));
     $criteria->add(new Criteria('valid', 1, '='));
-    $criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-    $numrows     = $alumniListingHandler->getCount($criteria);
-    $listing_arr = $alumniListingHandler->getAll($criteria);
-    foreach (array_keys($listing_arr) as $i) {
-        $date      = $listing_arr[$i]->getVar('date');
+    $criteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
+    $numrows      = $alumniListingHandler->getCount($criteria);
+    $listingArray = $alumniListingHandler->getAll($criteria);
+    foreach (array_keys($listingArray) as $i) {
+        $date      = $listingArray[$i]->getVar('date');
         $count     = 1;
         $new       = '';
         $startdate = (time() - (86400 * $count));

@@ -39,54 +39,54 @@ switch ($op) {
         echo $indexAdmin->displayNavigation('alumni_categories.php');
         $indexAdmin->addItemButton(AlumniLocale::A_ADD_CAT, 'alumni_categories.php?op=new_category', 'add');
         echo $indexAdmin->renderButton('left', '');
-        $limit        = Request::getInt('limit', 10, 'POST');
-        $start        = Request::getInt('start', 0, 'POST');
-        $order        = $xoops->getModuleConfig('alumni_csortorder');
-        $cat_criteria = new CriteriaCompo();
-        $cat_criteria->setSort('cid');
-        $cat_criteria->setOrder($order);
+        $limit       = Request::getInt('limit', 10, 'POST');
+        $start       = Request::getInt('start', 0, 'POST');
+        $order       = $xoops->getModuleConfig('alumni_csortorder');
+        $catCriteria = new CriteriaCompo();
+        $catCriteria->setSort('cid');
+        $catCriteria->setOrder($order);
         $numrows = $alumniCategoriesHandler->getCount();
 
-        $cat_criteria->setStart($start);
-        $cat_criteria->setLimit($limit);
+        $catCriteria->setStart($start);
+        $catCriteria->setLimit($limit);
 
-        $category_arr = $alumniCategoriesHandler->getAll($cat_criteria);
+        $categoryArray = $alumniCategoriesHandler->getAll($catCriteria);
 
         //Function that allows display child categories
         /**
          * @param int    $cid
-         * @param        $category_arr
+         * @param        $categoryArray
          * @param string $prefix
          * @param string $order
          * @param        $class
          */
-        function alumniCategoryDisplayChildren($cid = 0, $category_arr, $prefix = '', $order = '', &$class)
+        function alumniCategoryDisplayChildren($cid = 0, $categoryArray, $prefix = '', $order = '', &$class)
         {
             $xoops = Xoops::getInstance();
 
             //  $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
             $moduleDirName = basename(dirname(__DIR__));
             $prefix        = $prefix . '<img src=\'' . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/arrow.gif'>";
-            foreach (array_keys($category_arr) as $i) {
-                $cid   = $category_arr[$i]->getVar('cid');
-                $pid   = $category_arr[$i]->getVar('pid');
-                $title = $category_arr[$i]->getVar('title');
-                $img   = $category_arr[$i]->getVar('img');
-                $order = $category_arr[$i]->getVar('ordre');
+            foreach (array_keys($categoryArray) as $i) {
+                $cid   = $categoryArray[$i]->getVar('cid');
+                $pid   = $categoryArray[$i]->getVar('pid');
+                $title = $categoryArray[$i]->getVar('title');
+                $img   = $categoryArray[$i]->getVar('img');
+                $order = $categoryArray[$i]->getVar('ordre');
 
                 echo '<tr class="' . $class . '">';
-                echo '<td align="left">' . $prefix . '&nbsp;' . $category_arr[$i]->getVar('title') . '</td>';
+                echo '<td align="left">' . $prefix . '&nbsp;' . $categoryArray[$i]->getVar('title') . '</td>';
 
-                echo '<td align="center"><img src="' . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/cat/" . $category_arr[$i]->getVar('img') . '" height="16px" title="img" alt="img"></td>';
-                echo '<td align="center">' . $category_arr[$i]->getVar('ordre') . '</td>';
+                echo '<td align="center"><img src="' . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/cat/" . $categoryArray[$i]->getVar('img') . '" height="16px" title="img" alt="img"></td>';
+                echo '<td align="center">' . $categoryArray[$i]->getVar('ordre') . '</td>';
                 echo "<td align='center' width='10%'>
-						<a href='alumni_categories.php?op=edit_category&cid=" . $category_arr[$i]->getVar('cid') . "'><img src='../assets/images/edit.gif' alt='" . XoopsLocale::A_EDIT . "' title='" . XoopsLocale::A_EDIT . "'></a>
-						<a href='alumni_categories.php?op=delete_category&cid=" . $category_arr[$i]->getVar('cid') . "'><img src='../assets/images/dele.gif' alt='" . XoopsLocale::A_DELETE . "' title='" . XoopsLocale::A_DELETE . "'></a></td></tr>";
+						<a href='alumni_categories.php?op=edit_category&cid=" . $categoryArray[$i]->getVar('cid') . "'><img src='../assets/images/edit.gif' alt='" . XoopsLocale::A_EDIT . "' title='" . XoopsLocale::A_EDIT . "'></a>
+						<a href='alumni_categories.php?op=delete_category&cid=" . $categoryArray[$i]->getVar('cid') . "'><img src='../assets/images/dele.gif' alt='" . XoopsLocale::A_DELETE . "' title='" . XoopsLocale::A_DELETE . "'></a></td></tr>";
                 $class = ('even' == $class) ? 'odd' : 'even';
 
                 $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
                 $criteria2               = new CriteriaCompo();
-                $criteria2->add(new Criteria('pid', $category_arr[$i]->getVar('cid')));
+                $criteria2->add(new Criteria('pid', $categoryArray[$i]->getVar('cid')));
                 $criteria2->setSort('title');
                 $criteria2->setOrder('ASC');
                 $cat_pid = $alumniCategoriesHandler->getAll($criteria2);
@@ -122,22 +122,22 @@ switch ($op) {
             $class  = 'odd';
             $prefix = "<img src='" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/arrow.gif'>";
 
-            $category_arr2 = $alumniCategoriesHandler->getAll($cat_criteria);
+            $categoryArray2 = $alumniCategoriesHandler->getAll($catCriteria);
 
-            foreach (array_keys($category_arr2) as $i) {
-                if (0 == $category_arr2[$i]->getVar('pid')) {
-                    $cid   = $category_arr2[$i]->getVar('cid');
-                    $img   = $category_arr2[$i]->getVar('img');
-                    $title = $category_arr2[$i]->getVar('title');
-                    $order = $category_arr2[$i]->getVar('ordre');
+            foreach (array_keys($categoryArray2) as $i) {
+                if (0 == $categoryArray2[$i]->getVar('pid')) {
+                    $cid   = $categoryArray2[$i]->getVar('cid');
+                    $img   = $categoryArray2[$i]->getVar('img');
+                    $title = $categoryArray2[$i]->getVar('title');
+                    $order = $categoryArray2[$i]->getVar('ordre');
                     echo "<tr class='" . $class . "'>";
-                    echo "<td align=\"left\">" . $prefix . "&nbsp;" . $category_arr2[$i]->getVar("title") . "</td>";
+                    echo "<td align=\"left\">" . $prefix . "&nbsp;" . $categoryArray2[$i]->getVar("title") . "</td>";
 
-                    echo "<td align=\"center\"><img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/cat/" . $category_arr2[$i]->getVar("img") . "\" height=\"16px\" title=\"img\" alt=\"img\"></td>";
-                    echo "<td align=\"center\">" . $category_arr2[$i]->getVar("ordre") . "</td>";
+                    echo "<td align=\"center\"><img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/cat/" . $categoryArray2[$i]->getVar("img") . "\" height=\"16px\" title=\"img\" alt=\"img\"></td>";
+                    echo "<td align=\"center\">" . $categoryArray2[$i]->getVar("ordre") . "</td>";
                     echo "<td align='center' width='10%'>
-				<a href='alumni_categories.php?op=edit_category&cid=" . $category_arr2[$i]->getVar("cid") . "'><img src='../assets/images/edit.gif' alt='" . XoopsLocale::A_EDIT . "' title='" . XoopsLocale::A_EDIT . "'></a>
-				<a href='alumni_categories.php?op=delete_category&cid=" . $category_arr2[$i]->getVar("cid") . "'><img src='../assets/images/dele.gif' alt='" . XoopsLocale::A_DELETE . "' title='" . XoopsLocale::A_DELETE . "'></a></td></tr>";
+				<a href='alumni_categories.php?op=edit_category&cid=" . $categoryArray2[$i]->getVar("cid") . "'><img src='../assets/images/edit.gif' alt='" . XoopsLocale::A_EDIT . "' title='" . XoopsLocale::A_EDIT . "'></a>
+				<a href='alumni_categories.php?op=delete_category&cid=" . $categoryArray2[$i]->getVar("cid") . "'><img src='../assets/images/dele.gif' alt='" . XoopsLocale::A_DELETE . "' title='" . XoopsLocale::A_DELETE . "'></a></td></tr>";
                     $class     = ('even' == $class) ? 'odd' : 'even';
                     $criteria3 = new CriteriaCompo();
                     $criteria3->add(new Criteria('pid', $cid));
@@ -181,12 +181,12 @@ switch ($op) {
         $obj->setVar('title', Request::getString('title', '', 'POST'));
 
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
-        $uploaddir         = XOOPS_UPLOAD_PATH . "/{$moduleDirName}/assets/images/";
-        $photomax          = $xoops->getModuleConfig('alumni_photomax');
-        $maxwide           = $xoops->getModuleConfig('alumni_maxwide');
-        $maxhigh           = $xoops->getModuleConfig('alumni_maxhigh');
-        $allowed_mimetypes = array('image/gif', 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
-        $uploader          = new XoopsMediaUploader($uploaddir, $allowed_mimetypes, $photomax, $maxwide, $maxhigh);
+        $uploaddir        = XOOPS_UPLOAD_PATH . "/{$moduleDirName}/assets/images/";
+        $photomax         = $xoops->getModuleConfig('alumni_photomax');
+        $maxwide          = $xoops->getModuleConfig('alumni_maxwide');
+        $maxhigh          = $xoops->getModuleConfig('alumni_maxhigh');
+        $allowedMimetypes = array('image/gif', 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
+        $uploader         = new XoopsMediaUploader($uploaddir, $allowedMimetypes, $photomax, $maxwide, $maxhigh);
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('category_img_');
             $uploader->fetchMedia($_POST['xoops_upload_file'][0]);
@@ -223,12 +223,12 @@ switch ($op) {
         $date = time();
         if (!empty($_FILES['scphoto']['name'])) {
             include_once XOOPS_ROOT_PATH . '/class/uploader.php';
-            $uploaddir         = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/school_photos";
-            $photomax          = $xoops->getModuleConfig('alumni_photomax');
-            $maxwide           = $xoops->getModuleConfig('alumni_maxwide');
-            $maxhigh           = $xoops->getModuleConfig('alumni_maxhigh');
-            $allowed_mimetypes = array('image/gif', 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
-            $uploader          = new XoopsMediaUploader($uploaddir, $allowed_mimetypes, $photomax, $maxwide, $maxhigh);
+            $uploaddir        = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/school_photos";
+            $photomax         = $xoops->getModuleConfig('alumni_photomax');
+            $maxwide          = $xoops->getModuleConfig('alumni_maxwide');
+            $maxhigh          = $xoops->getModuleConfig('alumni_maxhigh');
+            $allowedMimetypes = array('image/gif', 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
+            $uploader         = new XoopsMediaUploader($uploaddir, $allowedMimetypes, $photomax, $maxwide, $maxhigh);
             if ($uploader->fetchMedia($_POST['xoops_upload_file'][1])) {
                 $uploader->setTargetFileName($date . '_' . $_FILES['scphoto']['name']);
                 $uploader->fetchMedia($_POST['xoops_upload_file'][1]);

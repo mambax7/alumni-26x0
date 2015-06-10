@@ -42,32 +42,32 @@ switch ($op) {
         $indexAdmin->renderButton('left', '');
 
         $listingCount = $alumniListingHandler->countAlumni();
-        $listing_arr  = $alumniListingHandler->getAll();
+        $listingArray = $alumniListingHandler->getAll();
 
         // Assign Template variables
         $xoops->tpl()->assign('listingCount', $listingCount);
         if ($listingCount > 0) {
-            foreach (array_keys($listing_arr) as $i) {
-                $lid        = $listing_arr[$i]->getVar('lid');
-                $cid        = $listing_arr[$i]->getVar('cid');
-                $name       = $listing_arr[$i]->getVar('name');
-                $mname      = $listing_arr[$i]->getVar('mname');
-                $lname      = $listing_arr[$i]->getVar('lname');
-                $school     = $listing_arr[$i]->getVar('school');
-                $year       = $listing_arr[$i]->getVar('year');
-                $studies    = $listing_arr[$i]->getVar('studies');
-                $activities = $listing_arr[$i]->getVar('activities');
-                $extrainfo  = $listing_arr[$i]->getVar('extrainfo');
-                $occ        = $listing_arr[$i]->getVar('occ');
-                $date       = $listing_arr[$i]->getVar('date');
-                $email      = $listing_arr[$i]->getVar('email');
-                $submitter  = $listing_arr[$i]->getVar('submitter');
-                $usid       = $listing_arr[$i]->getVar('usid');
-                $town       = $listing_arr[$i]->getVar('town');
-                $valid      = $listing_arr[$i]->getVar('valid');
-                $photo      = $listing_arr[$i]->getVar('photo');
-                $photo2     = $listing_arr[$i]->getVar('photo2');
-                $view       = $listing_arr[$i]->getVar('view');
+            foreach (array_keys($listingArray) as $i) {
+                $lid        = $listingArray[$i]->getVar('lid');
+                $cid        = $listingArray[$i]->getVar('cid');
+                $name       = $listingArray[$i]->getVar('name');
+                $mname      = $listingArray[$i]->getVar('mname');
+                $lname      = $listingArray[$i]->getVar('lname');
+                $school     = $listingArray[$i]->getVar('school');
+                $year       = $listingArray[$i]->getVar('year');
+                $studies    = $listingArray[$i]->getVar('studies');
+                $activities = $listingArray[$i]->getVar('activities');
+                $extrainfo  = $listingArray[$i]->getVar('extrainfo');
+                $occ        = $listingArray[$i]->getVar('occ');
+                $date       = $listingArray[$i]->getVar('date');
+                $email      = $listingArray[$i]->getVar('email');
+                $submitter  = $listingArray[$i]->getVar('submitter');
+                $usid       = $listingArray[$i]->getVar('usid');
+                $town       = $listingArray[$i]->getVar('town');
+                $valid      = $listingArray[$i]->getVar('valid');
+                $photo      = $listingArray[$i]->getVar('photo');
+                $photo2     = $listingArray[$i]->getVar('photo2');
+                $view       = $listingArray[$i]->getVar('view');
 
                 $xoops->tpl()->assign('cat', $cid);
 
@@ -213,12 +213,12 @@ switch ($op) {
 
         if (!empty($_FILES['photo']['name'])) {
             include_once XOOPS_ROOT_PATH . '/class/uploader.php';
-            $uploaddir         = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
-            $photomax          = $xoops->getModuleConfig('alumni_photomax');
-            $maxwide           = $xoops->getModuleConfig('alumni_maxwide');
-            $maxhigh           = $xoops->getModuleConfig('alumni_maxhigh');
-            $allowed_mimetypes = array('image/gif', 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
-            $uploader          = new XoopsMediaUploader($uploaddir, $allowed_mimetypes, $photomax, $maxwide, $maxhigh);
+            $uploaddir        = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
+            $photomax         = $xoops->getModuleConfig('alumni_photomax');
+            $maxwide          = $xoops->getModuleConfig('alumni_maxwide');
+            $maxhigh          = $xoops->getModuleConfig('alumni_maxhigh');
+            $allowedMimetypes = array('image/gif', 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
+            $uploader         = new XoopsMediaUploader($uploaddir, $allowedMimetypes, $photomax, $maxwide, $maxhigh);
             if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
                 //       $uploader->setPrefix("pic_");
                 $uploader->setTargetFileName($date . '_' . $_FILES['photo']['name']);
@@ -236,12 +236,12 @@ switch ($op) {
 
         if (!empty($_FILES['photo2']['name'])) {
             include_once XOOPS_ROOT_PATH . '/class/uploader.php';
-            $uploaddir2        = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
-            $photomax          = $xoops->getModuleConfig('alumni_photomax');
-            $maxwide           = $xoops->getModuleConfig('alumni_maxwide');
-            $maxhigh           = $xoops->getModuleConfig('alumni_maxhigh');
-            $allowed_mimetypes = array('image/gif', 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
-            $uploader2         = new XoopsMediaUploader($uploaddir2, $allowed_mimetypes, $photomax, $maxwide, $maxhigh);
+            $uploaddir2       = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
+            $photomax         = $xoops->getModuleConfig('alumni_photomax');
+            $maxwide          = $xoops->getModuleConfig('alumni_maxwide');
+            $maxhigh          = $xoops->getModuleConfig('alumni_maxhigh');
+            $allowedMimetypes = array('image/gif', 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
+            $uploader2        = new XoopsMediaUploader($uploaddir2, $allowedMimetypes, $photomax, $maxwide, $maxhigh);
             if ($uploader2->fetchMedia($_POST['xoops_upload_file'][1])) {
                 //       $uploader2->setPrefix("pic_");
                 $uploader2->setTargetFileName($date . '_' . $_FILES['photo2']['name']);
@@ -331,41 +331,41 @@ switch ($op) {
         $xoTheme->addStylesheet(ALUMNI_URL . '/media/jquery/css/theme.blue.css');
         $xoTheme->addStylesheet(ALUMNI_URL . '/media/jquery/tablesorter-master/addons/pager/jquery.tablesorter.pager.css');
 
-        $listingHandler    = $xoops->getModuleHandler('alumni_listing', 'alumni');
-        $alumni            = Alumni::getInstance();
-        $module_id         = $xoops->module->getVar('mid');
-        $groups            = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-        $alumni_ids        = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
-        $moderate_criteria = new CriteriaCompo();
-        $moderate_criteria->add(new Criteria('valid', 0, '='));
-        $moderate_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-        $listingCount = $listingHandler->getCount($moderate_criteria);
-        $listing_arr  = $listingHandler->getAll($moderate_criteria);
+        $listingHandler   = $xoops->getModuleHandler('alumni_listing', 'alumni');
+        $alumni           = Alumni::getInstance();
+        $moduleId         = $xoops->module->getVar('mid');
+        $groups           = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $alumniIds        = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
+        $moderateCriteria = new CriteriaCompo();
+        $moderateCriteria->add(new Criteria('valid', 0, '='));
+        $moderateCriteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
+        $listingCount = $listingHandler->getCount($moderateCriteria);
+        $listingArray = $listingHandler->getAll($moderateCriteria);
 
         // Assign Template variables
         $xoops->tpl()->assign('listingCount', $listingCount);
         if ($listingCount > 0) {
-            foreach (array_keys($listing_arr) as $i) {
-                $lid        = $listing_arr[$i]->getVar('lid');
-                $cid        = $listing_arr[$i]->getVar('cid');
-                $name       = $listing_arr[$i]->getVar('name');
-                $mname      = $listing_arr[$i]->getVar('mname');
-                $lname      = $listing_arr[$i]->getVar('lname');
-                $school     = $listing_arr[$i]->getVar('school');
-                $year       = $listing_arr[$i]->getVar('year');
-                $studies    = $listing_arr[$i]->getVar('studies');
-                $activities = $listing_arr[$i]->getVar('activities');
-                $extrainfo  = $listing_arr[$i]->getVar('extrainfo');
-                $occ        = $listing_arr[$i]->getVar('occ');
-                $date       = $listing_arr[$i]->getVar('date');
-                $email      = $listing_arr[$i]->getVar('email');
-                $submitter  = $listing_arr[$i]->getVar('submitter');
-                $usid       = $listing_arr[$i]->getVar('usid');
-                $town       = $listing_arr[$i]->getVar('town');
-                $valid      = $listing_arr[$i]->getVar('valid');
-                $photo      = $listing_arr[$i]->getVar('photo');
-                $photo2     = $listing_arr[$i]->getVar('photo2');
-                $view       = $listing_arr[$i]->getVar('view');
+            foreach (array_keys($listingArray) as $i) {
+                $lid        = $listingArray[$i]->getVar('lid');
+                $cid        = $listingArray[$i]->getVar('cid');
+                $name       = $listingArray[$i]->getVar('name');
+                $mname      = $listingArray[$i]->getVar('mname');
+                $lname      = $listingArray[$i]->getVar('lname');
+                $school     = $listingArray[$i]->getVar('school');
+                $year       = $listingArray[$i]->getVar('year');
+                $studies    = $listingArray[$i]->getVar('studies');
+                $activities = $listingArray[$i]->getVar('activities');
+                $extrainfo  = $listingArray[$i]->getVar('extrainfo');
+                $occ        = $listingArray[$i]->getVar('occ');
+                $date       = $listingArray[$i]->getVar('date');
+                $email      = $listingArray[$i]->getVar('email');
+                $submitter  = $listingArray[$i]->getVar('submitter');
+                $usid       = $listingArray[$i]->getVar('usid');
+                $town       = $listingArray[$i]->getVar('town');
+                $valid      = $listingArray[$i]->getVar('valid');
+                $photo      = $listingArray[$i]->getVar('photo');
+                $photo2     = $listingArray[$i]->getVar('photo2');
+                $view       = $listingArray[$i]->getVar('view');
 
                 $xoops->tpl()->assign('cat', $cid);
 

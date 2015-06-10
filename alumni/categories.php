@@ -19,10 +19,10 @@ include __DIR__ . '/header.php';
 $moduleDirName = basename(__DIR__);
 $mainLang      = '_MA_' . strtoupper($moduleDirName);
 require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
-$myts      = MyTextSanitizer::getInstance();
-$xoops     = Xoops::getInstance();
-$alumni    = Alumni::getInstance();
-$module_id = $xoopsModule->getVar('mid');
+$myts     = MyTextSanitizer::getInstance();
+$xoops    = Xoops::getInstance();
+$alumni   = Alumni::getInstance();
+$moduleId = $xoopsModule->getVar('mid');
 
 if (is_object($xoopsUser)) {
     $groups = $xoopsUser->getGroups();
@@ -36,11 +36,11 @@ if (isset($_POST['item_id'])) {
     $perm_itemid = 0;
 }
 //If no access
-if (!$groupPermHandler->checkRight('' . $moduleDirName . '_view', $perm_itemid, $groups, $module_id)) {
+if (!$groupPermHandler->checkRight('' . $moduleDirName . '_view', $perm_itemid, $groups, $moduleId)) {
     $xoops->redirect(XOOPS_URL . '/index.php', 3, _NOPERM);
     exit();
 }
-if (!$groupPermHandler->checkRight('' . $moduleDirName . '_premium', $perm_itemid, $groups, $module_id)) {
+if (!$groupPermHandler->checkRight('' . $moduleDirName . '_premium', $perm_itemid, $groups, $moduleId)) {
     $prem_perm = '0';
 } else {
     $prem_perm = '1';
@@ -78,27 +78,27 @@ $cat_banner = $xoops->getbanner();
 $xoops->tpl()->assign('cat_banner', $cat_banner);
 
 $cat_code_place = $xoops->getModuleConfig('' . $moduleDirName . '_code_place');
-$use_extra_code = $xoops->getModuleConfig('' . $moduleDirName . '_use_code');
-$use_banner     = $xoops->getModuleConfig('' . $moduleDirName . '_use_banner');
-$cat_extra_code = $xoops->getModuleConfig('' . $moduleDirName . '_index_code');
-$xoops->tpl()->assign('use_extra_code', $use_extra_code);
-$xoops->tpl()->assign('use_banner', $use_banner);
-$xoops->tpl()->assign('cat_extra_code', '<html>' . $cat_extra_code . '</html>');
+$useExtraCode   = $xoops->getModuleConfig('' . $moduleDirName . '_use_code');
+$useBanner      = $xoops->getModuleConfig('' . $moduleDirName . '_useBanner');
+$catExtraCode   = $xoops->getModuleConfig('' . $moduleDirName . '_index_code');
+$xoops->tpl()->assign('useExtraCode', $useExtraCode);
+$xoops->tpl()->assign('useBanner', $useBanner);
+$xoops->tpl()->assign('catExtraCode', '<html>' . $catExtraCode . '</html>');
 $xoops->tpl()->assign('cat_code_place', $cat_code_place);
 
 $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
 
-$alumni    = Alumni::getInstance();
-$module_id = $xoops->module->getVar('mid');
+$alumni   = Alumni::getInstance();
+$moduleId = $xoops->module->getVar('mid');
 // get permitted id
-$groups       = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-$alumni_ids   = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
-$cat_criteria = new CriteriaCompo();
-$cat_criteria->add(new Criteria('cid', $cid, '='));
-$cat_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-$cat_criteria->setOrder('' . $xoops->getModuleConfig('' . $moduleDirName . '_csortorder') . '');
-$numcat       = $alumniCategoriesHandler->getCount();
-$category_arr = $alumniCategoriesHandler->getAll($cat_criteria);
+$groups      = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$alumniIds   = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
+$catCriteria = new CriteriaCompo();
+$catCriteria->add(new Criteria('cid', $cid, '='));
+$catCriteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
+$catCriteria->setOrder('' . $xoops->getModuleConfig('' . $moduleDirName . '_csortorder') . '');
+$numcat        = $alumniCategoriesHandler->getCount();
+$categoryArray = $alumniCategoriesHandler->getAll($catCriteria);
 
 $catObj = $alumniCategoriesHandler->get($cid);
 
@@ -107,39 +107,39 @@ $itemPath = $catObj->getVar('title');
 $path     = '';
 $myParent = $catObj->getVar('pid');
 
-$catpath_criteria = new CriteriaCompo();
-$catpath_criteria->add(new Criteria('cid', $myParent, '='));
-$catpath_arr = $alumniCategoriesHandler->getAll($catpath_criteria);
-foreach (array_keys($catpath_arr) as $i) {
-    $mytitle = $catpath_arr[$i]->getVar('title');
+$catpathCriteria = new CriteriaCompo();
+$catpathCriteria->add(new Criteria('cid', $myParent, '='));
+$catpathArray = $alumniCategoriesHandler->getAll($catpathCriteria);
+foreach (array_keys($catpathArray) as $i) {
+    $mytitle = $catpathArray[$i]->getVar('title');
 }
 
 if ($myParent != 0) {
-    $path = "<a href='" . ALUMNI_URL . '/categories.php?cid=' . $catpath_arr[$i]->getVar('cid') . "'>" . $catpath_arr[$i]->getVar('title') . '</a>&nbsp;:&nbsp;{$path}';
+    $path = "<a href='" . ALUMNI_URL . '/categories.php?cid=' . $catpathArray[$i]->getVar('cid') . "'>" . $catpathArray[$i]->getVar('title') . '</a>&nbsp;:&nbsp;{$path}';
 }
 $path = "{$homePath}{$path}{$itemPath}";
 $path = str_replace('&nbsp;:&nbsp;', " <img src='" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/arrow.gif" . "' style='border-width: 0px;' alt='' /> ", $path);
 
 $xoops->tpl()->assign('category_path', $path);
 
-unset($cat_criteria);
+unset($catCriteria);
 
-foreach (array_keys($category_arr) as $i) {
-    $cat_id     = $category_arr[$i]->getVar('cid');
-    $cat_pid    = $category_arr[$i]->getVar('pid');
-    $title      = $category_arr[$i]->getVar('title', 'e');
-    $scaddress  = $category_arr[$i]->getVar('scaddress');
-    $scaddress2 = $category_arr[$i]->getVar('scaddress2');
-    $sccity     = $category_arr[$i]->getVar('sccity');
-    $scstate    = $category_arr[$i]->getVar('scstate');
-    $sczip      = $category_arr[$i]->getVar('sczip');
-    $scphone    = $category_arr[$i]->getVar('scphone');
-    $scfax      = $category_arr[$i]->getVar('scfax');
-    $scmotto    = $category_arr[$i]->getVar('scmotto');
-    $scurl      = $category_arr[$i]->getVar('scurl');
-    $img        = $category_arr[$i]->getVar('img');
-    $scphoto    = $category_arr[$i]->getVar('scphoto');
-    $order      = $category_arr[$i]->getVar('ordre');
+foreach (array_keys($categoryArray) as $i) {
+    $cat_id     = $categoryArray[$i]->getVar('cid');
+    $cat_pid    = $categoryArray[$i]->getVar('pid');
+    $title      = $categoryArray[$i]->getVar('title', 'e');
+    $scaddress  = $categoryArray[$i]->getVar('scaddress');
+    $scaddress2 = $categoryArray[$i]->getVar('scaddress2');
+    $sccity     = $categoryArray[$i]->getVar('sccity');
+    $scstate    = $categoryArray[$i]->getVar('scstate');
+    $sczip      = $categoryArray[$i]->getVar('sczip');
+    $scphone    = $categoryArray[$i]->getVar('scphone');
+    $scfax      = $categoryArray[$i]->getVar('scfax');
+    $scmotto    = $categoryArray[$i]->getVar('scmotto');
+    $scurl      = $categoryArray[$i]->getVar('scurl');
+    $img        = $categoryArray[$i]->getVar('img');
+    $scphoto    = $categoryArray[$i]->getVar('scphoto');
+    $order      = $categoryArray[$i]->getVar('ordre');
 
     $xoops->tpl()->assign('moderated', '');
     if ($xoops->getModuleConfig('alumni_moderated') == 1) {
@@ -147,24 +147,24 @@ foreach (array_keys($category_arr) as $i) {
     }
     $xoops->tpl()->assign('lang_subcat', '');
     if ($xoops->getModuleConfig('alumni_showsubcat') == 1) {
-        $subcat_criteria = new CriteriaCompo();
-        $subcat_criteria->add(new Criteria('pid', $cid, '='));
-        $subcat_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-        $subcat_criteria->setOrder('' . $xoops->getModuleConfig('' . $moduleDirName . '_csortorder') . '');
-        $numsubcat  = $alumniCategoriesHandler->getCount($subcat_criteria);
-        $subcat_arr = $alumniCategoriesHandler->getAll($subcat_criteria);
-        unset($subcat_criteria);
+        $subcatCriteria = new CriteriaCompo();
+        $subcatCriteria->add(new Criteria('pid', $cid, '='));
+        $subcatCriteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
+        $subcatCriteria->setOrder('' . $xoops->getModuleConfig('' . $moduleDirName . '_csortorder') . '');
+        $numsubcat  = $alumniCategoriesHandler->getCount($subcatCriteria);
+        $subcat_arr = $alumniCategoriesHandler->getAll($subcatCriteria);
+        unset($subcatCriteria);
         foreach (array_keys($subcat_arr) as $i) {
             $subcat_id     = $subcat_arr[$i]->getVar('cid');
             $subcat_pid    = $subcat_arr[$i]->getVar('pid');
             $sub_cat_title = $subcat_arr[$i]->getVar('title', 'e');
 
             //      $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-            $listing_criteria = new CriteriaCompo();
-            $listing_criteria->add(new Criteria('cid', $subcat_id, '='));
-            $listing_criteria->add(new Criteria('valid', 1, '='));
-            $listing_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-            $alumni_count = $alumniListingHandler->getCount($listing_criteria);
+            $listingCriteria = new CriteriaCompo();
+            $listingCriteria->add(new Criteria('cid', $subcat_id, '='));
+            $listingCriteria->add(new Criteria('valid', 1, '='));
+            $listingCriteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
+            $alumni_count = $alumniListingHandler->getCount($listingCriteria);
 
             $xoops->tpl()->append('subcategories', array('title' => $sub_cat_title, 'id' => $subcat_id, 'totallinks' => $alumni_count, 'count' => $numsubcat));
         }
@@ -198,35 +198,35 @@ foreach (array_keys($category_arr) as $i) {
     $xoops->tpl()->assign('no_listings', constant($mainLang . '_NO_LISTINGS'));
 
     $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-    $listing_criteria     = new CriteriaCompo();
-    $listing_criteria->add(new Criteria('cid', $cid, '='));
-    $listing_criteria->add(new Criteria('valid', 1, '='));
-    $listing_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-    $numrows = $alumniListingHandler->getCount($listing_criteria);
+    $listingCriteria      = new CriteriaCompo();
+    $listingCriteria->add(new Criteria('cid', $cid, '='));
+    $listingCriteria->add(new Criteria('valid', 1, '='));
+    $listingCriteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
+    $numrows = $alumniListingHandler->getCount($listingCriteria);
 
-    $listing_arr = $alumniListingHandler->getAll($listing_criteria);
-    unset($listing_criteria);
-    foreach (array_keys($listing_arr) as $i) {
-        $lid        = $listing_arr[$i]->getVar('lid');
-        $cid        = $listing_arr[$i]->getVar('cid');
-        $name       = $listing_arr[$i]->getVar('name');
-        $mname      = $listing_arr[$i]->getVar('mname');
-        $lname      = $listing_arr[$i]->getVar('lname');
-        $school     = $listing_arr[$i]->getVar('school');
-        $year       = $listing_arr[$i]->getVar('year');
-        $studies    = $listing_arr[$i]->getVar('studies');
-        $activities = $listing_arr[$i]->getVar('activities');
-        $extrainfo  = $listing_arr[$i]->getVar('extrainfo');
-        $occ        = $listing_arr[$i]->getVar('occ');
-        $date       = $listing_arr[$i]->getVar('date');
-        $email      = $listing_arr[$i]->getVar('email');
-        $submitter  = $listing_arr[$i]->getVar('submitter');
-        $usid       = $listing_arr[$i]->getVar('usid');
-        $town       = $listing_arr[$i]->getVar('town');
-        $valid      = $listing_arr[$i]->getVar('valid');
-        $photo      = $listing_arr[$i]->getVar('photo');
-        $photo2     = $listing_arr[$i]->getVar('photo2');
-        $view       = $listing_arr[$i]->getVar('view');
+    $listingArray = $alumniListingHandler->getAll($listingCriteria);
+    unset($listingCriteria);
+    foreach (array_keys($listingArray) as $i) {
+        $lid        = $listingArray[$i]->getVar('lid');
+        $cid        = $listingArray[$i]->getVar('cid');
+        $name       = $listingArray[$i]->getVar('name');
+        $mname      = $listingArray[$i]->getVar('mname');
+        $lname      = $listingArray[$i]->getVar('lname');
+        $school     = $listingArray[$i]->getVar('school');
+        $year       = $listingArray[$i]->getVar('year');
+        $studies    = $listingArray[$i]->getVar('studies');
+        $activities = $listingArray[$i]->getVar('activities');
+        $extrainfo  = $listingArray[$i]->getVar('extrainfo');
+        $occ        = $listingArray[$i]->getVar('occ');
+        $date       = $listingArray[$i]->getVar('date');
+        $email      = $listingArray[$i]->getVar('email');
+        $submitter  = $listingArray[$i]->getVar('submitter');
+        $usid       = $listingArray[$i]->getVar('usid');
+        $town       = $listingArray[$i]->getVar('town');
+        $valid      = $listingArray[$i]->getVar('valid');
+        $photo      = $listingArray[$i]->getVar('photo');
+        $photo2     = $listingArray[$i]->getVar('photo2');
+        $view       = $listingArray[$i]->getVar('view');
 
         $trows = $numrows;
 

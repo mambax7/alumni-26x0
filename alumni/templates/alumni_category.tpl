@@ -100,9 +100,9 @@
 
 
 
-    <{if $use_extra_code|default:false}>
+    <{if $useExtraCode|default:false}>
 
-        <{if $use_banner|default:false}>
+        <{if $useBanner|default:false}>
             <table>
                 <tr>
                     <td align='center'><{$cat_banner}></td>
@@ -111,7 +111,7 @@
         <{else}>
             <table>
                 <tr>
-                    <td align="center"><{$cat_extra_code}></td>
+                    <td align="center"><{$catExtraCode}></td>
                 </tr>
             </table>
         <{/if}><{/if}>

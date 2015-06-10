@@ -28,6 +28,9 @@ use Xoops\Core\PreloadItem;
  */
 class AlumniPreload extends PreloadItem
 {
+    /**
+     * @param $args
+     */
     public static function eventCoreIncludeCommonClassmaps($args)
     {
         $path = dirname(__DIR__);

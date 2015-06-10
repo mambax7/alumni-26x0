@@ -10,6 +10,10 @@ include_once dirname(__DIR__) . '/include/common.php';
 $xoops  = Xoops::getInstance();
 $alumni = Alumni::getInstance();
 
+/**
+ * @param $options
+ * @return array
+ */
 function alumni_show($options)
 {
     $blockDirName = basename(dirname(__DIR__));
@@ -51,6 +55,10 @@ function alumni_show($options)
     return $block;
 }
 
+/**
+ * @param $options
+ * @return string
+ */
 function alumni_edit($options)
 {
     global $xoopsDB;

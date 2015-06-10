@@ -3,7 +3,7 @@
 //defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 $moduleDirName = basename(__DIR__);
-$modinfoLang  = '_MI_' . strtoupper($moduleDirName);
+$modinfoLang   = '_MI_' . strtoupper($moduleDirName);
 //$blocksLang    = '_MB_' . strtoupper($moduleDirName);
 
 $xoops = Xoops::getInstance();
@@ -354,11 +354,11 @@ $modversion['config'][] = array(
     'default'     => '1',
     'options'     => array());
 
-// $xoopsModuleConfig['alumni_use_banner']
+// $xoopsModuleConfig['alumni_useBanner']
 $modversion['config'][] = array(
-    'name'        => 'alumni_use_banner',
-    'title'       => constant($modinfoLang . '_USE_BANNER'),
-    'description' => constant($modinfoLang . '_USE_BANNER_DESC'),
+    'name'        => 'alumni_useBanner',
+    'title'       => constant($modinfoLang . '_useBanner'),
+    'description' => constant($modinfoLang . '_useBanner_DESC'),
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '1',
@@ -375,11 +375,11 @@ $modversion['config'][] = array(
 
 );
 
-// $xoopsModuleConfig['alumni_index_code_place']
+// $xoopsModuleConfig['alumni_indexCodePlace']
 $modversion['config'][] = array(
     'name'        => 'alumni_code_place',
-    'title'       => constant($modinfoLang . '_INDEX_CODE_PLACE'),
-    'description' => constant($modinfoLang . '_INDEX_CODE_PLACE_DESC'),
+    'title'       => constant($modinfoLang . '_indexCodePlace'),
+    'description' => constant($modinfoLang . '_indexCodePlace_DESC'),
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
     'default'     => '5');

@@ -52,6 +52,6 @@ $uid    = $helper->getUserId();
 //$start = Request::getInt('start', 0);
 
 // Parameters
-$module_id = $helper->getModule()->getVar('mid');
-$interval  = 3600; //1 hour
+$moduleId = $helper->getModule()->getVar('mid');
+$interval = 3600; //1 hour
 

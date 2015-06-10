@@ -107,8 +107,8 @@ class alumni_listing extends XoopsObject
         $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
         $categories              = $alumniCategoriesHandler->getObjects();
         $mytree                  = new XoopsObjectTree($categories, 'cid', 'pid');
-        $category_select         = $mytree->makeSelBox('cid', 'title', '--', $this->getVar('cid', 'e'), true);
-        $form->addElement(new Xoops\Form\Label(constant($adminLang . '_CAT'), $category_select), true);
+        $categorySelect          = $mytree->makeSelBox('cid', 'title', '--', $this->getVar('cid', 'e'), true);
+        $form->addElement(new Xoops\Form\Label(constant($adminLang . '_CAT'), $categorySelect), true);
 
         $cat_name                = '';
         $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
@@ -121,57 +121,57 @@ class alumni_listing extends XoopsObject
         $form->addElement(new Xoops\Form\Text(AlumniLocale::A_CLASS_OF_2, 'year', 50, 255, $this->getVar('year')), true);
         $form->addElement(new Xoops\Form\Text(AlumniLocale::A_STUDIES_2, 'studies', 50, 255, $this->getVar('studies')), false);
 
-        $activities               = $this->getVar('activities', 'e') ?: '';
-        $editor_configs           = array();
-        $editor_configs['name']   = 'activities';
-        $editor_configs['value']  = $activities;
-        $editor_configs['editor'] = $xoops->getModuleConfig('alumni_form_options');
-        $editor_configs['rows']   = 6;
-        $editor_configs['cols']   = 8;
-        $form->addElement(new Xoops\Form\Editor(constant($adminLang . '_ACTIVITIES'), 'activities', $editor_configs), false);
+        $activities              = $this->getVar('activities', 'e') ?: '';
+        $editorConfigs           = array();
+        $editorConfigs['name']   = 'activities';
+        $editorConfigs['value']  = $activities;
+        $editorConfigs['editor'] = $xoops->getModuleConfig('alumni_form_options');
+        $editorConfigs['rows']   = 6;
+        $editorConfigs['cols']   = 8;
+        $form->addElement(new Xoops\Form\Editor(constant($adminLang . '_ACTIVITIES'), 'activities', $editorConfigs), false);
 
-        $extrainfo                = $this->getVar('extrainfo', 'e') ?: '';
-        $editor_configs           = array();
-        $editor_configs['name']   = 'extrainfo';
-        $editor_configs['value']  = $extrainfo;
-        $editor_configs['editor'] = $xoops->getModuleConfig('alumni_form_options');
-        $editor_configs['rows']   = 6;
-        $editor_configs['cols']   = 8;
-        $form->addElement(new Xoops\Form\Editor(constant($adminLang . '_EXTRAINFO'), 'extrainfo', $editor_configs), false);
+        $extrainfo               = $this->getVar('extrainfo', 'e') ?: '';
+        $editorConfigs           = array();
+        $editorConfigs['name']   = 'extrainfo';
+        $editorConfigs['value']  = $extrainfo;
+        $editorConfigs['editor'] = $xoops->getModuleConfig('alumni_form_options');
+        $editorConfigs['rows']   = 6;
+        $editorConfigs['cols']   = 8;
+        $form->addElement(new Xoops\Form\Editor(constant($adminLang . '_EXTRAINFO'), 'extrainfo', $editorConfigs), false);
 
         $photo_old            = $this->getVar('photo') ?: '';
-        $uploadirectory_photo = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
-        $imgtray_photo        = new Xoops\Form\ElementTray(constant($adminLang . '_PHOTO'), '<br />');
-        $imgpath_photo        = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadirectory_photo);
-        $fileseltray_photo    = new Xoops\Form\ElementTray('', '<br />');
-        $fileseltray_photo->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'photo', $xoops->getModuleConfig('alumni_photomax')), false);
+        $uploadDirectoryPhoto = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
+        $imageTrayPhoto       = new Xoops\Form\ElementTray(constant($adminLang . '_PHOTO'), '<br />');
+        $imagePathPhoto       = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadDirectoryPhoto);
+        $fileSelectTrayPhoto  = new Xoops\Form\ElementTray('', '<br />');
+        $fileSelectTrayPhoto->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'photo', $xoops->getModuleConfig('alumni_photomax')), false);
 
         if ($photo_old) {
-            $fileseltray_photo->addElement(new Xoops\Form\Label(constant($adminLang . '_GRAD_PIC'), '<a href="../photos/grad_photo/' . $photo_old . '">' . $photo_old . '</a>', false));
-            $imgtray_checkbox = new Xoops\Form\Checkbox('', 'del_photo', 0);
-            $imgtray_checkbox->addOption(1, constant($adminLang . '_DELPICT'));
-            $fileseltray_photo->addElement($imgtray_checkbox);
+            $fileSelectTrayPhoto->addElement(new Xoops\Form\Label(constant($adminLang . '_GRAD_PIC'), '<a href="../photos/grad_photo/' . $photo_old . '">' . $photo_old . '</a>', false));
+            $imageTrayCheckbox = new Xoops\Form\Checkbox('', 'del_photo', 0);
+            $imageTrayCheckbox->addOption(1, constant($adminLang . '_DELPICT'));
+            $fileSelectTrayPhoto->addElement($imageTrayCheckbox);
         }
-        $imgtray_photo->addElement($fileseltray_photo);
-        $form->addElement($imgtray_photo);
+        $imageTrayPhoto->addElement($fileSelectTrayPhoto);
+        $form->addElement($imageTrayPhoto);
         $form->addElement(new Xoops\Form\Hidden('photo_old', $photo_old));
 
         $photo2_old            = $this->getVar('photo2') ?: '';
-        $uploadirectory_photo2 = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
-        $imgtray_photo2        = new Xoops\Form\ElementTray(constant($adminLang . '_PHOTO2'), '<br />');
-        $imgpath_photo2        = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadirectory_photo2);
-        $fileseltray_photo2    = new Xoops\Form\ElementTray('', '<br />');
-        $fileseltray_photo2->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'photo2', $xoops->getModuleConfig('alumni_photomax')), false);
+        $uploadDirectoryPhoto2 = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
+        $imageTrayPhoto2       = new Xoops\Form\ElementTray(constant($adminLang . '_PHOTO2'), '<br />');
+        $imagePathPhoto2       = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadDirectoryPhoto2);
+        $fileSelectTrayPhoto2  = new Xoops\Form\ElementTray('', '<br />');
+        $fileSelectTrayPhoto2->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'photo2', $xoops->getModuleConfig('alumni_photomax')), false);
 
         if ($photo_old) {
-            $fileseltray_photo2->addElement(new Xoops\Form\Label(constant($adminLang . '_NOW_PIC'), '<a href="../photos/now_photo/' . $photo2_old . '">' . $photo2_old . '</a>', false));
+            $fileSelectTrayPhoto2->addElement(new Xoops\Form\Label(constant($adminLang . '_NOW_PIC'), '<a href="../photos/now_photo/' . $photo2_old . '">' . $photo2_old . '</a>', false));
 
-            $imgtray_checkbox2 = new Xoops\Form\Checkbox('', 'del_photo2', 0);
-            $imgtray_checkbox2->addOption(1, constant($adminLang . '_DELPICT'));
-            $fileseltray_photo2->addElement($imgtray_checkbox2);
+            $imageTrayCheckbox2 = new Xoops\Form\Checkbox('', 'del_photo2', 0);
+            $imageTrayCheckbox2->addOption(1, constant($adminLang . '_DELPICT'));
+            $fileSelectTrayPhoto2->addElement($imageTrayCheckbox2);
         }
-        $imgtray_photo2->addElement($fileseltray_photo2);
-        $form->addElement($imgtray_photo2);
+        $imageTrayPhoto2->addElement($fileSelectTrayPhoto2);
+        $form->addElement($imageTrayPhoto2);
         $form->addElement(new Xoops\Form\Hidden('photo2_old', $photo2_old));
         $form->addElement(new Xoops\Form\Text(AlumniLocale::A_EMAIL_2, 'email', 50, 255, $this->getVar('email')), true);
         $form->addElement(new Xoops\Form\Text(AlumniLocale::A_OCC_2, 'occ', 50, 255, $this->getVar('occ')), false);
@@ -242,9 +242,9 @@ class alumni_listing extends XoopsObject
             $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
             $listingObj           = $alumniListingHandler->get($tempLid);
             $cat_id               = $listingObj->getVar('cid');
-            $category_select      = $mytree->makeSelBox('cid', 'title', '--', $listingObj->getVar('cid'), true);
+            $categorySelect       = $mytree->makeSelBox('cid', 'title', '--', $listingObj->getVar('cid'), true);
 
-            $form->addElement(new Xoops\Form\Label(constant($adminLang . '_CAT'), $category_select), true);
+            $form->addElement(new Xoops\Form\Label(constant($adminLang . '_CAT'), $categorySelect), true);
 
             $cat_name                = '';
             $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
@@ -256,9 +256,9 @@ class alumni_listing extends XoopsObject
                 $catObj                  = $alumniCategoriesHandler->get($tempCid);
                 $cat_name                = $catObj->getVar('title');
 
-                $category_select = $mytree->makeSelBox('cid', 'title', '--', $catObj->getVar('cid'), true);
+                $categorySelect = $mytree->makeSelBox('cid', 'title', '--', $catObj->getVar('cid'), true);
 
-                $form->addElement(new Xoops\Form\Label(constant($adminLang . '_CAT'), $category_select), true);
+                $form->addElement(new Xoops\Form\Label(constant($adminLang . '_CAT'), $categorySelect), true);
             }
         }
 
@@ -268,56 +268,56 @@ class alumni_listing extends XoopsObject
         $form->addElement(new Xoops\Form\Text(constant($adminLang . '_LNAME'), 'lname', 50, 255, $this->getVar('lname')), true);
         $form->addElement(new Xoops\Form\Text(constant($adminLang . '_YEAR2'), 'year', 50, 255, $this->getVar('year')), true);
         $form->addElement(new Xoops\Form\Text(constant($adminLang . '_STUDIES'), 'studies', 50, 255, $this->getVar('studies')), false);
-        $activities               = $this->getVar('activities', 'e') ?: '';
-        $editor_configs           = array();
-        $editor_configs['name']   = 'activities';
-        $editor_configs['value']  = ($activities);
-        $editor_configs['editor'] = $xoops->getModuleConfig('alumni_form_options');
-        $editor_configs['rows']   = 6;
-        $editor_configs['cols']   = 8;
+        $activities              = $this->getVar('activities', 'e') ?: '';
+        $editorConfigs           = array();
+        $editorConfigs['name']   = 'activities';
+        $editorConfigs['value']  = ($activities);
+        $editorConfigs['editor'] = $xoops->getModuleConfig('alumni_form_options');
+        $editorConfigs['rows']   = 6;
+        $editorConfigs['cols']   = 8;
 
-        $form->addElement(new Xoops\Form\Editor(constant($adminLang . '_ACTIVITIES'), 'activities', $editor_configs), false);
-        $extrainfo                = $this->getVar('extrainfo', 'e') ?: '';
-        $editor_configs           = array();
-        $editor_configs['name']   = 'extrainfo';
-        $editor_configs['value']  = $extrainfo;
-        $editor_configs['editor'] = $xoops->getModuleConfig('alumni_form_options');
-        $editor_configs['rows']   = 6;
-        $editor_configs['cols']   = 8;
+        $form->addElement(new Xoops\Form\Editor(constant($adminLang . '_ACTIVITIES'), 'activities', $editorConfigs), false);
+        $extrainfo               = $this->getVar('extrainfo', 'e') ?: '';
+        $editorConfigs           = array();
+        $editorConfigs['name']   = 'extrainfo';
+        $editorConfigs['value']  = $extrainfo;
+        $editorConfigs['editor'] = $xoops->getModuleConfig('alumni_form_options');
+        $editorConfigs['rows']   = 6;
+        $editorConfigs['cols']   = 8;
 
-        $form->addElement(new Xoops\Form\Editor(constant($adminLang . '_EXTRAINFO'), 'extrainfo', $editor_configs), false);
+        $form->addElement(new Xoops\Form\Editor(constant($adminLang . '_EXTRAINFO'), 'extrainfo', $editorConfigs), false);
         $photo_old            = $this->getVar('photo') ?: '';
-        $uploadirectory_photo = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
-        $imgtray_photo        = new Xoops\Form\ElementTray(constant($adminLang . '_GRAD_PIC'), '<br />');
-        $imgpath_photo        = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadirectory_photo);
-        $fileseltray_photo    = new Xoops\Form\ElementTray('', '<br />');
-        $fileseltray_photo->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'photo', $xoops->getModuleConfig('alumni_photomax')), false);
+        $uploadDirectoryPhoto = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
+        $imageTrayPhoto       = new Xoops\Form\ElementTray(constant($adminLang . '_GRAD_PIC'), '<br />');
+        $imagePathPhoto       = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadDirectoryPhoto);
+        $fileSelectTrayPhoto  = new Xoops\Form\ElementTray('', '<br />');
+        $fileSelectTrayPhoto->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'photo', $xoops->getModuleConfig('alumni_photomax')), false);
 
         if ($photo_old) {
-            $fileseltray_photo->addElement(new Xoops\Form\Label(constant($adminLang . '_GRAD_PIC'), '<a href="photos/grad_photo/' . $photo_old . '">' . $photo_old . '</a>', false));
-            $imgtray_checkbox = new Xoops\Form\Checkbox('', 'del_photo', 0);
-            $imgtray_checkbox->addOption(1, constant($adminLang . '_DELPICT'));
-            $fileseltray_photo->addElement($imgtray_checkbox);
+            $fileSelectTrayPhoto->addElement(new Xoops\Form\Label(constant($adminLang . '_GRAD_PIC'), '<a href="photos/grad_photo/' . $photo_old . '">' . $photo_old . '</a>', false));
+            $imageTrayCheckbox = new Xoops\Form\Checkbox('', 'del_photo', 0);
+            $imageTrayCheckbox->addOption(1, constant($adminLang . '_DELPICT'));
+            $fileSelectTrayPhoto->addElement($imageTrayCheckbox);
         }
-        $imgtray_photo->addElement($fileseltray_photo);
-        $form->addElement($imgtray_photo);
+        $imageTrayPhoto->addElement($fileSelectTrayPhoto);
+        $form->addElement($imageTrayPhoto);
         $form->addElement(new Xoops\Form\Hidden('photo_old', $photo_old));
 
         $photo2_old            = $this->getVar('photo2') ?: '';
-        $uploadirectory_photo2 = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
-        $imgtray_photo2        = new Xoops\Form\ElementTray(constant($adminLang . '_NOW_PIC'), '<br />');
-        $imgpath_photo2        = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadirectory_photo2);
-        $fileseltray_photo2    = new Xoops\Form\ElementTray('', '<br />');
-        $fileseltray_photo2->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'photo2', $xoops->getModuleConfig('alumni_photomax')), false);
+        $uploadDirectoryPhoto2 = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
+        $imageTrayPhoto2       = new Xoops\Form\ElementTray(constant($adminLang . '_NOW_PIC'), '<br />');
+        $imagePathPhoto2       = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadDirectoryPhoto2);
+        $fileSelectTrayPhoto2  = new Xoops\Form\ElementTray('', '<br />');
+        $fileSelectTrayPhoto2->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'photo2', $xoops->getModuleConfig('alumni_photomax')), false);
 
         if ($photo_old) {
-            $fileseltray_photo2->addElement(new Xoops\Form\Label(constant($adminLang . '_NOW_PIC'), '<a href="photos/now_photo/' . $photo2_old . '">' . $photo2_old . '</a>', false));
-            $imgtray_checkbox2 = new Xoops\Form\Checkbox('', 'del_photo2', 0);
-            $imgtray_checkbox2->addOption(1, constant($adminLang . '_DELPICT'));
-            $fileseltray_photo2->addElement($imgtray_checkbox2);
+            $fileSelectTrayPhoto2->addElement(new Xoops\Form\Label(constant($adminLang . '_NOW_PIC'), '<a href="photos/now_photo/' . $photo2_old . '">' . $photo2_old . '</a>', false));
+            $imageTrayCheckbox2 = new Xoops\Form\Checkbox('', 'del_photo2', 0);
+            $imageTrayCheckbox2->addOption(1, constant($adminLang . '_DELPICT'));
+            $fileSelectTrayPhoto2->addElement($imageTrayCheckbox2);
         }
-        $imgtray_photo2->addElement($fileseltray_photo2);
-        $form->addElement($imgtray_photo2);
+        $imageTrayPhoto2->addElement($fileSelectTrayPhoto2);
+        $form->addElement($imageTrayPhoto2);
         $form->addElement(new Xoops\Form\Hidden('photo2_old', $photo2_old));
 
         $form->addElement(new Xoops\Form\Text(constant($adminLang . '_EMAIL'), 'email', 50, 255, $this->getVar('email')), true);
@@ -374,16 +374,16 @@ class AlumniAlumni_listingHandler extends XoopsPersistableObjectHandler
      */
     public function getListingPublished($start = 0, $limit = 0, $sort = 'date', $order = 'ASC')
     {
-        $helper    = Alumni::getInstance();
-        $xoops     = $helper->xoops();
-        $module_id = $helper->getModule()->getVar('mid');
+        $helper   = Alumni::getInstance();
+        $xoops    = $helper->xoops();
+        $moduleId = $helper->getModule()->getVar('mid');
         // get permitted id
-        $groups     = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
-        $alumni_ids = $helper->getGrouppermHandler()->getItemIds('alumni_view', $groups, $module_id);
+        $groups    = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $alumniIds = $helper->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
         // criteria
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('valid', 1, '='));
-        $criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
+        $criteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setStart($start);

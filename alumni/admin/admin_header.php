@@ -38,7 +38,7 @@ $adminLang     = '_AM_' . strtoupper($moduleDirName);
 $alumniListingHandler    = $xoops->getModuleHandler('alumni_listing', 'alumni');
 $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
 $alumniGrouppermHandler  = $helper->getGrouppermHandler();
-$module_id               = $helper->getModule()->getVar('mid');
+$moduleId                = $helper->getModule()->getVar('mid');
 
 XoopsLoad::loadFile($xoops->path(XOOPS_ROOT_PATH . '/include/cp_header.php'));
 // Define Stylesheet
