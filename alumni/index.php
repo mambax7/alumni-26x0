@@ -52,7 +52,6 @@ $xoops->tpl()->assign('class_of', constant($mainLang . '_CLASSOF'));
 $xoops->tpl()->assign('front_intro', constant($mainLang . '_FINTRO'));
 
 if ($xoops->getModuleConfig('' . $moduleDirName . '_offer_search') == '1') {
-
     $xoops->tpl()->assign('offer_search', true);
     $xoops->tpl()->assign('search_listings', constant($mainLang . '_SEARCH_LISTINGS'));
     $xoops->tpl()->assign('match', constant($mainLang . '_MATCH'));
@@ -130,7 +129,6 @@ $count = 0;
 
 foreach (array_keys($cats) as $i) {
     if (in_array($cats[$i]->getVar('cid'), $alumni_ids)) {
-
         $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
         $count_criteria       = new CriteriaCompo();
         $count_criteria->add(new Criteria('cid', $cats[$i]->getVar('cid'), '='));
@@ -143,7 +141,7 @@ foreach (array_keys($cats) as $i) {
         if (count($all_subcats) > 0) {
             foreach (array_keys($all_subcats) as $k) {
                 if (in_array($all_subcats[$k]->getVar('cid'), $alumni_ids)) {
-                    $publishdate = (isset($listings['date'][$all_subcats[$k]->getVar('cid')]) AND $listings['date'][$all_subcats[$k]->getVar('cid')] > $publishdate) ? $listings['date'][$all_subcats[$k]->getVar('cid')] : $publishdate;
+                    $publishdate = (isset($listings['date'][$all_subcats[$k]->getVar('cid')]) and $listings['date'][$all_subcats[$k]->getVar('cid')] > $publishdate) ? $listings['date'][$all_subcats[$k]->getVar('cid')] : $publishdate;
                 }
             }
         }
@@ -168,9 +166,7 @@ foreach (array_keys($cats) as $i) {
 
     if (count($all_subcats) > 0) {
         foreach (array_keys($all_subcats) as $k) {
-
             if (in_array($all_subcats[$k]->getVar('cid'), $alumni_ids)) {
-
                 $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
                 $sub_count_criteria   = new CriteriaCompo();
                 $sub_count_criteria->add(new Criteria('cid', $all_subcats[$k]->getVar('cid'), '='));
@@ -178,7 +174,7 @@ foreach (array_keys($cats) as $i) {
                 $sub_count_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
                 $alumni_subcount = $alumniListingHandler->getCount($sub_count_criteria);
 
-                if ($xoops->getModuleConfig('alumni_showsubcat') == 1 AND $all_subcats[$k]->getVar('pid') == $cats[$i]->getVar('cid')) { // if we are collecting subcat info for displaying, and this subcat is a first level child...
+                if ($xoops->getModuleConfig('alumni_showsubcat') == 1 and $all_subcats[$k]->getVar('pid') == $cats[$i]->getVar('cid')) { // if we are collecting subcat info for displaying, and this subcat is a first level child...
                     $subcategories[] = array('id' => $all_subcats[$k]->getVar('cid'), 'title' => $all_subcats[$k]->getVar('title'), 'count' => $alumni_subcount);
                 }
             }
@@ -225,14 +221,11 @@ if ($xoops->getModuleConfig('' . $moduleDirName . '_moderated') == '1') {
             $xoops->tpl()->assign('admin_block', constant($mainLang . '_ADMINCADRE'));
             if ($moderate_rows == 0) {
                 $xoops->tpl()->assign('confirm_ads', constant($mainLang . '_NO_ALUM'));
-
             } else {
                 $xoops->tpl()->assign('confirm_ads', constant($mainLang . '_THEREIS') . ' $moderate_rows  ' . constant($mainLang . '_WAIT') . "<br /><a href=\"admin/alumni.php?op=list_moderated\">" . constant($mainLang . '_SEEIT') . "</a>");
                 $xoops->tpl()->assign('total_confirm', constant($mainLang . '_AND') . ' $moderate_rows ' . constant($mainLang . '_WAIT3'));
             }
-
         }
-
     }
 }
 

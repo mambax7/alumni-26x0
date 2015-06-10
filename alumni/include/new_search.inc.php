@@ -76,7 +76,6 @@ function alumni_search($queries, $andor, $limit, $start, $userid, $by_cat)
     $k   = 0;
 
     foreach ($this_search as $obj) {
-
         $ret[$k]['image'] = 'assets/images/cat/default.gif';
         $ret[$k]['link']  = 'listing.php?lid=' . $obj->getVar('lid') . '';
         $ret[$k]['title'] = $obj->getVar('name') . ' ' . $obj->getVar('mname') . ' ' . $obj->getVar('lname') . '   ---   ' . $obj->getVar('school') . '

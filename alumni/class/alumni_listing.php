@@ -63,7 +63,6 @@ class alumni_listing extends XoopsObject
         $this->initVar('photo', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('photo2', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('view', XOBJ_DTYPE_TXTBOX, null, false);
-
     }
 
     /**
@@ -204,7 +203,6 @@ class alumni_listing extends XoopsObject
      */
     public function getForm($action = false)
     {
-
         $myts = MyTextSanitizer::getInstance();
         global $xoopsDB;
         $xoops = Xoops::getInstance();
@@ -352,7 +350,6 @@ class alumni_listing extends XoopsObject
     {
         return $this->updateCounter($this->getVar('lid'));
     }
-
 }
 
 /**

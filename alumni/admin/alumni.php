@@ -48,7 +48,6 @@ switch ($op) {
         $xoops->tpl()->assign('listingCount', $listingCount);
         if ($listingCount > 0) {
             foreach (array_keys($listing_arr) as $i) {
-
                 $lid        = $listing_arr[$i]->getVar('lid');
                 $cid        = $listing_arr[$i]->getVar('cid');
                 $name       = $listing_arr[$i]->getVar('name');
@@ -228,9 +227,7 @@ switch ($op) {
                     $errors = $uploader->getErrors();
                     $xoops->redirect('javascript:history.go(-1)', 3, $errors);
                 } else {
-
                     $obj->setVar('photo', $uploader->getSavedFileName());
-
                 }
             } else {
                 $obj->setVar('photo', Request::getString('photo', '', 'POST'));
@@ -349,7 +346,6 @@ switch ($op) {
         $xoops->tpl()->assign('listingCount', $listingCount);
         if ($listingCount > 0) {
             foreach (array_keys($listing_arr) as $i) {
-
                 $lid        = $listing_arr[$i]->getVar('lid');
                 $cid        = $listing_arr[$i]->getVar('cid');
                 $name       = $listing_arr[$i]->getVar('name');
@@ -427,7 +423,6 @@ switch ($op) {
                 $xoops->tpl()->assign('occLang', AlumniLocale::A_OCC);
             }
             unset($listing);
-
         } else {
             $xoops->tpl()->assign('error_message', AlumniLocale::E_NO_LISTING_APPROVE);
         }

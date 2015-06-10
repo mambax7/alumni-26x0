@@ -94,7 +94,6 @@ switch ($op) {
                 if (0 != $num_pid) {
                     alumniCategoryDisplayChildren($cid, $cat_pid, $prefix, $order, $class);
                 }
-
             }
         }
 
@@ -111,7 +110,6 @@ switch ($op) {
                     $nav = new XoopsPageNav($numrows, $limit, $start, 'start', $args);
 
                     echo '' . $nav->renderNav(5, '', 'center') . '';
-
                 }
             }
 

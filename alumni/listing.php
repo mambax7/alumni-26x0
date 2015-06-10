@@ -127,7 +127,6 @@ switch ($op) {
             $recordexist = false;
 
             if ($lid != 0) {
-
                 $recordexist = true;
             }
 
@@ -251,7 +250,6 @@ switch ($op) {
         if ($tempLid = Request::getInt('lid', null, 'GET')) {
             $obj = $listingHandler->get($tempLid);
             $obj->setVar('date', Request::getString('date', '', 'POST'));
-
         } else {
             $obj = $listingHandler->create();
             $obj->setVar('date', time());

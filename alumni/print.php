@@ -17,7 +17,6 @@ $myts = MyTextSanitizer::getInstance();
 
 function PrintAlum($lid = 0)
 {
-
     global $xoopsConfig, $xoopsUser, $xoopsDB, $xoopsModuleConfig, $useroffset, $myts, $xoopsLogger, $moduleDirName, $mainLang, $xoops;
 
     $currenttheme = $xoopsConfig['theme_set'];

@@ -28,7 +28,7 @@ use Xoops\Core\PreloadItem;
  */
 class AlumniPreload extends PreloadItem
 {
-    static function eventCoreIncludeCommonClassmaps($args)
+    public static function eventCoreIncludeCommonClassmaps($args)
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap(array(

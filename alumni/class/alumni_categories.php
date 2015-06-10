@@ -27,7 +27,6 @@ defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
  */
 class alumni_categories extends XoopsObject
 {
-
     public $alumni;
 
     /**
@@ -73,7 +72,7 @@ class alumni_categories extends XoopsObject
         }
 
         $moduleDirName = basename(dirname(__DIR__));
-        $adminLang    = '_AM_' . strtoupper($moduleDirName);
+        $adminLang     = '_AM_' . strtoupper($moduleDirName);
 
         $title = $this->isNew() ? sprintf(constant($adminLang . '_CATEGORY_ADD')) : sprintf(constant($adminLang . '_CATEGORY_EDIT'));
 
@@ -168,7 +167,6 @@ class alumni_categories extends XoopsObject
  */
 class AlumniAlumni_categoriesHandler extends XoopsPersistableObjectHandler
 {
-
     public $alumni;
 
     /**
@@ -177,7 +175,6 @@ class AlumniAlumni_categoriesHandler extends XoopsPersistableObjectHandler
     public function __construct(Connection $db = null)
     {
         parent::__construct($db, 'alumni_categories', 'alumni_categories', 'cid', 'title');
-
     }
 
     /**

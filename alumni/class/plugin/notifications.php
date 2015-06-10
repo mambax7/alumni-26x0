@@ -38,7 +38,6 @@ class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
      */
     public function item($category, $item_id)
     {
-
         $xoops   = Xoops::getInstance();
         $item    = array();
         $item_id = (int)$item_id;
@@ -87,7 +86,7 @@ class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
     public function categories()
     {
         $moduleDirName = basename(dirname(dirname(__DIR__)));
-        $modinfoLang  = '_MI_' . strtoupper($moduleDirName);
+        $modinfoLang   = '_MI_' . strtoupper($moduleDirName);
 
         $ret                      = array();
         $ret[1]['name']           = 'global';
@@ -118,7 +117,7 @@ class AlumniNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
     public function events()
     {
         $moduleDirName = basename(dirname(dirname(__DIR__)));
-        $modinfoLang  = '_MI_' . strtoupper($moduleDirName);
+        $modinfoLang   = '_MI_' . strtoupper($moduleDirName);
 
         $ret = array();
 

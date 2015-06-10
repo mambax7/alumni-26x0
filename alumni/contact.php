@@ -42,7 +42,6 @@ if (Request::getString('submit', '', 'POST')) {
     $numrows     = $alumniListingHandler->getCount($listing_criteria);
     $listing_arr = $alumniListingHandler->getAll($listing_criteria);
     foreach (array_keys($listing_arr) as $i) {
-
         $name      = $listing_arr[$i]->getVar('name');
         $mname     = $listing_arr[$i]->getVar('mname');
         $lname     = $listing_arr[$i]->getVar('lname');
@@ -110,9 +109,7 @@ if (Request::getString('submit', '', 'POST')) {
     $xoopsMailer2->getErrors();
 
     $xoops->redirect('index.php', 3, constant($mainLang . '_MESSEND'));
-
 } else {
-
     $lid = Request::getInt('lid', '', 'POST');
     include __DIR__ . '/header.php';
     $xoops = Xoops::getInstance();

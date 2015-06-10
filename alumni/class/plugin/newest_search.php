@@ -96,6 +96,5 @@ class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
 
         //        return $items;
         return $ret;
-
     }
 }

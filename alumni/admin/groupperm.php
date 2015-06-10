@@ -32,7 +32,6 @@ $cattree = new AlumniObjectTree($cats, 'cid', 'pid');
 if ('0' == $cat_rows) {
     echo constant($modinfoLang . '_MUST_ADD_CAT');
 } else {
-
     $perm_desc = '';
     switch ($op) {
 

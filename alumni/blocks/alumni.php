@@ -12,10 +12,9 @@ $alumni = Alumni::getInstance();
 
 function alumni_show($options)
 {
-
     $blockDirName = basename(dirname(__DIR__));
     $blocksLang   = '_MB_' . strtoupper($blockDirName);
-//    $modinfoLang = '_MI_' . strtoupper($blockDirName);
+    //    $modinfoLang = '_MI_' . strtoupper($blockDirName);
 
     global $xoops, $helper, $alumni;
 
@@ -25,7 +24,6 @@ function alumni_show($options)
 
     $listings = $alumniListingHandler->getListingPublished(0, $options[1], $options[0], 'DESC');
     foreach (array_keys($listings) as $l) {
-
         $a_item = array();
         $name   = $myts->undoHtmlSpecialChars($listings[$l]->getVar('name'));
         $mname  = $myts->undoHtmlSpecialChars($listings[$l]->getVar('mname'));

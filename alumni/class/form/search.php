@@ -91,7 +91,6 @@ class AlumniSearchForm extends XoopsThemeForm
 
             //$cat_select = new XoopsFormSelect(_ALUMNI_CATEGORIES, 'title', $title);
             //$cat_select->addOption('title', $title);
-
         }
 
         //           $cattree = new AlumniObjectTree($category_arr, 'cid', 'pid');
@@ -104,7 +103,6 @@ class AlumniSearchForm extends XoopsThemeForm
         foreach ($categories as $cid => $title) {
             $category_select->addOption('0', XoopsLocale::ALL);
             $category_select->addOptionArray(array($cid => $title));
-
         }
         $this->addElement($category_select);
 

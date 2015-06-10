@@ -119,6 +119,5 @@ class AlumniGroupPermHandler extends XoopsGroupPermHandler
                 parent::addRight('alumni_premium', $cid, $group_id, $module_id);
             }
         }
-
     }
 }

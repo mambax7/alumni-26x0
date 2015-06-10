@@ -111,13 +111,10 @@ $catpath_criteria = new CriteriaCompo();
 $catpath_criteria->add(new Criteria('cid', $myParent, '='));
 $catpath_arr = $alumniCategoriesHandler->getAll($catpath_criteria);
 foreach (array_keys($catpath_arr) as $i) {
-
     $mytitle = $catpath_arr[$i]->getVar('title');
-
 }
 
 if ($myParent != 0) {
-
     $path = "<a href='" . ALUMNI_URL . '/categories.php?cid=' . $catpath_arr[$i]->getVar('cid') . "'>" . $catpath_arr[$i]->getVar('title') . '</a>&nbsp;:&nbsp;{$path}';
 }
 $path = "{$homePath}{$path}{$itemPath}";
@@ -150,7 +147,6 @@ foreach (array_keys($category_arr) as $i) {
     }
     $xoops->tpl()->assign('lang_subcat', '');
     if ($xoops->getModuleConfig('alumni_showsubcat') == 1) {
-
         $subcat_criteria = new CriteriaCompo();
         $subcat_criteria->add(new Criteria('pid', $cid, '='));
         $subcat_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
@@ -171,7 +167,6 @@ foreach (array_keys($category_arr) as $i) {
             $alumni_count = $alumniListingHandler->getCount($listing_criteria);
 
             $xoops->tpl()->append('subcategories', array('title' => $sub_cat_title, 'id' => $subcat_id, 'totallinks' => $alumni_count, 'count' => $numsubcat));
-
         }
         $xoops->tpl()->assign('showsubcat', true);
     }
@@ -245,7 +240,6 @@ foreach (array_keys($category_arr) as $i) {
         $xoops->tpl()->assign('lang_subcat', constant($mainLang . '_AVAILAB'));
 
         if ($trows > '0') {
-
             $xoops->tpl()->assign('last_head', constant($mainLang . '_THE') . ' ' . $xoops->getModuleConfig('' . $moduleDirName . '_newalumni') . ' ' . constant($mainLang . '_LASTADD'));
             $xoops->tpl()->assign('last_head_name', constant($mainLang . '_NAME2'));
             $xoops->tpl()->assign('last_head_mname', constant($mainLang . '_MNAME'));
@@ -265,7 +259,6 @@ foreach (array_keys($category_arr) as $i) {
             $rank = 1;
 
             if ($trows > "1") {
-
                 $xoops->tpl()->assign('show_nav', true);
                 $xoops->tpl()->assign('lang_sortby', constant($mainLang . '_SORTBY'));
                 $xoops->tpl()->assign('lang_name', constant($mainLang . '_NAME2'));

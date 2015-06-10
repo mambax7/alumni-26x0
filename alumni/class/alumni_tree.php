@@ -270,7 +270,6 @@ class AlumniObjectTree extends XoopsObjectTree
             $value       = $this->_tree[$key]['obj']->getVar($this->_myId);
             $ret[$value] = $prefix_curr . $this->_tree[$key]['obj']->getVar($fieldName);
             $prefix_curr .= $prefix_orig;
-
         }
         if (isset($this->_tree[$key]['child']) && !empty($this->_tree[$key]['child'])) {
             foreach ($this->_tree[$key]['child'] as $childkey) {

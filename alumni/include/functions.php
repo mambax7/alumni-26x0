@@ -91,7 +91,6 @@ function alumni_convertorderbyin($orderby)
 
 function alumni_convertorderbytrans($orderby)
 {
-
     global $mainLang;
 
     if ($orderby == 'view ASC') {
@@ -209,7 +208,7 @@ function alumni_filechecks()
     global $xoopsModule, $xoopsConfig;
 
     $moduleDirName = basename(dirname(__DIR__));
-    $adminLang    = '_AM_' . strtoupper($moduleDirName);
+    $adminLang     = '_AM_' . strtoupper($moduleDirName);
 
     echo '<fieldset>';
     echo "<legend style=\"color: #990000; font-weight: bold;\">" . constant($adminLang . '_FILECHECKS') . '</legend>';
@@ -275,5 +274,4 @@ function alumni_filechecks()
     echo '</ul>';
 
     echo '</fieldset>';
-
 }

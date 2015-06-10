@@ -157,5 +157,4 @@ class AlumniLocaleEn_US /*extends XoopsLocaleEn_US*/
     const CONF_BLOCK_L_DESC = 'Descending';
 
     const CONF_BLOCK_DISPLAY_NUMBER = 'Number to display';
-
 }

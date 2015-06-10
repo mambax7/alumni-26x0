@@ -9,7 +9,6 @@ $moduleDirName = basename(__DIR__);
 //$mainLang =  '_' . strtoupper( $moduleDirName ) ;
 
 if (!empty($_POST['submit'])) {
-
     if ($xoops->getModuleConfig('alumni_use_captcha') == '1' && !$xoops->user->isAdmin()) {
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
@@ -133,9 +132,7 @@ if (!empty($_POST['submit'])) {
         $xoops->redirect('index.php', 3, constant($mainLang . '_ALUM_SEND'));
         exit();
     }
-
 } else {
-
     global $xoops;
 
     $lid = Request::getInt('lid', null, 'GET');
