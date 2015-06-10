@@ -3,9 +3,10 @@
 //                           Alumni for Xoops 2.6.0                           //
 //                           By John Mordo (jlm69)                           //
 //  -----------------------------------------------------------------------  //
+use Xoops\Core\Request;
 
-$lid = isset($_REQUEST['lid']) ? $_REQUEST['lid'] : '';
-if (!empty($_POST['submit'])) {
+$lid = Request::getInt('lid', null, 'POST');
+if (Request::getString('submit', '', 'POST')) {
     include __DIR__ . '/header.php';
 
     $moduleDirName = basename(__DIR__);
@@ -22,12 +23,12 @@ if (!empty($_POST['submit'])) {
         }
     }
 
-    $lid = (int)($_REQUEST['lid']);
+    $lid = Request::getInt('lid', '', 'POST');
 
-    $body          = (isset($_REQUEST['body'])) ? $_REQUEST['body'] : null;
-    $sname         = (isset($_REQUEST['sname'])) ? $_REQUEST['sname'] : null;
-    $semail        = (isset($_REQUEST['semail'])) ? $_REQUEST['semail'] : null;
-    $listing       = (isset($_REQUEST['listing'])) ? $_REQUEST['listing'] : null;
+    $body          = Request::getString('body', null, 'POST'); //(isset($_REQUEST['body'])) ? $_REQUEST['body'] : null;
+    $sname         = Request::getString('sname', null, 'POST'); //(isset($_REQUEST['sname'])) ? $_REQUEST['sname'] : null;
+    $semail        = Request::getString('semail', null, 'POST'); //(isset($_REQUEST['semail'])) ? $_REQUEST['semail'] : null;
+    $listing       = Request::getString('listing', null, 'POST'); //(isset($_REQUEST['listing'])) ? $_REQUEST['listing'] : null;
     $subject       = constant($mainLang . '_CONTACTALUMNI');
     $admin_subject = constant($mainLang . '_CONTACTADMIN');
 
@@ -112,7 +113,7 @@ if (!empty($_POST['submit'])) {
 
 } else {
 
-    $lid = isset($_REQUEST['lid']) ? $_REQUEST['lid'] : '';
+    $lid = Request::getInt('lid', '', 'POST');
     include __DIR__ . '/header.php';
     $xoops = Xoops::getInstance();
     //	Xoops::getInstance()->header();

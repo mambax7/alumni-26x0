@@ -9,13 +9,13 @@
             <{/foreach}>
             </span>
             <{if $sr_showing}>
-                <br />
+                <br/>
                 <{$sr_showing}>&nbsp;<{$showing_of}>
-                
-                 <br />
-            <br /><{$in_category}> <{$cat_name}>
-            <{/if}> 
-            
+                <br/>
+                <br/>
+                <{$in_category}> <{$cat_name}>
+            <{/if}>
+
         </div>
         <{if count($ignored_queries) != 0}>
             <div>
@@ -57,7 +57,7 @@
                         <div><{$result.content}></div>
                         <span class='x-small'>
                             <{if $result.uid}>
-                               <a href="<{$xoops_url}>/userinfo.php?uid=<{$result.uid}>" title="<{$result.uname}>"><{$result.uname}></a>
+                                <a href="<{$xoops_url}>/userinfo.php?uid=<{$result.uid}>" title="<{$result.uname}>"><{$result.uname}></a>
                             <{/if}>
                             <{if $result.time}>
                                 &nbsp;(<{$result.time}>)
@@ -66,7 +66,6 @@
                     </div>
                 <{/foreach}>
             </div>
-
             <!-- prev / next -->
             <{if $module.prev|default:false || $module.next|default:false}>
                 <div>

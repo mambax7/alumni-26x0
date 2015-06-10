@@ -1,4 +1,3 @@
-
 {HELLO} {SUBMITTER},
 
 {YNAME} {THINKS_INTERESTING}
@@ -21,7 +20,7 @@
 {NO_REPLY}
 
 -----------
-{X_SITENAME} <a href="{X_SITEURL}" > ({X_SITEURL}) </a>
+{X_SITENAME} <a href="{X_SITEURL}"> ({X_SITEURL}) </a>
 {WEBMASTER}
 <a href="mailto:{X_ADMINMAIL}">{X_ADMINMAIL}</a>
 ----------

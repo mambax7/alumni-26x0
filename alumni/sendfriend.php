@@ -1,4 +1,6 @@
 <?php
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 $xoops = Xoops::getInstance();
 //$alumni = Alumni::getInstance();
@@ -136,14 +138,14 @@ if (!empty($_POST['submit'])) {
 
     global $xoops;
 
-    $lid = !isset($_REQUEST['lid']) ? null : $_REQUEST['lid'];
+    $lid = Request::getInt('lid', null, 'GET');
     $xoops->header('alumni_sendfriend.tpl');
     //   Xoops::getInstance()->header();
 
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-    $listing_2_send       = $alumniListingHandler->get($_REQUEST['lid']);
+    $listing_2_send       = $alumniListingHandler->get(Request::getInt('lid', 0, 'GET'));
 
     $listing_2_send->getVar('name');
     $listing_2_send->getVar('mname');

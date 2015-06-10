@@ -17,7 +17,7 @@
 include __DIR__ . '/header.php';
 
 $moduleDirName = basename(__DIR__);
-$mainLang     = '_MA_' . strtoupper($moduleDirName);
+$mainLang      = '_MA_' . strtoupper($moduleDirName);
 require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
 $myts      = MyTextSanitizer::getInstance();
 $xoops     = Xoops::getInstance();
@@ -186,7 +186,9 @@ foreach (array_keys($category_arr) as $i) {
     $xoops->tpl()->assign('scfax', $scfax);
     $xoops->tpl()->assign('scmotto', $scmotto);
     $xoops->tpl()->assign('scurl', $scurl);
-    $xoops->tpl()->assign('top_scphoto', "<img src='" . XOOPS_URL . "/modules/{$moduleDirName}/photos/school_photos/$scphoto' align='middle' alt='$school_name' />");
+    if ($scphoto) {
+        $xoops->tpl()->assign('top_scphoto', "<img src='" . XOOPS_URL . "/modules/{$moduleDirName}/photos/school_photos/$scphoto' align='middle' alt='$school_name' />");
+    }
     $xoops->tpl()->assign('head_scphone', constant($mainLang . '_SCPHONE'));
     $xoops->tpl()->assign('head_scfax', constant($mainLang . '_SCFAX'));
     $xoops->tpl()->assign('web', constant($mainLang . '_WEB'));

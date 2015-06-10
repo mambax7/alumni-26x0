@@ -1,27 +1,27 @@
-
 CREATE TABLE alumni_listing (
-  lid int(11) NOT NULL auto_increment,
-  cid int(11) NOT NULL default '0',
-  name varchar(100) NOT NULL default '', 
-  mname varchar(100) NOT NULL default '',
-  lname varchar(100) NOT NULL default '',
-  school varchar(100) NOT NULL default '',
-  year varchar(4) NOT NULL default '',
-  studies varchar(100) NOT NULL default '',
-  activities mediumtext NOT NULL,
-  extrainfo text NOT NULL,
-  occ varchar(100) NOT NULL default '',
-  date varchar(25) default NULL,
-  email varchar(100) NOT NULL default '',
-  submitter varchar(60) NOT NULL default '',
-  usid varchar(6) NOT NULL default '',
-  town varchar(100) NOT NULL default '',
-  valid varchar(11) NOT NULL default '',
-  photo varchar(100) NOT NULL default '',
-  photo2 varchar(100) NOT NULL default '',
-  view varchar(10) NOT NULL default '0',
-  PRIMARY KEY  (lid)
-) ENGINE=MyISAM;
+  lid        INT(11)      NOT NULL AUTO_INCREMENT,
+  cid        INT(11)      NOT NULL DEFAULT '0',
+  name       VARCHAR(100) NOT NULL DEFAULT '',
+  mname      VARCHAR(100) NOT NULL DEFAULT '',
+  lname      VARCHAR(100) NOT NULL DEFAULT '',
+  school     VARCHAR(100) NOT NULL DEFAULT '',
+  year       VARCHAR(4)   NOT NULL DEFAULT '',
+  studies    VARCHAR(100) NOT NULL DEFAULT '',
+  activities MEDIUMTEXT   NOT NULL,
+  extrainfo  TEXT         NOT NULL,
+  occ        VARCHAR(100) NOT NULL DEFAULT '',
+  date       VARCHAR(25)           DEFAULT NULL,
+  email      VARCHAR(100) NOT NULL DEFAULT '',
+  submitter  VARCHAR(60)  NOT NULL DEFAULT '',
+  usid       VARCHAR(6)   NOT NULL DEFAULT '',
+  town       VARCHAR(100) NOT NULL DEFAULT '',
+  valid      VARCHAR(11)  NOT NULL DEFAULT '',
+  photo      VARCHAR(100) NOT NULL DEFAULT '',
+  photo2     VARCHAR(100) NOT NULL DEFAULT '',
+  view       VARCHAR(10)  NOT NULL DEFAULT '0',
+  PRIMARY KEY (lid)
+)
+  ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -30,34 +30,37 @@ CREATE TABLE alumni_listing (
 # Table structure for table `alumni_price`
 
 CREATE TABLE alumni_categories (
-  cid int(11) NOT NULL auto_increment,
-  pid int(5) unsigned NOT NULL default '0',
-  title varchar(100) NOT NULL default '',
-  scaddress varchar(100) NOT NULL default '',
-  scaddress2 varchar(100) NOT NULL default '',
-  sccity varchar(100) NOT NULL default '',
-  scstate varchar(100) NOT NULL default '',
-  sczip varchar(20) NOT NULL default '',
-  scphone varchar(30) NOT NULL default '',
-  scfax varchar(30) NOT NULL default '',
-  scmotto varchar(100) NOT NULL default '',
-  scurl varchar(150) NOT NULL default '',
-  img varchar(150) NOT NULL default '',
-  scphoto varchar(150) NOT NULL default '',
-  ordre int(5) NOT NULL default '0',
-  PRIMARY KEY  (cid)
-) ENGINE=MyISAM;
+  cid        INT(11)         NOT NULL AUTO_INCREMENT,
+  pid        INT(5) UNSIGNED NOT NULL DEFAULT '0',
+  title      VARCHAR(100)    NOT NULL DEFAULT '',
+  scaddress  VARCHAR(100)    NOT NULL DEFAULT '',
+  scaddress2 VARCHAR(100)    NOT NULL DEFAULT '',
+  sccity     VARCHAR(100)    NOT NULL DEFAULT '',
+  scstate    VARCHAR(100)    NOT NULL DEFAULT '',
+  sczip      VARCHAR(20)     NOT NULL DEFAULT '',
+  scphone    VARCHAR(30)     NOT NULL DEFAULT '',
+  scfax      VARCHAR(30)     NOT NULL DEFAULT '',
+  scmotto    VARCHAR(100)    NOT NULL DEFAULT '',
+  scurl      VARCHAR(150)    NOT NULL DEFAULT '',
+  img        VARCHAR(150)    NOT NULL DEFAULT '',
+  scphoto    VARCHAR(150)    NOT NULL DEFAULT '',
+  ordre      INT(5)          NOT NULL DEFAULT '0',
+  PRIMARY KEY (cid)
+)
+  ENGINE = MyISAM;
 
 
 # Table structure for table `alumni_ip_log`
 
 CREATE TABLE `alumni_ip_log` (
-  ip_id int(11) NOT NULL auto_increment,
-  lid int(11) NOT NULL default '0',
-  date varchar(25) default NULL,
-  submitter varchar(60) NOT NULL default '',
-  ipnumber varchar(150) NOT NULL default '',
-  email varchar(100) NOT NULL default '',
-  PRIMARY KEY  (`ip_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+  ip_id     INT(11)      NOT NULL AUTO_INCREMENT,
+  lid       INT(11)      NOT NULL DEFAULT '0',
+  date      VARCHAR(25)           DEFAULT NULL,
+  submitter VARCHAR(60)  NOT NULL DEFAULT '',
+  ipnumber  VARCHAR(150) NOT NULL DEFAULT '',
+  email     VARCHAR(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (`ip_id`)
+)
+  ENGINE = MyISAM
+  AUTO_INCREMENT = 1;
 

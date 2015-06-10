@@ -19,14 +19,17 @@
  * @version         $Id: const_entete.php 9860 2012-07-13 10:41:41Z txmodxoops $
  */
 
+use Xoops\Core\Request;
+
 include __DIR__ . '/admin_header.php';
 $xoops = Xoops::getInstance();
 $xoops->header();
 
-$op = 'list';
-if (isset($_REQUEST['op'])) {
-    $op = $_REQUEST['op'];
-}
+//$op = 'list';
+//if (isset($_REQUEST['op'])) {
+//    $op = $_REQUEST['op'];
+//}
+$op = Request::getCmd('op', Request::getCmd('op', 'list', 'GET'), 'POST');
 
 switch ($op) {
     case 'list':
@@ -36,9 +39,8 @@ switch ($op) {
         echo $indexAdmin->displayNavigation('alumni_categories.php');
         $indexAdmin->addItemButton(AlumniLocale::A_ADD_CAT, 'alumni_categories.php?op=new_category', 'add');
         echo $indexAdmin->renderButton('left', '');
-
-        $limit        = empty($_REQUEST['limit']) ? 10 : (int)($_REQUEST['limit']);
-        $start        = isset($_REQUEST['start']) ? (int)($_REQUEST['start']) : 0;
+        $limit        = Request::getInt('limit', 10, 'POST');
+        $start        = Request::getInt('start', 0, 'POST');
         $order        = $xoops->getModuleConfig('alumni_csortorder');
         $cat_criteria = new CriteriaCompo();
         $cat_criteria->setSort('cid');
@@ -171,14 +173,14 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             $xoops->redirect('alumni_categories.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        if (isset($_REQUEST['cid'])) {
-            $obj = $alumniCategoriesHandler->get($_REQUEST['cid']);
+        if ($tempCid = Request::getInt('cid', null, 'GET')) {
+            $obj = $alumniCategoriesHandler->get($tempCid);
         } else {
             $obj = $alumniCategoriesHandler->create();
         }
 
-        $obj->setVar('pid', $_REQUEST['pid']);
-        $obj->setVar('title', $_REQUEST['title']);
+        $obj->setVar('pid', Request::getInt('pid', 0, 'POST'));
+        $obj->setVar('title', Request::getString('title', '', 'POST'));
 
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploaddir         = XOOPS_UPLOAD_PATH . "/{$moduleDirName}/assets/images/";
@@ -197,28 +199,28 @@ switch ($op) {
                 $obj->setVar('img', $uploader->getSavedFileName());
             }
         } else {
-            $obj->setVar('img', $_REQUEST['img']);
+            $obj->setVar('img', Request::getString('img', '', 'POST'));
         }
 
         $destination = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/school_photos";
 
-        if ('1' == isset($_REQUEST['del_photo'])) {
-            if (@file_exists('' . $destination . '/' . $_REQUEST['photo_old'] . '')) {
-                unlink('' . $destination . '/' . $_REQUEST['photo_old'] . '');
+        if ('1' == Request::getInt('del_photo', 0, 'POST')) {
+            if (@file_exists('' . $destination . '/' . Request::getString('photo_old', '', 'POST') . '')) {
+                unlink('' . $destination . '/' . Request::getString('photo_old', '', 'POST') . '');
             }
 
             $obj->setVar('scphoto', '');
         }
-        $obj->setVar('ordre', $_REQUEST['ordre']);
-        $obj->setVar('scaddress', $_REQUEST['scaddress']);
-        $obj->setVar('scaddress2', $_REQUEST['scaddress2']);
-        $obj->setVar('sccity', $_REQUEST['sccity']);
-        $obj->setVar('scstate', $_REQUEST['scstate']);
-        $obj->setVar('sczip', $_REQUEST['sczip']);
-        $obj->setVar('scphone', $_REQUEST['scphone']);
-        $obj->setVar('scfax', $_REQUEST['scfax']);
-        $obj->setVar('scmotto', $_REQUEST['scmotto']);
-        $obj->setVar('scurl', $_REQUEST['scurl']);
+        $obj->setVar('ordre', Request::getString('ordre', '', 'POST')); // $_REQUEST['ordre']);
+        $obj->setVar('scaddress', Request::getString('scaddress', '', 'POST')); // $_REQUEST['scaddress']);
+        $obj->setVar('scaddress2', Request::getString('scaddress2', '', 'POST')); // $_REQUEST['scaddress2']);
+        $obj->setVar('sccity', Request::getString('sccity', '', 'POST')); // $_REQUEST['sccity']);
+        $obj->setVar('scstate', Request::getString('scstate', '', 'POST')); // $_REQUEST['scstate']);
+        $obj->setVar('sczip', Request::getString('sczip', '', 'POST')); // $_REQUEST['sczip']);
+        $obj->setVar('scphone', Request::getString('scphone', '', 'POST')); // $_REQUEST['scphone']);
+        $obj->setVar('scfax', Request::getString('scfax', '', 'POST')); // $_REQUEST['scfax']);
+        $obj->setVar('scmotto', Request::getString('scmotto', '', 'POST')); // $_REQUEST['scmotto']);
+        $obj->setVar('scurl', Request::getString('scurl', '', 'POST')); // $_REQUEST['scurl']);
 
         $date = time();
         if (!empty($_FILES['scphoto']['name'])) {
@@ -239,7 +241,7 @@ switch ($op) {
                     $obj->setVar('scphoto', $uploader->getSavedFileName());
                 }
             } else {
-                $obj->setVar('scphoto', $_REQUEST['scphoto']);
+                $obj->setVar('scphoto', Request::getString('scphoto', '', 'POST')); // $_REQUEST['scphoto']);
             }
         }
 
@@ -259,7 +261,7 @@ switch ($op) {
         $indexAdmin->displayNavigation('alumni_categories.php');
         $indexAdmin->addItemButton(constant($adminLang . '_CATEGORYLIST'), 'alumni.php', 'list');
         $indexAdmin->renderButton('left', '');
-        $obj  = $alumniCategoriesHandler->get($_REQUEST['cid']);
+        $obj  = $alumniCategoriesHandler->get(Request::getInt('cid', 0, 'GET'));
         $form = $obj->getForm();
         $form->display();
         break;
@@ -267,8 +269,8 @@ switch ($op) {
     case 'delete_category':
         $xoops = Xoops::getInstance();
         $xoops->header();
-        $obj = $alumniCategoriesHandler->get($_REQUEST['cid']);
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        $obj = $alumniCategoriesHandler->get(Request::getInt('cid', 0, 'GET'));
+        if (1 == Request::getInt('ok', null, 'POST')) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 $xoops->redirect('alumni_categories.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -278,7 +280,7 @@ switch ($op) {
                 echo $obj->getHtmlErrors();
             }
         } else {
-            $xoops->confirm(array('ok' => 1, 'cid' => $_REQUEST['cid'], 'op' => 'delete_category'), $_SERVER['REQUEST_URI'], sprintf(constant($adminLang . '_FORMSUREDEL'), $obj->getVar('category')));
+            echo $xoops->confirm(array('ok' => 1, 'cid' => Request::getInt('cid', 0, 'GET'), 'op' => 'delete_category'), Request::getString('REQUEST_URI', '', 'SERVER'), sprintf(constant($adminLang . '_FORMSUREDEL'), $obj->getVar('category')));
         }
         break;
 }

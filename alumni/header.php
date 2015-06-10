@@ -24,15 +24,14 @@ include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 include_once __DIR__ . '/include/common.php';
 
 $moduleDirName = basename(__DIR__);
-$modinfoLang  = '_MI_' . strtoupper($moduleDirName);
-$mainLang     = '_MA_' . strtoupper($moduleDirName);
+$modinfoLang   = '_MI_' . strtoupper($moduleDirName);
+$mainLang      = '_MA_' . strtoupper($moduleDirName);
 $blocksLang    = '_MB_' . strtoupper($moduleDirName);
 
 // Get main instance
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
-//$request = Xoops_Request::getInstance();
 $helper = Alumni::getInstance();
 //$xoops = Xoops::getInstance();
 $xoops = $helper->xoops();
@@ -46,8 +45,8 @@ $groupPermHandler = $helper->getGrouppermHandler();
 $groups = $xoops->getUserGroups();
 $uid    = $helper->getUserId();
 // Define Stylesheet
-$xoops->theme()->addStylesheet($helper->url('css/styles.css'));
-$xoops->theme()->addStylesheet($helper->url('css/rating.css'));
+//$xoops->theme()->addStylesheet($helper->url('css/styles.css'));
+//$xoops->theme()->addStylesheet($helper->url('css/rating.css'));
 
 // Get $_POST, $_GET, $_REQUEST
 //$start = Request::getInt('start', 0);

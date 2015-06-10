@@ -12,34 +12,35 @@
 <{/if}>
 <!--Page content-->
 <{if $category_count|default:false}>
-<table id="xo-smilies-sorter" class="outer tablesorter">
-    <thead>
-    <tr>
-        <th class="txtcenter"><{translate key="ID"}></th>
-        <th class="txtleft"><{translate key="TITLE"}></th>
-        <th class="txtleft"><{translate key="ALUMNI_SELECT_GROUPS"}></th>
-    </tr>
-    </thead>
-    <tbody>
-    <{foreach item=category from=$categories}>
-    <tr class="<{cycle values='even,odd'}> alignmiddle">
-        <td class="txtcenter width5"><{$category.id}></td>
-        <td class="txtleft width45"><{$category.title}></td>
-        <td class="xo-actions txtleft">
-            <{$category.permissions}>
-        </td>
-    </tr>
-    <{/foreach}>
-    </tbody>
-</table>
-<div class="clear spacer"></div>
-<{if $nav_menu|default:false}>
-<div class="xo-avatar-pagenav floatright"><{$nav_menu}></div><div class="clear spacer"></div>
-<{/if}>
+    <table id="xo-smilies-sorter" class="outer tablesorter">
+        <thead>
+        <tr>
+            <th class="txtcenter"><{translate key="ID"}></th>
+            <th class="txtleft"><{translate key="TITLE"}></th>
+            <th class="txtleft"><{translate key="ALUMNI_SELECT_GROUPS"}></th>
+        </tr>
+        </thead>
+        <tbody>
+        <{foreach item=category from=$categories}>
+            <tr class="<{cycle values='even,odd'}> alignmiddle">
+                <td class="txtcenter width5"><{$category.id}></td>
+                <td class="txtleft width45"><{$category.title}></td>
+                <td class="xo-actions txtleft">
+                    <{$category.permissions}>
+                </td>
+            </tr>
+        <{/foreach}>
+        </tbody>
+    </table>
+    <div class="clear spacer"></div>
+    <{if $nav_menu|default:false}>
+        <div class="xo-avatar-pagenav floatright"><{$nav_menu}></div>
+        <div class="clear spacer"></div>
+    <{/if}>
 <{/if}>
 <!-- Display form (add,edit) -->
 <{if $error_message|default:false}>
-<div class="alert alert-error">
-    <strong><{$error_message}></strong>
-</div>
+    <div class="alert alert-error">
+        <strong><{$error_message}></strong>
+    </div>
 <{/if}>

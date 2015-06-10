@@ -1,5 +1,9 @@
 <{foreach item=item from=$block.items}>
-	<{$item.school}><br /><{$item.link}><br /><br />
+    <{$item.school}>
+    <br/>
+    <{$item.link}>
+    <br/>
+    <br/>
 <{/foreach}>
-<br />
+<br/>
 <{$block.link}>

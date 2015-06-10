@@ -17,7 +17,7 @@
 include __DIR__ . '/header.php';
 
 $xoops = Xoops::getInstance();
-$op    = $request->asStr('op', 'alumni_view');
+$op    = Request::getString('op', 'alumni_view');
 $xoops->header();
 $admin_page = new Xoops\Module\Admin();
 $admin_page->displayNavigation('groupperm.php');

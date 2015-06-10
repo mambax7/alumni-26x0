@@ -4,10 +4,13 @@
 //                            By John Mordo - jlm69                          //
 //                             Licence Type   : GPL                          //
 // ------------------------------------------------------------------------- //
+
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 
 $moduleDirName = basename(__DIR__);
-$mainLang     = '_MA_' . strtoupper($moduleDirName);
+$mainLang      = '_MA_' . strtoupper($moduleDirName);
 require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
 $myts      = MyTextSanitizer::getInstance();
 $xoops     = Xoops::getInstance();
@@ -91,7 +94,7 @@ if ($xoops->getModuleConfig('' . $moduleDirName . '_offer_search') == '1') {
     $cattree = new AlumniObjectTree($category_arr, 'cid', 'pid');
 
     $categories      = $alumni->getCategoryHandler()->getCategoriesForSearch();
-    $by_cat          = XoopsRequest::getInt('by_cat');
+    $by_cat          = Request::getInt('by_cat', 0, 'POST');
     $select_category = "<select name=\"by_cat\">";
     $select_category .= "<option value=\"all\"";
     if (empty($by_cat) || count($by_cat) == 0) {

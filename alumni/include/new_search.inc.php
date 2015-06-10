@@ -15,20 +15,21 @@
 // Author Website : pascal.e-xoops@perso-search.com                          //
 // Licence Type   : GPL                                                      //
 // ------------------------------------------------------------------------- //
+use Xoops\Core\Request;
 
 $moduleDirName = basename(dirname(__DIR__));
 $xoops         = Xoops::getInstance();
 require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
 include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php");
 
-$alumni  = Alumni::getInstance();
-$request = Xoops_Request::getInstance();
+$alumni = Alumni::getInstance();
+
 $myts    = MyTextSanitizer::getInstance();
-$by_cat  = $request->asInt('by_cat', '');
-$andor   = $request->asStr('query', 'OR');
+$by_cat  = Request::getInt('by_cat', '');
+$andor   = Request::getString('query', 'OR');
 $queries = array();
-$query   = $request->asStr('query', '');
-$start   = $request->asInt('start', '0');
+$query   = Request::getString('query', '');
+$start   = Request::getString('start', '0');
 
 function alumni_search($queries, $andor, $limit, $start, $userid, $by_cat)
 {

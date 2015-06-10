@@ -10,10 +10,13 @@
 // Author Website : jlmzone.com                          //
 // Licence Type   : GPL                                                      //
 // ------------------------------------------------------------------------- //
+
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 
 $moduleDirName = basename(__DIR__);
-$mainLang     = '_MA_' . strtoupper($moduleDirName);
+$mainLang      = '_MA_' . strtoupper($moduleDirName);
 require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
 $myts      = MyTextSanitizer::getInstance();
 $xoops     = Xoops::getInstance();
@@ -40,20 +43,22 @@ if (!$groupPermHandler->checkRight('' . $moduleDirName . '_premium', $perm_itemi
 } else {
     $prem_perm = '1';
 }
-if (isset($_REQUEST['lid'])) {
-    $lid = (int)($_REQUEST['lid']);
-    $lid = ((int)($lid) > 0) ? (int)($lid) : 0;
-}
+//if (isset($_REQUEST['lid'])) {
+//    $lid = (int)($_REQUEST['lid']);
+//    $lid = ((int)($lid) > 0) ? (int)($lid) : 0;
+//}
+$lid = Request::getInt('lid', 0, 'GET');
 $xoops->header('module:alumni/alumni_item.tpl');
 Xoops::getInstance()->header();
 //$xoops->tpl() = $xoops->tpl();
 include(XOOPS_ROOT_PATH . '/class/pagenav.php');
 
-if (isset($_REQUEST['op'])) {
-    $op = $_REQUEST['op'];
-} else {
-    $op = 'list';
-}
+//if (isset($_REQUEST['op'])) {
+//    $op = $_REQUEST['op'];
+//} else {
+//    $op = 'list';
+//}
+$op = Request::getCmd('op', Request::getCmd('op', 'list', 'GET'), 'POST');
 
 switch ($op) {
     case 'list':
@@ -243,9 +248,9 @@ switch ($op) {
             }
         }
 
-        if (isset($_REQUEST['lid'])) {
-            $obj = $listingHandler->get($_REQUEST['lid']);
-            $obj->setVar('date', $_REQUEST['date']);
+        if ($tempLid = Request::getInt('lid', null, 'GET')) {
+            $obj = $listingHandler->get($tempLid);
+            $obj->setVar('date', Request::getString('date', '', 'POST'));
 
         } else {
             $obj = $listingHandler->create();
@@ -254,41 +259,40 @@ switch ($op) {
         }
 
         $destination = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
-        if (isset($_REQUEST['del_photo'])) {
-            if ($_REQUEST['del_photo'] == '1') {
-                if (@file_exists('' . $destination . '/' . $_REQUEST['photo_old'] . '')) {
-                    unlink('' . $destination . '/' . $_REQUEST['photo_old'] . '');
-                }
-                $obj->setVar('photo', '');
+        if (1 == Request::getInt('del_photo', null, 'POST')) {
+            if (@file_exists('' . $destination . '/' . Request::getString('photo_old', '', 'POST') . '')) {
+                unlink('' . $destination . '/' . Request::getString('photo_old', '', 'POST') . '');
             }
-        }
-        $destination2 = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
-        if (isset($_REQUEST['del_photo2'])) {
-            if ($_REQUEST['del_photo2'] == '1') {
-                if (@file_exists('' . $destination2 . '/' . $_REQUEST['photo2_old'] . '')) {
-                    unlink('' . $destination2 . '/' . $_REQUEST['photo2_old'] . '');
-                }
-                $obj->setVar('photo2', '');
-            }
+            $obj->setVar('photo', '');
         }
 
-        if (isset($_REQUEST['lid'])) {
-            $obj->setVar('lid', $_REQUEST['lid']);
+        $destination2 = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
+
+        if (1 == Request::getInt('del_photo2', null, 'POST')) {
+            if (@file_exists('' . $destination2 . '/' . Request::getString('photo_old2', '', 'POST') . '')) {
+                unlink('' . $destination2 . '/' . Request::getString('photo_old2', '', 'POST') . '');
+            }
+            $obj->setVar('photo2', '');
         }
-        $obj->setVar('cid', $_REQUEST['cid']);
-        $obj->setVar('name', $_REQUEST['name']);
-        $obj->setVar('mname', $_REQUEST['mname']);
-        $obj->setVar('lname', $_REQUEST['lname']);
-        $obj->setVar('school', $_REQUEST['school']);
-        $obj->setVar('year', $_REQUEST['year']);
-        $obj->setVar('studies', $_REQUEST['studies']);
-        $obj->setVar('activities', $_REQUEST['activities']);
-        $obj->setVar('extrainfo', $_REQUEST['extrainfo']);
-        $obj->setVar('occ', $_REQUEST['occ']);
-        $obj->setVar('email', $_REQUEST['email']);
-        $obj->setVar('submitter', $_REQUEST['submitter']);
-        $obj->setVar('usid', $_REQUEST['usid']);
-        $obj->setVar('town', $_REQUEST['town']);
+
+        if ($tempLid = Request::getInt('lid', null, 'POST')) {
+            $obj->setVar('lid', $tempLid);
+        }
+
+        $obj->setVar('cid', Request::getInt('cid', null, 'POST')); //$_REQUEST['cid']);
+        $obj->setVar('name', Request::getString('name', '', 'POST')); //$_REQUEST['name']);
+        $obj->setVar('mname', Request::getString('mname', '', 'POST')); //$_REQUEST['mname']);
+        $obj->setVar('lname', Request::getString('lname', '', 'POST')); //$_REQUEST['lname']);
+        $obj->setVar('school', Request::getString('school', '', 'POST')); //$_REQUEST['year']); $cat_name);
+        $obj->setVar('year', Request::getString('year', '', 'POST')); //$_REQUEST['year']);
+        $obj->setVar('studies', Request::getString('studies', '', 'POST')); //$_REQUEST['studies']);
+        $obj->setVar('activities', Request::getString('activities', '', 'POST')); //$_REQUEST['activities']);
+        $obj->setVar('extrainfo', Request::getString('extrainfo', '', 'POST')); //$_REQUEST['extrainfo']);
+        $obj->setVar('occ', Request::getString('occ', '', 'POST')); //$_REQUEST['occ']);
+        $obj->setVar('email', Request::getString('email', '', 'POST')); //$_REQUEST['email']);
+        $obj->setVar('submitter', Request::getString('submitter', '', 'POST')); //$_REQUEST['submitter']);
+        $obj->setVar('usid', Request::getInt('usid', null, 'POST')); //$_REQUEST['usid']);
+        $obj->setVar('town', Request::getString('town', '', 'POST')); //$_REQUEST['town']);
 
         if ($xoops->getModuleConfig('alumni_moderated') == '1') {
             $obj->setVar('valid', '0');
@@ -316,7 +320,7 @@ switch ($op) {
                     $obj->setVar('photo', $uploader->getSavedFileName());
                 }
             } else {
-                $obj->setVar('photo', $_REQUEST['photo']);
+                $obj->setVar('photo', Request::getString('photo', '', 'POST'));
             }
         }
 
@@ -338,7 +342,7 @@ switch ($op) {
                     $obj->setVar('photo2', $uploader2->getSavedFileName());
                 }
             } else {
-                $obj->setVar('photo2', $_REQUEST['photo2']);
+                $obj->setVar('photo2', Request::getString('photo2', '', 'POST'));
             }
         }
 
@@ -353,7 +357,7 @@ switch ($op) {
                 $notificationHandler = Notifications::getInstance()->getHandlerNotification();
                 $tags                = array();
                 $tags['MODULE_NAME'] = 'alumni';
-                $tags['ITEM_NAME']   = $request->asStr('lname', '');
+                $tags['ITEM_NAME']   = Request::getString('lname', '', 'POST');
                 $tags['ITEM_URL']    = XOOPS_URL . '/modules/alumni/listing.php?lid=' . $new_id;
                 $notificationHandler->triggerEvent('global', 0, 'new_listing', $tags);
                 $notificationHandler->triggerEvent('category', $new_id, 'new_listing', $tags);
@@ -366,14 +370,14 @@ switch ($op) {
         break;
 
     case 'edit_listing':
-        $obj  = $listingHandler->get($_REQUEST['lid']);
+        $obj  = $listingHandler->get(Request::getInt('lid', 0, 'GET'));
         $form = $obj->getForm();
         $form->display();
         break;
 
     case 'delete_listing':
-        $obj = $listingHandler->get($_REQUEST['lid']);
-        if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
+        $obj = $listingHandler->get(Request::getInt('lid', 0, 'GET'));
+        if (1 == Request::getInt('ok', null, 'POST')) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 $xoops->redirect('index.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -383,7 +387,7 @@ switch ($op) {
                 echo $obj->getHtmlErrors();
             }
         } else {
-            $xoops->confirm(array('ok' => 1, 'lid' => $_REQUEST['lid'], 'op' => 'delete_listing'), $_SERVER['REQUEST_URI'], sprintf(constant($mainLang . '_FORMSUREDEL'), $obj->getVar('lid')));
+            $xoops->confirm(array('ok' => 1, 'lid' => Request::getInt('lid', 0, 'GET'), 'op' => 'delete_listing'), Request::getString('REQUEST_URI', '', 'SERVER'), sprintf(constant($mainLang . '_FORMSUREDEL'), $obj->getVar('lid')));
         }
         break;
 }

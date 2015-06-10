@@ -20,6 +20,7 @@
  */
 
 use Xoops\Core\Database\Connection;
+use Xoops\Core\Request;
 
 //defined('XOOPS_ROOT_PATH') or exit('XOOPS root path not defined');
 $xoops = Xoops::getInstance();
@@ -85,7 +86,7 @@ class alumni_listing extends XoopsObject
         global $xoopsDB;
         $xoops = Xoops::getInstance();
         if ($action === false) {
-            $action = $_SERVER['REQUEST_URI'];
+            $action = Request::getVar('REQUEST_URI', '', 'SERVER');
         }
 
         $moduleDirName = basename(dirname(__DIR__));
@@ -178,8 +179,8 @@ class alumni_listing extends XoopsObject
         $form->addElement(new Xoops\Form\Text(AlumniLocale::A_TOWN_2, 'town', 50, 255, $this->getVar('town')), false);
         $form->addElement(new Xoops\Form\RadioYesNo(AlumniLocale::A_APPROVE_2, 'valid', $this->getVar('valid'), XoopsLocale::YES, XoopsLocale::NO));
 
-        if (isset($_REQUEST['date'])) {
-            $form->addElement(new Xoops\Form\Hidden('date', $_REQUEST['date']));
+        if ($tempDate = Request::getString('date', '', 'POST')) {
+            $form->addElement(new Xoops\Form\Hidden('date', $tempDate));
         } else {
             $form->addElement(new Xoops\Form\Hidden('date', time()));
         }
@@ -213,7 +214,7 @@ class alumni_listing extends XoopsObject
         $adminLang = '_AM_' . strtoupper($moduleDirName);
 
         if ($action === false) {
-            $action = $_SERVER['REQUEST_URI'];
+            $action = Request::getString('REQUEST_URI', '', 'SERVER');
         }
         if ('1' == $xoops->getModuleConfig('alumni_moderated')) {
             $title = $this->isNew() ? sprintf(constant($adminLang . '_ADD_LINK_MOD')) : sprintf(constant($adminLang . '_LISTING_EDIT_MOD'));
@@ -225,9 +226,10 @@ class alumni_listing extends XoopsObject
         $memberHandler = $xoops->getHandlerMember();
         $userGroups    = $memberHandler->getGroupList();
 
-        if (isset($_REQUEST['lid'])) {
-            $lid = $_REQUEST['lid'];
-        }
+        //        if (isset($_REQUEST['lid'])) {
+        //            $lid = $_REQUEST['lid'];
+        //        }
+        $lid = Request::getInt('lid', 0, 'GET');
 
         $form = new XoopsThemeForm($title, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
@@ -238,23 +240,23 @@ class alumni_listing extends XoopsObject
         $categories              = $alumniCategoriesHandler->getObjects();
         $mytree                  = new XoopsObjectTree($categories, 'cid', 'pid');
 
-        if (isset($_REQUEST['lid'])) {
+        if ($tempLid = Request::getInt('lid', 0, 'GET')) {
             $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-            $listingObj           = $alumniListingHandler->get($_REQUEST['lid']);
+            $listingObj           = $alumniListingHandler->get($tempLid);
             $cat_id               = $listingObj->getVar('cid');
             $category_select      = $mytree->makeSelBox('cid', 'title', '--', $listingObj->getVar('cid'), true);
 
             $form->addElement(new Xoops\Form\Label(constant($adminLang . '_CAT'), $category_select), true);
 
-            $cat_name = '';
-            //            $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-            $catObj   = $alumniCategoriesHandler->get($listingObj->getVar('cid'));
-            $cat_name = $catObj->getVar('title');
+            $cat_name                = '';
+            $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
+            $catObj                  = $alumniCategoriesHandler->get($listingObj->getVar('cid'));
+            $cat_name                = $catObj->getVar('title');
         } else {
-            if (isset($_REQUEST['cid'])) {
-                //                $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-                $catObj   = $alumniCategoriesHandler->get($_REQUEST['cid']);
-                $cat_name = $catObj->getVar('title');
+            if ($tempCid = Request::getInt('cid', 0, 'GET')) {
+                $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
+                $catObj                  = $alumniCategoriesHandler->get($tempCid);
+                $cat_name                = $catObj->getVar('title');
 
                 $category_select = $mytree->makeSelBox('cid', 'title', '--', $catObj->getVar('cid'), true);
 
@@ -328,8 +330,8 @@ class alumni_listing extends XoopsObject
             $form->addElement(new Xoops\Form\Captcha());
         }
 
-        if (isset($_REQUEST['date'])) {
-            $form->addElement(new Xoops\Form\Hidden('date', $_REQUEST['date']));
+        if ($tempDate = Request::getString('date', '', 'POST')) {
+            $form->addElement(new Xoops\Form\Hidden('date', $tempDate));
         } else {
             $form->addElement(new XoopsFormHidden('date', time()));
         }

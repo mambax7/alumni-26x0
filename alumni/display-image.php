@@ -8,8 +8,10 @@
 // Author Website : pascal.e-xoops@perso-search.com
 // Licence Type   : GPL
 // ------------------------------------------------------------------------- //
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
-$lid = (int)($_REQUEST['lid']);
+$lid = Request::getInt('lid', 0, 'GET');
 
 global $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsDB, $xoops_footer, $xoopsLogger;
 $currenttheme = $xoopsConfig['theme_set'];
@@ -22,7 +24,7 @@ $listing_arr = $alumniListingHandler->get($lid);
 
 if ($numrows > '0') {
     $photo = $listing_arr->getvar('photo');
-    echo '<center><br /><br /><img src="photos/grad_photo/$photo" border=0></center>';
+    echo '<center><br /><br /><img src="photos/grad_photo/' . $photo . '" border=0></center>';
 }
 
 echo '<center><table><tr><td><a href=#  onClick="window.close()">' . constant($mainLang . '_CLOSEF') . '</a></td></tr></table></center>';

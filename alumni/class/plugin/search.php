@@ -20,12 +20,14 @@
  */
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-$by_cat = '';
-if (!empty($_GET['by_cat'])) {
-    $by_cat = $_GET['by_cat'];
-} elseif (!empty($_POST['by_cat'])) {
-    $by_cat = $_POST['by_cat'];
-}
+//$by_cat = '';
+//if (!empty($_GET['by_cat'])) {
+//    $by_cat = $_GET['by_cat'];
+//} elseif (!empty($_POST['by_cat'])) {
+//    $by_cat = $_POST['by_cat'];
+//}
+
+$by_cat = Request::getCmd('by_cat', Request::getCmd('by_cat', '', 'POST'), 'GET');
 
 /**
  * Class AlumniSearchPlugin

@@ -2,16 +2,20 @@
 //                 Alumni for Xoops 2.5.5 and up  by John Mordo - jlm69 at Xoops              //
 //                                                                                           //
 // include_once '../../../include/cp_header.php';
+
+use Xoops\Core\Request;
+
 include __DIR__ . '/admin_header.php';
 $moduleDirName = basename(dirname(__DIR__));
 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 $myts  = MyTextSanitizer::getInstance();
 $xoops = Xoops::getInstance();
 
-$op = 'list';
-if (isset($_REQUEST['op'])) {
-    $op = $_REQUEST['op'];
-}
+//$op = 'list';
+//if (isset($_REQUEST['op'])) {
+//    $op = $_REQUEST['op'];
+//}
+$op = Request::getCmd('op', Request::getCmd('op', 'list', 'GET'), 'POST');
 
 switch ($op) {
     case 'list':
@@ -37,12 +41,12 @@ switch ($op) {
 
         $indexAdmin->renderButton('left', '');
 
-        $listing_count = $alumniListingHandler->countAlumni();
-        $listing_arr   = $alumniListingHandler->getAll();
+        $listingCount = $alumniListingHandler->countAlumni();
+        $listing_arr  = $alumniListingHandler->getAll();
 
         // Assign Template variables
-        $xoops->tpl()->assign('listing_count', $listing_count);
-        if ($listing_count > 0) {
+        $xoops->tpl()->assign('listingCount', $listingCount);
+        if ($listingCount > 0) {
             foreach (array_keys($listing_arr) as $i) {
 
                 $lid        = $listing_arr[$i]->getVar('lid');
@@ -147,55 +151,60 @@ switch ($op) {
 
         $date = time();
 
-        if (isset($_REQUEST['lid'])) {
-            $obj = $alumniListingHandler->get($_REQUEST['lid']);
-            $obj->setVar('lid', $_REQUEST['lid']);
+        //        if (isset($_REQUEST['lid'])) {
+        //            $obj = $alumniListingHandler->get($_REQUEST['lid']);
+        //            $obj->setVar('lid', $_REQUEST['lid']);
+        //        } else {
+        //            $obj = $alumniListingHandler->create();
+        //        }
+
+        if ($tempLid = Request::getInt('lid', null, 'POST')) {
+            $obj = $alumniListingHandler->get($tempLid);
+            $obj->setVar('lid', $lidTest);
         } else {
             $obj = $alumniListingHandler->create();
         }
 
         $destination = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
-        if (isset($_REQUEST['del_photo'])) {
-            if ('1' == $_REQUEST['del_photo']) {
-                if (@file_exists('' . $destination . '/' . $_REQUEST['photo_old'] . '')) {
-                    unlink('' . $destination . '/' . $_REQUEST['photo_old'] . '');
-                }
-                $obj->setVar('photo', '');
+
+        if ('1' == Request::getInt('del_photo', null, 'POST')) {
+            if (@file_exists('' . $destination . '/' . Request::getString('photo_old', '', 'POST') . '')) {
+                unlink('' . $destination . '/' . Request::getString('photo_old', '', 'POST') . '');
             }
+            $obj->setVar('photo', '');
         }
+
         $destination2 = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
-        if (isset($_REQUEST['del_photo2'])) {
-            if ('1' == $_REQUEST['del_photo2']) {
-                if (@file_exists('' . $destination2 . '/' . $_REQUEST['photo2_old'] . '')) {
-                    unlink('' . $destination2 . '/' . $_REQUEST['photo2_old'] . '');
-                }
-
-                $obj->setVar('photo2', '');
+        if ('1' == Request::getInt('del_photo2', null, 'POST')) {
+            if (@file_exists('' . $destination2 . '/' . Request::getString('photo2_old', '', 'POST') . '')) {
+                unlink('' . $destination2 . '/' . Request::getString('photo_old2', '', 'POST') . '');
             }
+
+            $obj->setVar('photo2', '');
         }
 
-        if (isset($_REQUEST['cid'])) {
+        if ($tempCid = Request::getInt('cid', null, 'POST')) {
             $cat_name                = '';
             $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-            $catObj                  = $alumniCategoriesHandler->get($_REQUEST['cid']);
+            $catObj                  = $alumniCategoriesHandler->get($tempCid);
             $cat_name                = $catObj->getVar('title');
         }
 
-        $obj->setVar('cid', $_REQUEST['cid']);
-        $obj->setVar('name', $_REQUEST['name']);
-        $obj->setVar('mname', $_REQUEST['mname']);
-        $obj->setVar('lname', $_REQUEST['lname']);
+        $obj->setVar('cid', Request::getInt('cid', null, 'POST')); //$_REQUEST['cid']);
+        $obj->setVar('name', Request::getString('name', '', 'POST')); //$_REQUEST['name']);
+        $obj->setVar('mname', Request::getString('mname', '', 'POST')); //$_REQUEST['mname']);
+        $obj->setVar('lname', Request::getString('lname', '', 'POST')); //$_REQUEST['lname']);
         $obj->setVar('school', $cat_name);
-        $obj->setVar('year', $_REQUEST['year']);
-        $obj->setVar('studies', $_REQUEST['studies']);
-        $obj->setVar('activities', $_REQUEST['activities']);
-        $obj->setVar('extrainfo', $_REQUEST['extrainfo']);
-        $obj->setVar('occ', $_REQUEST['occ']);
+        $obj->setVar('year', Request::getString('year', '', 'POST')); //$_REQUEST['year']);
+        $obj->setVar('studies', Request::getString('studies', '', 'POST')); //$_REQUEST['studies']);
+        $obj->setVar('activities', Request::getString('activities', '', 'POST')); //$_REQUEST['activities']);
+        $obj->setVar('extrainfo', Request::getString('extrainfo', '', 'POST')); //$_REQUEST['extrainfo']);
+        $obj->setVar('occ', Request::getString('occ', '', 'POST')); //$_REQUEST['occ']);
         $obj->setVar('date', time());
-        $obj->setVar('email', $_REQUEST['email']);
-        $obj->setVar('submitter', $_REQUEST['submitter']);
-        $obj->setVar('usid', $_REQUEST['usid']);
-        $obj->setVar('town', $_REQUEST['town']);
+        $obj->setVar('email', Request::getString('email', '', 'POST')); //$_REQUEST['email']);
+        $obj->setVar('submitter', Request::getString('submitter', '', 'POST')); //$_REQUEST['submitter']);
+        $obj->setVar('usid', Request::getInt('usid', null, 'POST')); //$_REQUEST['usid']);
+        $obj->setVar('town', Request::getString('town', '', 'POST')); //$_REQUEST['town']);
 
         if ('1' == $xoops->getModuleConfig('alumni_moderate')) {
             $obj->setVar('valid', '0');
@@ -224,7 +233,7 @@ switch ($op) {
 
                 }
             } else {
-                $obj->setVar('photo', $_REQUEST['photo']);
+                $obj->setVar('photo', Request::getString('photo', '', 'POST'));
             }
         }
 
@@ -247,7 +256,7 @@ switch ($op) {
                     $obj->setVar('photo2', $uploader2->getSavedFileName());
                 }
             } else {
-                $obj->setVar('photo2', $_REQUEST['photo2']);
+                $obj->setVar('photo2', Request::getString('photo2', '', 'POST'));
             }
         }
 
@@ -258,8 +267,8 @@ switch ($op) {
             if (0 == $lid && $xoops->isActiveModule('notifications')) {
                 $notificationHandler = Notifications::getInstance()->getHandlerNotification();
                 $tags                = array();
-                $tags['MODULE_NAME'] = 'alumni';
-                $tags['ITEM_NAME']   = $request->asStr('lname', '');
+                $tags['MODULE_NAME'] = $moduleDirName;
+                $tags['ITEM_NAME']   = Request::getString('lname', '', 'POST');
                 $tags['ITEM_URL']    = XOOPS_URL . "/modules/{$moduleDirName}/listing.php?lid=" . $new_id;
                 $notificationHandler->triggerEvent('global', 0, 'newlisting', $tags);
                 $notificationHandler->triggerEvent('item', $new_id, 'newlisting', $tags);
@@ -277,15 +286,15 @@ switch ($op) {
         $indexAdmin->addItemButton(constant($adminLang . '_ADD_LINK'), 'alumni.php?op=new_listing', 'add');
         $indexAdmin->addItemButton(constant($adminLang . '_LISTINGLIST'), 'alumni.php', 'list');
         echo $indexAdmin->renderButton('left', '');
-        $obj  = $alumniListingHandler->get($_REQUEST['lid']);
+        $obj  = $alumniListingHandler->get(Request::getInt('lid', 0, 'GET'));
         $form = $obj->getAdminForm();
         $form->display();
         break;
 
     case 'delete_listing':
         $xoops->header();
-        $obj = $alumniListingHandler->get($_REQUEST['lid']);
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        $obj = $alumniListingHandler->get(Request::getInt('lid', 0, 'POST'));
+        if (1 == Request::getInt('ok', null, 'POST')) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 $xoops->redirect('alumni.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -295,12 +304,12 @@ switch ($op) {
                 echo $obj->getHtmlErrors();
             }
         } else {
-            $xoops->confirm(array('ok' => 1, 'lid' => $_REQUEST['lid'], 'op' => 'delete_listing'), $_SERVER['REQUEST_URI'], sprintf(constant($adminLang . '_FORMSUREDEL'), $obj->getVar('lid')));
+            $xoops->confirm(array('ok' => 1, 'lid' => Request::getInt('lid', 0, 'GET'), 'op' => 'delete_listing'), Request::getString('REQUEST_URI', '', 'SERVER'), sprintf(constant($adminLang . '_FORMSUREDEL'), $obj->getVar('lid')));
         }
         break;
 
     case 'update_status':
-        $lid = $request->asInt('lid', 0);
+        $lid = Request::getInt('lid', 0, 'POST');
         if ($lid > 0) {
             $obj = $alumniListingHandler->get($lid);
             $obj->setVar('valid', 1);
@@ -333,12 +342,12 @@ switch ($op) {
         $moderate_criteria = new CriteriaCompo();
         $moderate_criteria->add(new Criteria('valid', 0, '='));
         $moderate_criteria->add(new Criteria('cid', '(' . implode(', ', $alumni_ids) . ')', 'IN'));
-        $listing_count = $listingHandler->getCount($moderate_criteria);
-        $listing_arr   = $listingHandler->getAll($moderate_criteria);
+        $listingCount = $listingHandler->getCount($moderate_criteria);
+        $listing_arr  = $listingHandler->getAll($moderate_criteria);
 
         // Assign Template variables
-        $xoops->tpl()->assign('listing_count', $listing_count);
-        if ($listing_count > 0) {
+        $xoops->tpl()->assign('listingCount', $listingCount);
+        if ($listingCount > 0) {
             foreach (array_keys($listing_arr) as $i) {
 
                 $lid        = $listing_arr[$i]->getVar('lid');

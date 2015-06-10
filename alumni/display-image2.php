@@ -9,7 +9,7 @@
 // Licence Type   : GPL
 // ------------------------------------------------------------------------- //
 include __DIR__ . '/header.php';
-$lid = (int)($_REQUEST['lid']);
+$lid = Request::getInt('lid', 0, 'POST');
 
 global $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsDB, $xoops_footer, $xoopsLogger;
 $currenttheme = $xoopsConfig['theme_set'];

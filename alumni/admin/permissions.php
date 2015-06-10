@@ -27,7 +27,8 @@ $system = System::getInstance();
 $xoops  = Xoops::getInstance();
 
 // Get Action type
-$op = $system->cleanVars($_REQUEST, 'op', 'view', 'string');
+//$op = $system->cleanVars($_REQUEST, 'op', 'view', 'string');
+$op = Request::getCmd('op', Request::getCmd('op', 'view', 'GET'), 'POST');
 // Call header
 $xoops->header();
 

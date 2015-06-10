@@ -1,14 +1,12 @@
-﻿
-<{include file="admin:system/admin_navigation.tpl"}>
+﻿<{include file="admin:system/admin_navigation.tpl"}>
 <{include file="admin:system/admin_tips.tpl"}>
 <{include file="admin:system/admin_buttons.tpl"}>
 
 <!--Page content-->
-<{if $listing_count == true}>
+<{if $listingCount == true}>
 
 
-
- <div class="pager"><span class="pagedisplay"></span>
+<div class="pager"><span class="pagedisplay"></span>
     <table id='mytable' class="tablesorter">
         <thead>
         <tr>
@@ -25,67 +23,58 @@
         </thead>
         <tbody>
         <{foreach item=a_listing from=$listing}>
-        <tr class="<{cycle values='even,odd'}> alignmiddle">
+            <tr class="<{cycle values='even,odd'}> alignmiddle">
 
-            <td class="txtleft width35"><{$a_listing.lid}></td>
-            <td class="txtleft width35"><{$a_listing.name}></td>
-            <td class="txtcenter width5"><{$a_listing.school}></td>
-            <td class="txtcenter width5"><{$a_listing.year}></td>
-            <td class="txtcenter width5"><{$a_listing.date}></td>
-            <td class="txtcenter width5"><{$a_listing.submitter}></td>
-            <td class="txtcenter width5"><{$a_listing.valid}></td>
-            <td class="txtcenter width5"><{$a_listing.view}></td>
+                <td class="txtleft width35"><{$a_listing.lid}></td>
+                <td class="txtleft width35"><{$a_listing.name}></td>
+                <td class="txtcenter width5"><{$a_listing.school}></td>
+                <td class="txtcenter width5"><{$a_listing.year}></td>
+                <td class="txtcenter width5"><{$a_listing.date}></td>
+                <td class="txtcenter width5"><{$a_listing.submitter}></td>
+                <td class="txtcenter width5"><{$a_listing.valid}></td>
+                <td class="txtcenter width5"><{$a_listing.view}></td>
 
-            <td class="xo-actions txtcenter width10">
+                <td class="xo-actions txtcenter width10">
 
-                <a href="alumni.php?op=edit_listing&amp;lid=<{$a_listing.lid}>" title="<{translate key="A_EDIT"}>">
-                    <img src="<{xoAdminIcons 'edit.png'}>" alt="<{translate key="A_EDIT"}>">
-                </a>
-                <a href="alumni.php?op=delete_listing&amp;lid=<{$a_listing.lid}>" title="<{translate key="A_DELETE"}>">
-                    <img src="<{xoAdminIcons 'delete.png'}>" alt="<{translate key="A_DELETE"}>">
-                </a>
-            </td>
-        </tr>
+                    <a href="alumni.php?op=edit_listing&amp;lid=<{$a_listing.lid}>" title="<{translate key="A_EDIT"}>">
+                        <img src="<{xoAdminIcons 'edit.png'}>" alt="<{translate key="A_EDIT"}>">
+                    </a>
+                    <a href="alumni.php?op=delete_listing&amp;lid=<{$a_listing.lid}>" title="<{translate key="A_DELETE"}>">
+                        <img src="<{xoAdminIcons 'delete.png'}>" alt="<{translate key="A_DELETE"}>">
+                    </a>
+                </td>
+            </tr>
         <{/foreach}>
         </tbody>
     </table>
 
-    
-    
-    
-          <div class="pager">
-          <nav class="left">
+
+    <div class="pager">
+        <nav class="left">
             # per page:
             <a href="#" class="current">10</a> |
             <a href="#">25</a> |
             <a href="#">50</a> |
             <a href="#">100</a>
-          </nav>
-          <nav class="right">
+        </nav>
+        <nav class="right">
             <span class="prev">
-              <img src="../media/jquery/addons/pager/icons/prev.png" /> Prev&nbsp;
+              <img src="../media/jquery/addons/pager/icons/prev.png"/> Prev&nbsp;
             </span>
             <span class="pagecount"></span>
             &nbsp;<span class="next">Next
-              <img src="../media/jquery/addons/pager/icons/next.png" />
+              <img src="../media/jquery/addons/pager/icons/next.png"/>
             </span>
-          </nav>
-        </div>  
-    
-    
-    
-    
-    
-    
+        </nav>
+    </div>
+
     <div class="clear spacer"></div>
 
+    <{/if}>
 
-<{/if}>
-
-<!-- Display form (add,edit) -->
-<{if $error_message}>
-    <div class="alert alert-error">
-        <strong><{$error_message}></strong>
-    </div>
-<{/if}>
-
+    <!-- Display form (add,edit) -->
+    <{if $error_message}>
+        <div class="alert alert-error">
+            <strong><{$error_message}></strong>
+        </div>
+    <{/if}>
