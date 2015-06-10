@@ -1,6 +1,5 @@
 # Alumni
 [![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](docs/license.txt) 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mambax7/alumni-26x/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mambax7/alumni-26x/?branch=master)
-
+[![Quality Score](https://img.shields.io/scrutinizer/g/mambax7/alumni-26x.svg?style=flat)](https://scrutinizer-ci.com/g/mambax7/alumni-26x)
 XOOPS Alumni module for XOOPS 2.6.0 (by John Mordo (jlm69))
 
