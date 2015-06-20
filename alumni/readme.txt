@@ -7,9 +7,9 @@ NOT FOR PRODUCTION SITES!!!
   extract all files to your module directory
 
 + IMPORTANT!!!
-- modify rights for folder photos/grad_photo/ to CHMOD 777
-- modify rights for folder photos/now_photo/ to CHMOD 777
-- modify rights for folder photos/school_photos/ to CHMOD 777
+- modify rights for folder /uploads/photos/grad_photo/ to CHMOD 777
+- modify rights for folder /uploads/photos/now_photo/ to CHMOD 777
+- modify rights for folder /uploads/photos/school_photos/ to CHMOD 777
 
 
 FIRST THING YOU NEED TO DO!

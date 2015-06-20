@@ -13,18 +13,18 @@ use Xoops\Core\Request;
 include __DIR__ . '/header.php';
 $lid = Request::getInt('lid', 0, 'GET');
 
-global $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsDB, $xoops_footer, $xoopsLogger;
+global $xoopsConfig, $xoopsTheme, $xoopsDB, $xoops_footer, $xoopsLogger;
 $currenttheme = $xoopsConfig['theme_set'];
 
-$alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+// $alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
 $listingCriteria      = new CriteriaCompo();
 $listingCriteria->add(new Criteria('lid', $lid, '='));
-$numrows      = $alumniListingHandler->getCount($listingCriteria);
-$listingArray = $alumniListingHandler->get($lid);
+$numrows      = $listingHandler->getCount($listingCriteria);
+$listingArray = $listingHandler->get($lid);
 
 if ($numrows > '0') {
-    $photo = $listingArray->getvar('photo');
-    echo '<center><br /><br /><img src="photos/grad_photo/' . $photo . '" border=0></center>';
+    $photo = $listingArray->getVar('photo');
+    echo '<div style="text-align: center;"><br /><br /><img src="'. XOOPS_URL . "/uploads/{$moduleDirName}/photos/grad_photo/" . $photo . '" border=0></div>';
 }
 
-echo '<center><table><tr><td><a href=#  onClick="window.close()">' . constant($mainLang . '_CLOSEF') . '</a></td></tr></table></center>';
+echo '<div style="text-align: center;"><table><tr><td><a href=#  onClick="window.close()">' . constant($mainLang . '_CLOSEF') . '</a></td></tr></table></div>';

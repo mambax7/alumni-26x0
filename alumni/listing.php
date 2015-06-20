@@ -17,31 +17,28 @@ include __DIR__ . '/header.php';
 
 $moduleDirName = basename(__DIR__);
 $mainLang      = '_MA_' . strtoupper($moduleDirName);
-require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
+require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/gtickets.php");
 $myts     = MyTextSanitizer::getInstance();
 $xoops    = Xoops::getInstance();
 $moduleId = $xoopsModule->getVar('mid');
 
-if (is_object($xoopsUser)) {
-    $groups = $xoopsUser->getGroups();
-} else {
-    $groups = XOOPS_GROUP_ANONYMOUS;
+$groups = SystemLocale::ANONYMOUS_USERS_GROUP;
+if (is_object($xoops->user)) {
+    $groups = $xoops->user->getGroups();
 }
 $groupPermHandler = $xoops->getHandler('groupperm');
-if (isset($_POST['item_id'])) {
-    $perm_itemid = (int)($_POST['item_id']);
-} else {
-    $perm_itemid = 0;
+$perm_itemid = 0;
+if ($tempItemId = Request::getInt('item_id', null, 'POST')) {
+                  $perm_itemid = $tempItemId;
 }
 //If no access
 if (!$groupPermHandler->checkRight('' . $moduleDirName . '_view', $perm_itemid, $groups, $moduleId)) {
-    $xoops->redirect(XOOPS_URL . '/index.php', 3, _NOPERM);
+    $xoops->redirect(XOOPS_URL . '/index.php', 3,  XoopsLocaleEn_US::E_NO_ACCESS_PERMISSION);
     exit();
 }
+$prem_perm = '1';
 if (!$groupPermHandler->checkRight('' . $moduleDirName . '_premium', $perm_itemid, $groups, $moduleId)) {
     $prem_perm = '0';
-} else {
-    $prem_perm = '1';
 }
 //if (isset($_REQUEST['lid'])) {
 //    $lid = (int)($_REQUEST['lid']);
@@ -63,37 +60,38 @@ $op = Request::getCmd('op', Request::getCmd('op', 'list', 'GET'), 'POST');
 switch ($op) {
     case 'list':
     default:
-        $listingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+//        $listingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
 
         $alumni     = Alumni::getInstance();
         $moduleId   = $xoops->module->getVar('mid');
         $listingObj = $listingHandler->get($lid);
 
-        $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-        $catObj                  = $alumniCategoriesHandler->get($listingObj->getVar('cid'));
+//        $alumniCategoryHandler = $xoops->getModuleHandler('Category', $moduleDirName);
+    // $alumniCategoryHandler = $xoops->getModuleHandler('Category');
+        $catObj                  = $categoryHandler->get($listingObj->getVar('cid'));
 
         $homePath        = "<a href='" . ALUMNI_URL . "/index.php'>" . constant($mainLang . '_MAIN') . "</a>&nbsp;:&nbsp;";
-        $itemPath        = "<a href='" . ALUMNI_URL . "/categories.php?cid=" . $catObj->getVar("cid") . "'>" . $catObj->getVar("title") . "</a>";
+        $itemPath        = "<a href='" . ALUMNI_URL . '/categories.php?cid=' . $catObj->getVar("cid") . "'>" . $catObj->getVar('title') . '</a>';
         $path            = '';
         $myParent        = $catObj->getVar('pid');
         $catpathCriteria = new CriteriaCompo();
         $catpathCriteria->add(new Criteria('cid', $myParent, '='));
-        $catpathArray = $alumniCategoriesHandler->getAll($catpathCriteria);
+        $catpathArray = $categoryHandler->getAll($catpathCriteria);
         foreach (array_keys($catpathArray) as $i) {
             $mytitle = $catpathArray[$i]->getVar('title');
         }
 
         if ($myParent != 0) {
-            $path = "<a href='" . ALUMNI_URL . "/categories.php?cid=" . $catpathArray[$i]->getVar("cid") . "'>" . $catpathArray[$i]->getVar("title") . "</a>&nbsp;:&nbsp;{$path}";
+            $path = "<a href='" . ALUMNI_URL . '/categories.php?cid=' . $catpathArray[$i]->getVar('cid') . "'>" . $catpathArray[$i]->getVar('title') . "</a>&nbsp;:&nbsp;{$path}";
         }
 
         $path = "{$homePath}{$path}{$itemPath}";
-        $path = str_replace("&nbsp;:&nbsp;", " <img src='" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/arrow.gif" . "' style='border-width: 0px;' alt='' /> ", $path);
+        $path = str_replace('&nbsp;:&nbsp;', " <img src='" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/arrow.gif" . "' style='border-width: 0px;' alt='' /> ", $path);
 
         $xoops->tpl()->assign('category_path', $path);
 
         // get permitted id
-        $groups    = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $groups    = $xoops->isUser() ? $xoops->user->getGroups() : SystemLocale::ANONYMOUS_USERS_GROUP;
         $alumniIds = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
         $criteria  = new CriteriaCompo();
         $criteria->add(new Criteria('lid', $lid, '='));
@@ -147,9 +145,9 @@ switch ($op) {
                 $xoops->tpl()->assign('submitter', constant($mainLang . '_FROM') . "$submitter");
             }
 
-            $xoops->tpl()->assign('print', '$printA');
-            $xoops->tpl()->assign('sfriend', '$mailA');
-            $xoops->tpl()->assign('read', '$view ' . constant($mainLang . '_VIEW2'));
+            $xoops->tpl()->assign('print', $printA);
+            $xoops->tpl()->assign('sfriend', $mailA);
+            $xoops->tpl()->assign('read', $view  . ' ' . constant($mainLang . '_VIEW2'));
 
             if ($xoops->isUser()) {
                 $calusern = $xoops->user->getVar('uid', 'E');
@@ -197,10 +195,10 @@ switch ($op) {
             $xoops->tpl()->assign('photo2', '');
 
             if ($photo) {
-                $xoops->tpl()->assign('photo', "<img src=\"photos/grad_photo/$photo\" alt=\"\" width=\"125\"/>");
+                $xoops->tpl()->assign('photo', "<img src=\"". XOOPS_URL . "/uploads/{$moduleDirName}/photos/grad_photo/" . "$photo\" alt=\"\" width=\"125\"/>");
             }
             if ($photo2) {
-                $xoops->tpl()->assign('photo2', "<img src=\"photos/now_photo/$photo2\" alt=\"\" width=\"125\" />");
+                $xoops->tpl()->assign('photo2', "<img src=\"". XOOPS_URL . "/uploads/{$moduleDirName}/photos/now_photo/" . "$photo2\" alt=\"\" width=\"125\" />");
             }
             $xoops->tpl()->assign('date', constant($mainLang . '_DATE2') . " $date ");
 
@@ -213,20 +211,18 @@ switch ($op) {
     case 'new_listing':
         $xoops->header();
         $moduleId = $xoopsModule->getVar('mid');
-        if (is_object($xoopsUser)) {
-            $groups = $xoopsUser->getGroups();
-        } else {
-            $groups = XOOPS_GROUP_ANONYMOUS;
+        $groups = SystemLocale::ANONYMOUS_USERS_GROUP;
+        if (is_object($xoops->user)) {
+            $groups = $xoops->user->getGroups();
         }
         $groupPermHandler = $xoops->getHandler('groupperm');
-        if (isset($_POST['item_id'])) {
-            $perm_itemid = (int)($_POST['item_id']);
-        } else {
-            $perm_itemid = 0;
+        $perm_itemid = 0;
+        if ($tempItemId = Request::getInt('item_id', null, 'POST')) {
+            $perm_itemid = $tempItemId;
         }
         //If no access
         if (!$groupPermHandler->checkRight('' . $moduleDirName . '_view', $perm_itemid, $groups, $moduleId)) {
-            $xoops->redirect(XOOPS_URL . '/index.php', 3, _NOPERM);
+            $xoops->redirect(XOOPS_URL . '/index.php', 3,  XoopsLocaleEn_US::E_NO_ACCESS_PERMISSION);
             exit();
         }
         $obj    = $listingHandler->create();
@@ -256,7 +252,7 @@ switch ($op) {
             $lid = '0';
         }
 
-        $destination = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
+        $destination = XOOPS_ROOT_PATH . "/uploads/{$moduleDirName}/photos/grad_photo";
         if (1 == Request::getInt('del_photo', null, 'POST')) {
             if (@file_exists('' . $destination . '/' . Request::getString('photo_old', '', 'POST') . '')) {
                 unlink('' . $destination . '/' . Request::getString('photo_old', '', 'POST') . '');
@@ -264,7 +260,7 @@ switch ($op) {
             $obj->setVar('photo', '');
         }
 
-        $destination2 = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
+        $destination2 = XOOPS_ROOT_PATH . "/uploads/{$moduleDirName}/photos/now_photo";
 
         if (1 == Request::getInt('del_photo2', null, 'POST')) {
             if (@file_exists('' . $destination2 . '/' . Request::getString('photo_old2', '', 'POST') . '')) {
@@ -302,7 +298,7 @@ switch ($op) {
 
         if (!empty($_FILES['photo']['name'])) {
             include_once XOOPS_ROOT_PATH . '/class/uploader.php';
-            $uploaddir        = XOOPS_ROOT_PATH . '/modules/alumni/photos/grad_photo';
+            $uploaddir        = XOOPS_ROOT_PATH . "/uploads/{$moduleDirName}/photos/grad_photo";
             $photomax         = $xoops->getModuleConfig('alumni_photomax');
             $maxwide          = $xoops->getModuleConfig('alumni_maxwide');
             $maxhigh          = $xoops->getModuleConfig('alumni_maxhigh');
@@ -324,7 +320,7 @@ switch ($op) {
 
         if (!empty($_FILES['photo2']['name'])) {
             include_once XOOPS_ROOT_PATH . '/class/uploader.php';
-            $uploaddir2       = XOOPS_ROOT_PATH . '/modules/alumni/photos/now_photo';
+            $uploaddir2       = XOOPS_ROOT_PATH . "/uploads/{$moduleDirName}/photos/now_photo";
             $photomax         = $xoops->getModuleConfig('alumni_photomax');
             $maxwide          = $xoops->getModuleConfig('alumni_maxwide');
             $maxhigh          = $xoops->getModuleConfig('alumni_maxhigh');

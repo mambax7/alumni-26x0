@@ -14,7 +14,7 @@ if (Request::getString('submit', '', 'POST')) {
 
     $moduleDirName = basename(__DIR__);
 
-    require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
+    require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/gtickets.php");
 
     global $xoopsConfig, $xoopsDB, $myts, $meta, $moduleDirName;
 
@@ -36,14 +36,14 @@ if (Request::getString('submit', '', 'POST')) {
     $admin_subject = constant($mainLang . '_CONTACTADMIN');
 
     $moduleId             = $xoops->module->getVar('mid');
-    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : SystemLocale::ANONYMOUS_USERS_GROUP;
     $alumniIds            = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
-    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    // $alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
     $listingCriteria      = new CriteriaCompo();
     $listingCriteria->add(new Criteria('lid', $lid, '='));
     $listingCriteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
-    $numrows      = $alumniListingHandler->getCount($listingCriteria);
-    $listingArray = $alumniListingHandler->getAll($listingCriteria);
+    $numrows      = $listingHandler->getCount($listingCriteria);
+    $listingArray = $listingHandler->getAll($listingCriteria);
     foreach (array_keys($listingArray) as $i) {
         $name      = $listingArray[$i]->getVar('name');
         $mname     = $listingArray[$i]->getVar('mname');
@@ -118,14 +118,14 @@ if (Request::getString('submit', '', 'POST')) {
     $xoops = Xoops::getInstance();
     //	Xoops::getInstance()->header();
     $moduleId             = $xoops->module->getVar('mid');
-    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : SystemLocale::ANONYMOUS_USERS_GROUP;
     $alumniIds            = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
-    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    // $alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
     $listingCriteria      = new CriteriaCompo();
     $listingCriteria->add(new Criteria('lid', $lid, '='));
     $listingCriteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
-    $numrows      = $alumniListingHandler->getCount($listingCriteria);
-    $listingArray = $alumniListingHandler->getAll($listingCriteria);
+    $numrows      = $listingHandler->getCount($listingCriteria);
+    $listingArray = $listingHandler->getAll($listingCriteria);
     unset($listingCriteria);
     foreach (array_keys($listingArray) as $i) {
         $name      = $listingArray[$i]->getVar('name');
@@ -150,7 +150,7 @@ if (Request::getString('submit', '', 'POST')) {
     if ($xoops->getModuleConfig('alumni_use_captcha') == '1' && !$xoops->user->isAdmin()) {
         $sendform->addElement(new XoopsFormCaptcha());
     }
-    $sendform->addElement(new XoopsFormLabel(constant($mainLang . '_YOUR_IP'), "<img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/ip_image.php\" alt=\"\" /><br />" . constant($mainLang . '_IP_LOGGED') . ""));
+    $sendform->addElement(new XoopsFormLabel(constant($mainLang . '_YOUR_IP'), "<img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/ip_image.php\" alt=\"\" /><br />" . constant($mainLang . '_IP_LOGGED') . ''));
 
     $sendform->addElement(new XoopsFormHidden('listing', $listing), false);
     $sendform->addElement(new XoopsFormHidden('email', $email), false);

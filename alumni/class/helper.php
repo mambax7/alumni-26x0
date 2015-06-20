@@ -33,7 +33,9 @@ class Alumni extends Xoops\Module\Helper\HelperAbstract
      */
     public function init()
     {
-        $this->setDirname('alumni');
+//        $this->setDirname('alumni');
+        $moduleDirName = basename(dirname(__DIR__));
+        $this->setDirname($moduleDirName);
         //$this->setDebug(true);
         //    $this->loadLanguage('modinfo');
     }
@@ -51,7 +53,7 @@ class Alumni extends Xoops\Module\Helper\HelperAbstract
      */
     public function getListingHandler()
     {
-        return $this->getHandler('alumni_listing');
+        return $this->getHandler('Listing');
     }
 
     /**
@@ -59,7 +61,7 @@ class Alumni extends Xoops\Module\Helper\HelperAbstract
      */
     public function getCategoryHandler()
     {
-        return $this->getHandler('alumni_categories');
+        return $this->getHandler('Category');
     }
 
     /**

@@ -26,23 +26,34 @@ XoopsLoad::load('system', 'system');
 //global $xoopsModule;
 $xoops = Xoops::getInstance();
 $xoops->loadLanguage('modinfo');
+//get local language for SystemLocale
+$xoops->loadLocale('system');
 
 $helper = Alumni::getInstance();
-$xoops  = $helper->xoops();
+//$xoops  = $helper->xoops();
 
 $moduleDirName = basename(dirname(__DIR__));
 $modinfoLang   = '_MI_' . strtoupper($moduleDirName);
 $adminLang     = '_AM_' . strtoupper($moduleDirName);
 
 //$request = Xoops_Request::getInstance();
-$alumniListingHandler    = $xoops->getModuleHandler('alumni_listing', 'alumni');
-$alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-$alumniGrouppermHandler  = $helper->getGrouppermHandler();
+//$alumniListingHandler    = $xoops->getModuleHandler('Listing', $moduleDirName);
+//$alumniCategoryHandler = $xoops->getModuleHandler('Category', $moduleDirName);
+//$alumniGrouppermHandler  = $helper->getGrouppermHandler();
+
+// Get handlers
+$categoryHandler = $helper->getCategoryHandler();
+$listingHandler  = $helper->getListingHandler();
+$groupPermHandler = $helper->getGrouppermHandler();
+
+
+
 $moduleId                = $helper->getModule()->getVar('mid');
 
 XoopsLoad::loadFile($xoops->path(XOOPS_ROOT_PATH . '/include/cp_header.php'));
 // Define Stylesheet
 $xoops->theme()->addStylesheet('modules/system/css/admin.css');
-
 // Add Scripts
 $xoops->theme()->addScript('media/xoops/xoops.js');
+
+

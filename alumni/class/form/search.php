@@ -9,6 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+use Xoops\Core\Request;
+
 /**
  * @copyright       XOOPS Project http://xoops.org/
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -23,7 +25,7 @@ include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/alumni_tree.php"
 /**
  * Class AlumniSearchForm
  */
-class AlumniSearchForm extends XoopsThemeForm
+class AlumniSearchForm extends Xoops\Form\ThemeForm
 {
     /**
      * We are not using this for objects but we need to override the constructor
@@ -44,6 +46,8 @@ class AlumniSearchForm extends XoopsThemeForm
     public function alumni_getSearchFrom($andor, $queries, $mids, $mid, $bycat)
     {
         $xoops  = Xoops::getInstance();
+        //get local language for SystemLocale
+        $xoops->loadLocale('system');
         $alumni = Alumni::getInstance();
         // create form
         parent::__construct(XoopsLocale::SEARCH, 'alumni', 'search.php', 'get');
@@ -63,26 +67,28 @@ class AlumniSearchForm extends XoopsThemeForm
         //       }
 
         //     $by_cat = $request->asInt('by_cat','');
-        $by_cat = '';
-        if (!empty($_GET['by_cat'])) {
-            $by_cat = (int)($_GET['by_cat']);
-        } elseif (!empty($_POST['by_cat'])) {
-            $by_cat = (int)($_POST['by_cat']);
-        }
+//        $by_cat = 0;
+//        if (!empty($_GET['by_cat'])) {
+//            $by_cat = (int)($_GET['by_cat']);
+//        } elseif (!empty($_POST['by_cat'])) {
+//            $by_cat = (int)($_POST['by_cat']);
+//        }
 
-        $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
+        $by_cat = Request::getInt('by_cat', Request::getInt('by_cat', 0, 'POST'), 'GET');
+
+        // $alumniCategoryHandler = $xoops->getModuleHandler('Category', $moduleDirName);
         $search                  = Search::getInstance();
         //      $xoops = $helper->xoops();
         $moduleId = $xoops->module->getVar('mid');
 
         // get permitted id
-        $groups    = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $groups    = $xoops->isUser() ? $xoops->user->getGroups() : SystemLocale::ANONYMOUS_USERS_GROUP;
         $alumniIds = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
         $criteria  = new CriteriaCompo();
         $criteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
         $criteria->setOrder($xoops->getModuleConfig('alumni_csortorder'));
 
-        $categoryArray = $alumniCategoriesHandler->getAll($criteria);
+        $categoryArray = $categoryHandler->getAll($criteria);
 
         foreach (array_keys($categoryArray) as $i) {
             $cid   = $categoryArray[$i]->getVar('cid');

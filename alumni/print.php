@@ -11,7 +11,7 @@
 include __DIR__ . '/header.php';
 $xoops         = Xoops::getInstance();
 $moduleDirName = basename(__DIR__);
-require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
+require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/gtickets.php");
 //include(XOOPS_ROOT_PATH."/modules/{$moduleDirName}/include/functions.php");
 $myts = MyTextSanitizer::getInstance();
 
@@ -20,7 +20,7 @@ $myts = MyTextSanitizer::getInstance();
  */
 function PrintAlum($lid = 0)
 {
-    global $xoopsConfig, $xoopsUser, $xoopsDB, $xoopsModuleConfig, $useroffset, $myts, $xoopsLogger, $moduleDirName, $mainLang, $xoops;
+    global $xoopsConfig, $useroffset, $myts, $moduleDirName, $mainLang, $xoops;
 
     $currenttheme = $xoopsConfig['theme_set'];
     $alumni       = Alumni::getInstance();
@@ -28,15 +28,15 @@ function PrintAlum($lid = 0)
     $moduleId = $xoops->module->getVar('mid');
 
     // get permitted id
-    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : SystemLocale::ANONYMOUS_USERS_GROUP;
     $alumniIds            = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
-    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    // $alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
     $listingCriteria      = new CriteriaCompo();
     $listingCriteria->add(new Criteria('lid', $lid, '='));
     $listingCriteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
-    $numrows = $alumniListingHandler->getCount($listingCriteria);
+    $numrows = $listingHandler->getCount($listingCriteria);
 
-    $listingArray = $alumniListingHandler->getAll($listingCriteria);
+    $listingArray = $listingHandler->getAll($listingCriteria);
     unset($listingCriteria);
     foreach (array_keys($listingArray) as $i) {
         $lid        = $listingArray[$i]->getVar('lid');
@@ -61,10 +61,10 @@ function PrintAlum($lid = 0)
         $view       = $listingArray[$i]->getVar('view');
 
         $useroffset = '';
-        if ($xoopsUser) {
-            $timezone = $xoopsUser->timezone();
-            if (isset($timezone)) {
-                $useroffset = $xoopsUser->timezone();
+        if ($xoops->user) {
+            $timezone = $xoops->user->timezone();
+            if (null !== $timezone) {
+                $useroffset = $xoops->user->timezone();
             } else {
                 $useroffset = $xoopsConfig['default_TZ'];
             }
@@ -122,11 +122,11 @@ function PrintAlum($lid = 0)
         }
         echo "</table><table width=\"100%\" border=0 valign=top>";
         if ($photo) {
-            echo "<tr><td width=\"40%\" valign=\"top\"><b>" . constant($mainLang . '_GPHOTO') . "</b><br /><br /><img src=\"photos/grad_photo/$photo\" width='125' border=0></td>";
+            echo "<tr><td width=\"40%\" valign=\"top\"><b>" . constant($mainLang . '_GPHOTO') . "</b><br /><br /><img src=\"".XOOPS_URL . "/uploads/{$moduleDirName}/photos/grad_photo/" . "$photo\" width='125' border=0></td>";
         }
 
         if ($photo2) {
-            echo "<td width=\"60%\" valign=\"top\"><b>" . constant($mainLang . '_RPHOTO') . "</b><br /><br />&nbsp;&nbsp;&nbsp;<img src=\"photos/now_photo/$photo2\" width='125' border=0></td></tr>";
+            echo "<td width=\"60%\" valign=\"top\"><b>" . constant($mainLang . '_RPHOTO') . "</b><br /><br />&nbsp;&nbsp;&nbsp;<img src=\"".XOOPS_URL . "/uploads/{$moduleDirName}/photos/now_photo/" . "$photo2\" width='125' border=0></td></tr>";
         }
         echo '</table><table border=0>';
         echo '<tr><td><b>' . constant($mainLang . '_DATE2') . " $date <br />";

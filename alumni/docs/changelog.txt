@@ -1,4 +1,46 @@
 ---------------------------------------
-2.xx Beta 1  2014-04-02
+3.1 Beta 1  NOT RELEASED
+---------------------------------------
+- PSR-2 code updates (mamba)
+- added autoload PSR-4 (mamba)
+- removed AlumniRequest (mamba)
+- converted $_REQUEST to Xoops\Core\Request (mamba)
+- moved /images to /assets, adding /docs and /tests (mamba)
+- added PhpDoc headers (mamba)
+- changed dirname(__FILE__) -> __DIR__ (mamba)
+- changed intval -> (int) (mamba)
+- language files clean-up for consistency (mamba)
+- changed icon to "content" since "listing" was not there in /admin/index.php :  $indexAdmin->addInfoBox(AlumniLocale::LISTINGS, 'listing'); (mamba)
+- merged functions into a class class AlumniFunctions (mamba)
+- changed $i++ to ++$i (mamba)
+- moved XoopsGTicket to /class
+- moved photos directory to /uploads (Mamba)
 
-- Converted to XOOPS 2.5.6 Admin GUI (Mamba)
+3.1 ALPHA  May. 27, 2014:
+=================================
+--- Works with Xoops 2.6.0 ALPHA3
+--- Added tablesorter for pagination and sorting
+--- cleaned-up language files for consistency (mamba)
+--- replaced hard-coded module directory name (mamba)
+
+
+3.01 RC  Apr. 11, 2011:
+=================================
+--- Took to long to do this, Sorry.
+--- added new Admin Menu Class (jlm69 - adapted code by Mage, mamba)
+    changed new Admin Menu to only be used if you are using Xoops 2.5.0
+    if not using Xoops 2.5.0 it will use Xoops Standard GUI
+--- changed the search so you can now search by Category/School
+--- edited search results pages
+--- ADDED showing 1-5 OF X on the first search results page, if there are more than one page
+--- Updated block code.
+--- added Notifications.
+--- Broke down the index page. Now there is an index page, a categories page, and a listing page.
+    The URL's are different. (EX. listing.php?lid=1)
+--- Improved how listings are sorted.
+--- You can now put adsense ads or Xoops banner in the middle of the listings,
+    on the index page and the category page.
+--- fixed reported errors
+=========
+ Release by jlm69
+

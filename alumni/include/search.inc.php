@@ -19,8 +19,8 @@ use Xoops\Core\Request;
 
 $moduleDirName = basename(dirname(__DIR__));
 $xoops         = Xoops::getInstance();
-require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
-include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php");
+require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/gtickets.php");
+//include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php");
 
 $alumni  = Alumni::getInstance();
 $myts    = MyTextSanitizer::getInstance();
@@ -45,8 +45,8 @@ function alumni_search($queries, $andor, $limit, $start, $userid, $by_cat)
 
     $alumni         = Alumni::getInstance();
     $moduleId       = $xoops->module->getVar('mid');
-    $listingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-    $groups         = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+//    $listingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
+    $groups         = $xoops->isUser() ? $xoops->user->getGroups() : SystemLocale::ANONYMOUS_USERS_GROUP;
     $alumniIds      = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
     $criteria       = new CriteriaCompo();
     $criteria->add(new Criteria('valid', 1, '='));
@@ -90,7 +90,7 @@ function alumni_search($queries, $andor, $limit, $start, $userid, $by_cat)
 		---   ' . $obj->getVar('year');
         $ret[$k]['time']  = $obj->getVar('date');
         $ret[$k]['uid']   = $obj->getVar('usid');
-        $k++;
+        ++$k;
     }
 
     return $ret;

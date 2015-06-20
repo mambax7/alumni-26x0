@@ -14,7 +14,7 @@
  * @author          John Mordo - jlm69
  */
 
-include __DIR__ . '/header.php';
+include __DIR__ . '/admin_header.php';
 
 $xoops = Xoops::getInstance();
 $op    = Request::getString('op', 'alumni_view');
@@ -22,9 +22,9 @@ $xoops->header();
 $admin_page = new Xoops\Module\Admin();
 $admin_page->displayNavigation('groupperm.php');
 $moduleId                = $xoops->module->getVar('mid');
-$alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-$cats                    = $alumniCategoriesHandler->getAll();
-$cat_rows                = $alumniCategoriesHandler->getCount();
+// $alumniCategoryHandler = $xoops->getModuleHandler('Category', $moduleDirName);
+$cats                    = $categoryHandler->getAll();
+$cat_rows                = $categoryHandler->getCount();
 
 include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/alumni_tree.php");
 $cattree = new AlumniObjectTree($cats, 'cid', 'pid');

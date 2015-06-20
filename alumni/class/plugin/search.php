@@ -9,6 +9,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
+use Xoops\Core\Request;
+
 /**
  * alumni module
  * Edited by John Mordo (jlm69)
@@ -57,7 +59,7 @@ class AlumniSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements S
         if (is_array($queries) && $count = count($queries)) {
             $sql .= " AND ((name LIKE '%$queries[0]%' OR mname LIKE '%$queries[0]%' OR lname LIKE '%$queries[0]%' OR school LIKE '%$queries[0]%' OR year LIKE '%$queries[0]%')";
 
-            for ($i = 1; $i < $count; $i++) {
+            for ($i = 1; $i < $count; ++$i) {
                 $sql .= " $andor ";
                 $sql .= "(name LIKE '%$queries[$i]%' OR mname LIKE '%$queries[$i]%' OR lname LIKE '%$queries[$i]%' OR school LIKE '%$queries[$i]%' OR year LIKE '%$queries[$i]%')";
             }
@@ -75,7 +77,7 @@ class AlumniSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements S
             $ret[$i]['time']  = $myrow['date'];
             //    $ret[$i]["content"] = $myrow["content_text"] . $myrow["content_shorttext"];
             $ret[$i]['uid'] = $myrow['usid'];
-            $i++;
+            ++$i;
         }
 
         return $ret;

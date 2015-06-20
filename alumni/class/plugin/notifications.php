@@ -21,7 +21,7 @@
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 $moduleDirName = basename(dirname(dirname(__DIR__)));
-include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php");
+//include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php");
 
 //include_once (XOOPS_ROOT_PATH . '/modules/jobs/include/resume_functions.php');
 

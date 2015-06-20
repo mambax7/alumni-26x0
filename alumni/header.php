@@ -38,8 +38,9 @@ $xoops = $helper->xoops();
 // Get handler
 $categoryHandler = $helper->getCategoryHandler();
 $listingHandler  = $helper->getListingHandler();
-
 $groupPermHandler = $helper->getGrouppermHandler();
+//get local language for SystemLocale
+$xoops->loadLocale('system');
 
 //permission
 $groups = $xoops->getUserGroups();
@@ -54,4 +55,3 @@ $uid    = $helper->getUserId();
 // Parameters
 $moduleId = $helper->getModule()->getVar('mid');
 $interval = 3600; //1 hour
-

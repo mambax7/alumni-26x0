@@ -118,7 +118,7 @@ switch ($action) {
         $criteria->add(new Criteria('dirname', "('" . implode("','", array_keys($available_plugins)) . "')", 'IN'));
         //       $criteria->add(new Criteria('mid', $xmid));
         $modules = $moduleHandler->getObjectsArray($criteria, true);
-        if (empty($mids) || !is_array($mids)) {
+        if (!is_array($mids) || 0 === count($mids)) {
             unset($mids);
             $mids = array_keys($modules);
         }
@@ -150,8 +150,8 @@ switch ($action) {
             $xoops->tpl()->assign('cat_name', '');
             if (!empty($by_cat)) {
                 $cat_name                = '';
-                $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-                $catObj                  = $alumniCategoriesHandler->get($by_cat);
+                // $alumniCategoryHandler = $xoops->getModuleHandler('Category', $moduleDirName);
+                $catObj                  = $categoryHandler->get($by_cat);
                 $cat_name                = $catObj->getVar('title');
                 $xoops->tpl()->assign('in_category', constant($mainLang . '_INCATEGORY'));
                 $xoops->tpl()->assign('cat_name', "<b> :  &nbsp;&nbsp; $cat_name</b>");
@@ -161,7 +161,7 @@ switch ($action) {
             if (is_array($results) && $count > 0) {
                 $nomatch                      = false;
                 $modules_result[$mid]['name'] = $module->getVar('name');
-                if (XoopsLoad::fileExists($image = $xoops->path('modules/' . $module->getVar('dirname') . '/icons/logo_large.png'))) {
+                if (XoopsLoad::fileExists($image = $xoops->path('modules/' . $module->getVar('dirname') . '/assets/images/icons/logo_large.png'))) {
                     $modules_result[$mid]['image'] = $xoops->url($image);
                 } else {
                     $modules_result[$mid]['image'] = $xoops->url('images/icons/posticon2.gif');
@@ -173,8 +173,8 @@ switch ($action) {
                     } else {
                         $res[$i]['link'] = $results[$i]['link'];
                     }
-                    $res[$i]['title']          = $myts->htmlspecialchars($results[$i]['title']);
-                    $res[$i]['title_highligh'] = preg_replace($queries_pattern, "<span class='searchHighlight'>$1</span>", $myts->htmlspecialchars($results[$i]['title']));
+                    $res[$i]['title']          = $myts->htmlSpecialChars($results[$i]['title']);
+                    $res[$i]['title_highligh'] = preg_replace($queries_pattern, "<span class='searchHighlight'>$1</span>", $myts->htmlSpecialChars($results[$i]['title']));
                     if (!empty($results[$i]['uid'])) {
                         $res[$i]['uid']   = (int)($results[$i]['uid']);
                         $res[$i]['uname'] = XoopsUser::getUnameFromId($results[$i]['uid'], true);
@@ -192,8 +192,7 @@ switch ($action) {
                 $modules_result[$mid]['result'] = $res;
             }
         }
-        unset($results);
-        unset($module);
+        unset($results, $module);
 
         $xoops->tpl()->assign('modules', $modules_result);
 
@@ -219,7 +218,7 @@ switch ($action) {
         $results2 = $plugin->search($queries, $andor, '', $start, $uid);
 
         $modules_result[$mid]['name']  = $module->getVar('name');
-        $modules_result[$mid]['image'] = $xoops->url('modules/' . $module->getVar('dirname') . '/icons/logo_large.png');
+        $modules_result[$mid]['image'] = $xoops->url('modules/' . $module->getVar('dirname') . '/assets/images/icons/logo_large.png');
 
         $count  = count($results);
         $count2 = count($results2);
@@ -235,8 +234,8 @@ switch ($action) {
 
             if (!empty($by_cat)) {
                 $cat_name                = '';
-                $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-                $catObj                  = $alumniCategoriesHandler->get($by_cat);
+                // $alumniCategoryHandler = $xoops->getModuleHandler('Category', $moduleDirName);
+                $catObj                  = $categoryHandler->get($by_cat);
                 $cat_name                = $catObj->getVar('title');
                 $xoops->tpl()->assign('in_category', constant($mainLang . '_INCATEGORY'));
                 $xoops->tpl()->assign('cat_name', "<b> :  &nbsp;&nbsp; $cat_name</b>");
@@ -254,11 +253,11 @@ switch ($action) {
                 } else {
                     $res[$i]['link'] = $results[$i]['link'];
                 }
-                $res[$i]['title'] = $myts->htmlspecialchars($results[$i]['title']);
-                if (isset($queries_pattern)) {
-                    $res[$i]['title_highligh'] = preg_replace($queries_pattern, "<span class='searchHighlight'>$1</span>", $myts->htmlspecialchars($results[$i]['title']));
+                $res[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
+                if (null !== $queries_pattern) {
+                    $res[$i]['title_highligh'] = preg_replace($queries_pattern, "<span class='searchHighlight'>$1</span>", $myts->htmlSpecialChars($results[$i]['title']));
                 } else {
-                    $res[$i]['title_highligh'] = $myts->htmlspecialchars($results[$i]['title']);
+                    $res[$i]['title_highligh'] = $myts->htmlSpecialChars($results[$i]['title']);
                 }
                 if (!empty($results[$i]['uid'])) {
                     $res[$i]['uid']   = @(int)($results[$i]['uid']);

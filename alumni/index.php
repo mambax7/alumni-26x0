@@ -8,37 +8,39 @@
 use Xoops\Core\Request;
 
 include __DIR__ . '/header.php';
+include XOOPS_ROOT_PATH . '/modules/system/locale/en_US/en_US.php';
+
+
 
 $moduleDirName = basename(__DIR__);
 $mainLang      = '_MA_' . strtoupper($moduleDirName);
-require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/gtickets.php");
+require_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/gtickets.php");
 $myts     = MyTextSanitizer::getInstance();
 $xoops    = Xoops::getInstance();
 $moduleId = $xoops->module->getVar('mid');
 
+$groups = SystemLocale::ANONYMOUS_USERS_GROUP;
 if (is_object($xoops->user)) {
     $groups = $xoops->user->getGroups();
-} else {
-    $groups = XOOPS_GROUP_ANONYMOUS;
 }
 $groupPermHandler = $xoops->getHandler('groupperm');
-if (isset($_POST['item_id'])) {
-    $perm_itemid = (int)($_POST['item_id']);
-} else {
-    $perm_itemid = 0;
-}
-//If no access
-if (!$groupPermHandler->checkRight('' . $moduleDirName . '_view', $perm_itemid, $groups, $moduleId)) {
-    $xoops->redirect(XOOPS_URL . '/index.php', 3, _NOPERM);
-    exit();
-}
-if (!$groupPermHandler->checkRight('' . $moduleDirName . '_premium', $perm_itemid, $groups, $moduleId)) {
-    $prem_perm = '0';
-} else {
-    $prem_perm = '1';
+$perm_itemid = 0;
+if ($tempItemId = Request::getInt('item_id', null, 'POST')) {
+                  $perm_itemid = $tempItemId;
 }
 
-include(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php");
+//If no access
+if (!$groupPermHandler->checkRight('' . $moduleDirName . '_view', $perm_itemid, $groups, $moduleId)) {
+    $xoops->redirect(XOOPS_URL . '/index.php', 3,  XoopsLocaleEn_US::E_NO_ACCESS_PERMISSION);
+    exit();
+}
+
+$prem_perm = '1';
+if (!$groupPermHandler->checkRight('' . $moduleDirName . '_premium', $perm_itemid, $groups, $moduleId)) {
+    $prem_perm = '0';
+}
+
+//include(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/include/functions.php");
 include(XOOPS_ROOT_PATH . '/class/pagenav.php');
 $xoops->header('module:alumni/alumni_index.tpl');
 Xoops::getInstance()->header();
@@ -63,19 +65,19 @@ if ($xoops->getModuleConfig('' . $moduleDirName . '_offer_search') == '1') {
     $xoops->tpl()->assign('keywords', constant($mainLang . '_SEARCH_KEYWORDS'));
     $xoops->tpl()->assign('search', constant($mainLang . '_SEARCH'));
 
-    $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
+    // $alumniCategoryHandler = $xoops->getModuleHandler('Category',$moduleDirName);
 
     $alumni   = Alumni::getInstance();
     $moduleId = $xoops->module->getVar('mid');
 
     // get permitted id
-    $groups      = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups      = $xoops->isUser() ? $xoops->user->getGroups() : SystemLocale::ANONYMOUS_USERS_GROUP;
     $alumniIds   = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
     $catCriteria = new CriteriaCompo();
     $catCriteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
     $catCriteria->setOrder('' . $xoops->getModuleConfig('' . $moduleDirName . '_csortorder') . '');
-    $numcat        = $alumniCategoriesHandler->getCount();
-    $categoryArray = $alumniCategoriesHandler->getAll($catCriteria);
+    $numcat        = $categoryHandler->getCount();
+    $categoryArray = $categoryHandler->getAll($catCriteria);
     unset($catCriteria);
 
     foreach (array_keys($categoryArray) as $i) {
@@ -129,12 +131,12 @@ $count = 0;
 
 foreach (array_keys($cats) as $i) {
     if (in_array($cats[$i]->getVar('cid'), $alumniIds)) {
-        $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+        // $alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
         $count_criteria       = new CriteriaCompo();
         $count_criteria->add(new Criteria('cid', $cats[$i]->getVar('cid'), '='));
         $count_criteria->add(new Criteria('valid', 1, '='));
         $count_criteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
-        $listings = $alumniListingHandler->getCount($count_criteria);
+        $listings = $listingHandler->getCount($count_criteria);
 
         $publishdate = isset($listings['date'][$cats[$i]->getVar('cid')]) ? $listings['date'][$cats[$i]->getVar('cid')] : 0;
         $all_subcats = $cattree->alumni_getAllChild($cats[$i]->getVar('cid'));
@@ -155,24 +157,24 @@ foreach (array_keys($cats) as $i) {
     }
     $subcategories = array();
 
-    $count++;
+    ++$count;
 
-    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    // $alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
     $listingCriteria      = new CriteriaCompo();
     $listingCriteria->add(new Criteria('cid', $cats[$i]->getVar('cid'), '='));
     $listingCriteria->add(new Criteria('valid', 1, '='));
     $listingCriteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
-    $alumni_count = $alumniListingHandler->getCount($listingCriteria);
+    $alumni_count = $listingHandler->getCount($listingCriteria);
 
     if (count($all_subcats) > 0) {
         foreach (array_keys($all_subcats) as $k) {
             if (in_array($all_subcats[$k]->getVar('cid'), $alumniIds)) {
-                $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+                // $alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
                 $sub_count_criteria   = new CriteriaCompo();
                 $sub_count_criteria->add(new Criteria('cid', $all_subcats[$k]->getVar('cid'), '='));
                 $sub_count_criteria->add(new Criteria('valid', 1, '='));
                 $sub_count_criteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
-                $alumni_subcount = $alumniListingHandler->getCount($sub_count_criteria);
+                $alumni_subcount = $listingHandler->getCount($sub_count_criteria);
 
                 if ($xoops->getModuleConfig('alumni_showsubcat') == 1 and $all_subcats[$k]->getVar('pid') == $cats[$i]->getVar('cid')) { // if we are collecting subcat info for displaying, and this subcat is a first level child...
                     $subcategories[] = array('id' => $all_subcats[$k]->getVar('cid'), 'title' => $all_subcats[$k]->getVar('title'), 'count' => $alumni_subcount);
@@ -203,7 +205,7 @@ foreach (array_keys($cats) as $i) {
 $xoops->tpl()->assign('total_confirm', '');
 $xoops->tpl()->assign('cat_count', $count - 1);
 
-$alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+// $alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
 
 $xoops->tpl()->assign('moderated', false);
 if ($xoops->getModuleConfig('' . $moduleDirName . '_moderated') == '1') {
@@ -211,11 +213,10 @@ if ($xoops->getModuleConfig('' . $moduleDirName . '_moderated') == '1') {
     $moderateCriteria = new CriteriaCompo();
     $moderateCriteria->add(new Criteria('valid', 0, '='));
     $moderateCriteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
-    $moderate_rows = $alumniListingHandler->getCount($moderateCriteria);
+    $moderate_rows = $listingHandler->getCount($moderateCriteria);
     $moderate_arr  = $listingHandler->getAll($moderateCriteria);
 
-    if ($xoops->isUser()) {
-        if ($xoops->user->isAdmin()) {
+    if ($xoops->isUser() && $xoops->user->isAdmin()) {
             $xoops->tpl()->assign('user_admin', true);
 
             $xoops->tpl()->assign('admin_block', constant($mainLang . '_ADMINCADRE'));
@@ -226,14 +227,13 @@ if ($xoops->getModuleConfig('' . $moduleDirName . '_moderated') == '1') {
                 $xoops->tpl()->assign('total_confirm', constant($mainLang . '_AND') . ' $moderate_rows ' . constant($mainLang . '_WAIT3'));
             }
         }
-    }
 }
 
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('valid', 1, '='));
 $criteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
 $criteria->setLimit($xoops->getModuleConfig('' . $moduleDirName . '_per_page'));
-$numrows = $alumniListingHandler->getCount($criteria);
+$numrows = $listingHandler->getCount($criteria);
 
 $xoops->tpl()->assign('total_listings', constant($mainLang . '_ACTUALY') . ' $numrows ' . constant($mainLang . '_LISTINGS') . ' ' . constant($mainLang . '_INCAT') . ' $numcat ' . constant($mainLang . '_CAT2'));
 
@@ -288,17 +288,15 @@ foreach (array_keys($listingArray) as $i) {
     $useroffset = '';
     if ($xoops->user) {
         $timezone = $xoops->user->timezone();
-        if (isset($timezone)) {
+        if (null !== $timezone) {
             $useroffset = $xoops->user->timezone();
         } else {
             $useroffset = $xoopsConfig['default_TZ'];
         }
     }
     $date = ($useroffset * 3600) + $date;
-    if ($xoops->user) {
-        if ($xoops->user->isAdmin()) {
+    if ($xoops->user && $xoops->user->isAdmin()) {
             $a_item['admin'] = "<a href='admin/alumni.php?op=edit_listing&amp;lid=$lid'><img src='assets/images/modif.gif' border=0 alt=\"" . constant($mainLang . '_MODADMIN') . "\" /></a>";
-        }
     }
 
     $a_item['name']    = "<a href='listing.php?lid=$lid'><b>$name&nbsp;$mname&nbsp;$lname</b></a>";
@@ -320,7 +318,7 @@ foreach (array_keys($listingArray) as $i) {
 
     $a_item['views'] = $view;
 
-    $rank++;
+    ++$rank;
     $xoops->tpl()->append('items', $a_item);
 }
 

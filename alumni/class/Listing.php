@@ -22,13 +22,14 @@
 use Xoops\Core\Database\Connection;
 use Xoops\Core\Request;
 
+
 //defined('XOOPS_ROOT_PATH') or exit('XOOPS root path not defined');
-$xoops = Xoops::getInstance();
+//$xoops = Xoops::getInstance();
 
 /**
- * Class alumni_listing
+ * Class Listing
  */
-class alumni_listing extends XoopsObject
+class Listing extends Xoops\Core\Kernel\XoopsObject
 {
     /**
      * @var Alumni
@@ -41,7 +42,7 @@ class alumni_listing extends XoopsObject
      */
     public function __construct()
     {
-        global $xoops;
+        $xoops = Xoops::getInstance();
         $this->db = $xoops->db();
         $this->initVar('lid', XOBJ_DTYPE_INT, null, false, 11);
         $this->initVar('cid', XOBJ_DTYPE_INT, null, false, 11);
@@ -82,7 +83,7 @@ class alumni_listing extends XoopsObject
      */
     public function getAdminForm($action = false)
     {
-        global $xoopsDB;
+//        global $xoopsDB;
         $xoops = Xoops::getInstance();
         if ($action === false) {
             $action = Request::getVar('REQUEST_URI', '', 'SERVER');
@@ -97,22 +98,25 @@ class alumni_listing extends XoopsObject
 
         include_once(XOOPS_ROOT_PATH . '/class/xoopsformloader.php');
 
+        $helper = Alumni::getInstance();
+        $categoryHandler = $helper->getCategoryHandler();
+
         $memberHandler = $xoops->getHandlerMember();
         $userGroups    = $memberHandler->getGroupList();
 
-        $form = new XoopsThemeForm($title, 'form', $action, 'post', true);
+        $form = new Xoops\Form\ThemeForm($title, 'form', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         $form->addElement(new Xoops\Form\Label(constant($adminLang . '_SUBMITTER'), $xoops->user->uname()));
 
-        $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-        $categories              = $alumniCategoriesHandler->getObjects();
+        // $alumniCategoryHandler = $xoops->getModuleHandler('Category', $moduleDirName);
+        $categories              = $categoryHandler->getObjects();
         $mytree                  = new XoopsObjectTree($categories, 'cid', 'pid');
         $categorySelect          = $mytree->makeSelBox('cid', 'title', '--', $this->getVar('cid', 'e'), true);
         $form->addElement(new Xoops\Form\Label(constant($adminLang . '_CAT'), $categorySelect), true);
 
         $cat_name                = '';
-        $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-        $catObj                  = $alumniCategoriesHandler->get($this->getVar('cid'));
+        // $alumniCategoryHandler = $xoops->getModuleHandler('Category', $moduleDirName);
+        $catObj                  = $categoryHandler->get($this->getVar('cid'));
         $cat_name                = $catObj->getVar('title');
         $form->addElement(new Xoops\Form\Hidden('school', $cat_name));
         $form->addElement(new Xoops\Form\Text(AlumniLocale::A_NAME_2, 'name', 50, 255, $this->getVar('name')), true);
@@ -140,14 +144,14 @@ class alumni_listing extends XoopsObject
         $form->addElement(new Xoops\Form\Editor(constant($adminLang . '_EXTRAINFO'), 'extrainfo', $editorConfigs), false);
 
         $photo_old            = $this->getVar('photo') ?: '';
-        $uploadDirectoryPhoto = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
+        $uploadDirectoryPhoto = XOOPS_ROOT_PATH . "/uploads/{$moduleDirName}/photos/grad_photo";
         $imageTrayPhoto       = new Xoops\Form\ElementTray(constant($adminLang . '_PHOTO'), '<br />');
         $imagePathPhoto       = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadDirectoryPhoto);
         $fileSelectTrayPhoto  = new Xoops\Form\ElementTray('', '<br />');
         $fileSelectTrayPhoto->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'photo', $xoops->getModuleConfig('alumni_photomax')), false);
 
         if ($photo_old) {
-            $fileSelectTrayPhoto->addElement(new Xoops\Form\Label(constant($adminLang . '_GRAD_PIC'), '<a href="../photos/grad_photo/' . $photo_old . '">' . $photo_old . '</a>', false));
+            $fileSelectTrayPhoto->addElement(new Xoops\Form\Label(constant($adminLang . '_GRAD_PIC'), '<a href="'. XOOPS_URL . "/uploads/{$moduleDirName}/photos/grad_photo/" .  $photo_old . '">' . $photo_old . '</a>', false));
             $imageTrayCheckbox = new Xoops\Form\Checkbox('', 'del_photo', 0);
             $imageTrayCheckbox->addOption(1, constant($adminLang . '_DELPICT'));
             $fileSelectTrayPhoto->addElement($imageTrayCheckbox);
@@ -157,14 +161,14 @@ class alumni_listing extends XoopsObject
         $form->addElement(new Xoops\Form\Hidden('photo_old', $photo_old));
 
         $photo2_old            = $this->getVar('photo2') ?: '';
-        $uploadDirectoryPhoto2 = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
+        $uploadDirectoryPhoto2 = XOOPS_ROOT_PATH . "/uploads/{$moduleDirName}/photos/now_photo";
         $imageTrayPhoto2       = new Xoops\Form\ElementTray(constant($adminLang . '_PHOTO2'), '<br />');
         $imagePathPhoto2       = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadDirectoryPhoto2);
         $fileSelectTrayPhoto2  = new Xoops\Form\ElementTray('', '<br />');
         $fileSelectTrayPhoto2->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'photo2', $xoops->getModuleConfig('alumni_photomax')), false);
 
         if ($photo_old) {
-            $fileSelectTrayPhoto2->addElement(new Xoops\Form\Label(constant($adminLang . '_NOW_PIC'), '<a href="../photos/now_photo/' . $photo2_old . '">' . $photo2_old . '</a>', false));
+            $fileSelectTrayPhoto2->addElement(new Xoops\Form\Label(constant($adminLang . '_NOW_PIC'), '<a href="'. XOOPS_URL . "/uploads/{$moduleDirName}/photos/now_photo/" . $photo2_old . '">' . $photo2_old . '</a>', false));
 
             $imageTrayCheckbox2 = new Xoops\Form\Checkbox('', 'del_photo2', 0);
             $imageTrayCheckbox2->addOption(1, constant($adminLang . '_DELPICT'));
@@ -204,11 +208,13 @@ class alumni_listing extends XoopsObject
     public function getForm($action = false)
     {
         $myts = MyTextSanitizer::getInstance();
-        global $xoopsDB;
         $xoops = Xoops::getInstance();
 
         $moduleDirName = basename(dirname(__DIR__));
         $xoops->loadLanguage('admin', $moduleDirName);
+        $helper = Alumni::getInstance();
+        $listingHandler  = $helper->getListingHandler();
+        $categoryHandler = $helper->getCategoryHandler();
         $adminLang = '_AM_' . strtoupper($moduleDirName);
 
         if ($action === false) {
@@ -234,26 +240,26 @@ class alumni_listing extends XoopsObject
 
         $form->addElement(new Xoops\Form\Label(constant($adminLang . '_SUBMITTER'), $xoops->user->uname()));
 
-        $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-        $categories              = $alumniCategoriesHandler->getObjects();
+        // $alumniCategoryHandler = $xoops->getModuleHandler('Category', $moduleDirName);
+        $categories              = $categoryHandler->getObjects();
         $mytree                  = new XoopsObjectTree($categories, 'cid', 'pid');
 
         if ($tempLid = Request::getInt('lid', 0, 'GET')) {
-            $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-            $listingObj           = $alumniListingHandler->get($tempLid);
+            // $alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
+            $listingObj           = $listingHandler->get($tempLid);
             $cat_id               = $listingObj->getVar('cid');
             $categorySelect       = $mytree->makeSelBox('cid', 'title', '--', $listingObj->getVar('cid'), true);
 
             $form->addElement(new Xoops\Form\Label(constant($adminLang . '_CAT'), $categorySelect), true);
 
             $cat_name                = '';
-            $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-            $catObj                  = $alumniCategoriesHandler->get($listingObj->getVar('cid'));
+            // $alumniCategoryHandler = $xoops->getModuleHandler('Category', $moduleDirName);
+            $catObj                  = $categoryHandler->get($listingObj->getVar('cid'));
             $cat_name                = $catObj->getVar('title');
         } else {
             if ($tempCid = Request::getInt('cid', 0, 'GET')) {
-                $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-                $catObj                  = $alumniCategoriesHandler->get($tempCid);
+                // $alumniCategoryHandler = $xoops->getModuleHandler('Category',$moduleDirName);
+                $catObj                  = $categoryHandler->get($tempCid);
                 $cat_name                = $catObj->getVar('title');
 
                 $categorySelect = $mytree->makeSelBox('cid', 'title', '--', $catObj->getVar('cid'), true);
@@ -287,14 +293,14 @@ class alumni_listing extends XoopsObject
 
         $form->addElement(new Xoops\Form\Editor(constant($adminLang . '_EXTRAINFO'), 'extrainfo', $editorConfigs), false);
         $photo_old            = $this->getVar('photo') ?: '';
-        $uploadDirectoryPhoto = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
+        $uploadDirectoryPhoto = XOOPS_ROOT_PATH . "/uploads/{$moduleDirName}/photos/grad_photo";
         $imageTrayPhoto       = new Xoops\Form\ElementTray(constant($adminLang . '_GRAD_PIC'), '<br />');
         $imagePathPhoto       = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadDirectoryPhoto);
         $fileSelectTrayPhoto  = new Xoops\Form\ElementTray('', '<br />');
         $fileSelectTrayPhoto->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'photo', $xoops->getModuleConfig('alumni_photomax')), false);
 
         if ($photo_old) {
-            $fileSelectTrayPhoto->addElement(new Xoops\Form\Label(constant($adminLang . '_GRAD_PIC'), '<a href="photos/grad_photo/' . $photo_old . '">' . $photo_old . '</a>', false));
+            $fileSelectTrayPhoto->addElement(new Xoops\Form\Label(constant($adminLang . '_GRAD_PIC'), '<a href="'. XOOPS_URL . "/uploads/{$moduleDirName}/photos/grad_photo/" . $photo_old . '">' . $photo_old . '</a>', false));
             $imageTrayCheckbox = new Xoops\Form\Checkbox('', 'del_photo', 0);
             $imageTrayCheckbox->addOption(1, constant($adminLang . '_DELPICT'));
             $fileSelectTrayPhoto->addElement($imageTrayCheckbox);
@@ -304,14 +310,14 @@ class alumni_listing extends XoopsObject
         $form->addElement(new Xoops\Form\Hidden('photo_old', $photo_old));
 
         $photo2_old            = $this->getVar('photo2') ?: '';
-        $uploadDirectoryPhoto2 = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
+        $uploadDirectoryPhoto2 = XOOPS_ROOT_PATH . "/uploads/{$moduleDirName}/photos/now_photo";
         $imageTrayPhoto2       = new Xoops\Form\ElementTray(constant($adminLang . '_NOW_PIC'), '<br />');
         $imagePathPhoto2       = sprintf(constant($adminLang . '_FORMIMAGE_PATH'), $uploadDirectoryPhoto2);
         $fileSelectTrayPhoto2  = new Xoops\Form\ElementTray('', '<br />');
         $fileSelectTrayPhoto2->addElement(new Xoops\Form\File(constant($adminLang . '_FORMUPLOAD'), 'photo2', $xoops->getModuleConfig('alumni_photomax')), false);
 
         if ($photo_old) {
-            $fileSelectTrayPhoto2->addElement(new Xoops\Form\Label(constant($adminLang . '_NOW_PIC'), '<a href="photos/now_photo/' . $photo2_old . '">' . $photo2_old . '</a>', false));
+            $fileSelectTrayPhoto2->addElement(new Xoops\Form\Label(constant($adminLang . '_NOW_PIC'), '<a href="'. XOOPS_URL . "/uploads/{$moduleDirName}/photos/now_photo/" . $photo2_old . '">' . $photo2_old . '</a>', false));
             $imageTrayCheckbox2 = new Xoops\Form\Checkbox('', 'del_photo2', 0);
             $imageTrayCheckbox2->addOption(1, constant($adminLang . '_DELPICT'));
             $fileSelectTrayPhoto2->addElement($imageTrayCheckbox2);
@@ -355,14 +361,14 @@ class alumni_listing extends XoopsObject
 /**
  * Class AlumniAlumni_listingHandler
  */
-class AlumniAlumni_listingHandler extends XoopsPersistableObjectHandler
+class AlumniListingHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param null|Connection|XoopsDatabase $db
      */
     public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'alumni_listing', 'alumni_listing', 'lid', 'title');
+        parent::__construct($db, 'alumni_listing', 'Listing', 'lid', 'title');
     }
 
     /**
@@ -376,9 +382,11 @@ class AlumniAlumni_listingHandler extends XoopsPersistableObjectHandler
     {
         $helper   = Alumni::getInstance();
         $xoops    = $helper->xoops();
+        //get local language for SystemLocale
+        $xoops->loadLocale('system');
         $moduleId = $helper->getModule()->getVar('mid');
         // get permitted id
-        $groups    = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $groups    = $xoops->isUser() ? $xoops->user->getGroups() : SystemLocale::ANONYMOUS_USERS_GROUP;
         $alumniIds = $helper->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
         // criteria
         $criteria = new CriteriaCompo();

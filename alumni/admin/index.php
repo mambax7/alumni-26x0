@@ -21,8 +21,9 @@ include __DIR__ . '/admin_header.php';
 //include_once '../include/functions.php';
 //$xoops = Xoops::getInstance();
 $xoops->header();
+//$xoops->theme()->addStylesheet("modules/{$moduleDirName}/assets/css/moduladmin.css");
 
-$listingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+//$listingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
 
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('valid', 1));
@@ -34,13 +35,13 @@ $moderateCriteria->add(new Criteria('valid', 0, '='));
 $moderate_count = $listingHandler->getCount($moderateCriteria);
 //	unset($moderateCriteria);
 
-$indexAdmin = new Xoops\Module\Admin();
+$indexAdmin = new \Xoops\Module\Admin();
 $indexAdmin->displayNavigation('index.php');
 
-$indexAdmin->addInfoBox(AlumniLocale::LISTINGS, 'listing');
-$indexAdmin->addInfoBoxLine(sprintf(AlumniLocale::TOTAL_LISTINGS, $moderate_count + $listing_valid), 'listing');
-$indexAdmin->addInfoBoxLine(sprintf(AlumniLocale::TOTAL_VALID, $listing_valid), 'listing');
-$indexAdmin->addInfoBoxLine(sprintf(AlumniLocale::TOTAL_NOT_VALID, $moderate_count), 'listing');
+$indexAdmin->addInfoBox(AlumniLocale::LISTINGS, 'content');
+$indexAdmin->addInfoBoxLine(sprintf(AlumniLocale::TOTAL_LISTINGS, $moderate_count + $listing_valid), 'content');
+$indexAdmin->addInfoBoxLine(sprintf(AlumniLocale::TOTAL_VALID, $listing_valid), 'content');
+$indexAdmin->addInfoBoxLine(sprintf(AlumniLocale::TOTAL_NOT_VALID, $moderate_count), 'content');
 
 $extensions = array(
     'comments'      => 'extension',

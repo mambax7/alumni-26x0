@@ -1,4 +1,4 @@
-﻿<{includeq file="admin:system/admin_navigation.tpl"}>
+﻿<{*<{includeq file="admin:system/admin_navigation.tpl"}>*}>
 
 
 <{if $listingCount == true}>

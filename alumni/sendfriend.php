@@ -8,7 +8,8 @@ $myts          = MyTextSanitizer::getInstance();
 $moduleDirName = basename(__DIR__);
 //$mainLang =  '_' . strtoupper( $moduleDirName ) ;
 
-if (!empty($_POST['submit'])) {
+//if (!empty($_POST['submit'])) {
+if (Request::getString('submit', '', 'POST')){
     if ($xoops->getModuleConfig('alumni_use_captcha') == '1' && !$xoops->user->isAdmin()) {
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
@@ -17,33 +18,33 @@ if (!empty($_POST['submit'])) {
         }
     }
 
-    $yname = $_POST['yname'];
-    $ymail = $_POST['ymail'];
-    $fname = $_POST['fname'];
-    $fmail = $_POST['fmail'];
+    $yname = Request::getString('yname', '', 'POST'); //$_POST['yname'];
+    $ymail = Request::getString('ymail', '', 'POST'); //$_POST['ymail'];
+    $fname = Request::getString('fname', '', 'POST'); //$_POST['fname'];
+    $fmail = Request::getString('fmail', '', 'POST'); //$_POST['fmail'];
 
-    if (isset($_POST['lid'])) {
-        $lid = (int)($_POST['lid']);
-    } else {
-        if (isset($_GET['lid'])) {
-            $lid = (int)($_GET['lid']);
-        } else {
-            $lid = 0;
-        }
-    }
+//    $lid = 0;
+//    if (isset($_POST['lid'])) {
+//        $lid = (int)($_POST['lid']);
+//    } elseif (isset($_GET['lid'])) {
+//        $lid = (int)($_GET['lid']);
+//    }
+
+    $lid = Request::getInt('lid', Request::getInt('lid', 0, 'GET'), 'POST');
+
     $alumni   = Alumni::getInstance();
     $moduleId = $xoops->module->getVar('mid');
 
     // get permitted id
-    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups               = $xoops->isUser() ? $xoops->user->getGroups() : SystemLocale::ANONYMOUS_USERS_GROUP;
     $alumniIds            = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
-    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    // $alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
     $listingCriteria      = new CriteriaCompo();
     $listingCriteria->add(new Criteria('lid', $lid, '='));
     $listingCriteria->add(new Criteria('cid', '(' . implode(', ', $alumniIds) . ')', 'IN'));
-    $numrows = $alumniListingHandler->getCount($listingCriteria);
+    $numrows = $listingHandler->getCount($listingCriteria);
 
-    $listingArray = $alumniListingHandler->getAll($listingCriteria);
+    $listingArray = $listingHandler->getAll($listingCriteria);
     unset($listingCriteria);
     foreach (array_keys($listingArray) as $i) {
         $lid        = $listingArray[$i]->getVar('lid');
@@ -69,10 +70,10 @@ if (!empty($_POST['submit'])) {
         $view       = $listingArray[$i]->getVar('view');
 
         $useroffset = '';
-        if ($xoopsUser) {
-            $timezone = $xoopsUser->timezone();
-            if (isset($timezone)) {
-                $useroffset = $xoopsUser->timezone();
+        if ($xoops->user) {
+            $timezone = $xoops->user->timezone();
+            if (null !== $timezone) {
+                $useroffset = $xoops->user->timezone();
             } else {
                 $useroffset = $xoopsConfig['default_TZ'];
             }
@@ -130,7 +131,6 @@ if (!empty($_POST['submit'])) {
         echo $xoopsMailer->getErrors();
 
         $xoops->redirect('index.php', 3, constant($mainLang . '_ALUM_SEND'));
-        exit();
     }
 } else {
     global $xoops;
@@ -141,8 +141,8 @@ if (!empty($_POST['submit'])) {
 
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
-    $listing_2_send       = $alumniListingHandler->get(Request::getInt('lid', 0, 'GET'));
+    // $alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
+    $listing_2_send       = $listingHandler->get(Request::getInt('lid', 0, 'GET'));
 
     $listing_2_send->getVar('name');
     $listing_2_send->getVar('mname');
@@ -153,9 +153,9 @@ if (!empty($_POST['submit'])) {
     $form->setExtra('enctype="multipart/form-data"');
     //    $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
     $form->addElement(new XoopsFormLabel(constant($mainLang . '_LISTING_SEND'), $listing_2_send->getVar('name') . ' ' . $listing_2_send->getVar('mname') . ' ' . $listing_2_send->getVar('lname') . ''));
-    if ($xoopsUser) {
-        $idd  = $xoopsUser->getVar('name', 'E');
-        $idde = $xoopsUser->getVar('email', 'E');
+    if ($xoops->user) {
+        $idd  = $xoops->user->getVar('name', 'E');
+        $idde = $xoops->user->getVar('email', 'E');
     }
 
     $form->addElement(new XoopsFormText(constant($mainLang . '_NAME'), 'yname', 30, 50, $idd), true);
@@ -170,7 +170,7 @@ if (!empty($_POST['submit'])) {
     $form->addElement(new XoopsFormHidden('lid', $lid), false);
     $form->addElement(new XoopsFormButton('', 'submit', constant($mainLang . '_SUBMIT'), 'submit'));
     $form->display();
-    $xoopsTpl->assign('sendfriend_form', ob_get_contents());
+    $xoops->tpl()->assign('sendfriend_form', ob_get_contents());
 
     ob_end_clean();
 }

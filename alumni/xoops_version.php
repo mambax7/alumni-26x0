@@ -1,12 +1,10 @@
 <?php
 // This Release Apr-04-2011
 //defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-
+$xoops = Xoops::getInstance();
 $moduleDirName = basename(__DIR__);
 $modinfoLang   = '_MI_' . strtoupper($moduleDirName);
 //$blocksLang    = '_MB_' . strtoupper($moduleDirName);
-
-$xoops = Xoops::getInstance();
 
 //$xoops->loadLanguage('block', $moduleDirName);
 //$xoops->loadLanguage('modinfo', $moduleDirName);

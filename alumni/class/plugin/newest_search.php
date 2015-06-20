@@ -52,7 +52,7 @@ class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
         $eb = $qb->expr();
         $qb->select('DISTINCT *')->fromPrefix('alumni_listing')->where($eb->neq('valid', '1'))//           ->andWhere($eb->neq('date', $time, "!="))
            ->orderBy('date', 'DESC')->setFirstResult($offset)->setMaxResults($limit);
-        if (is_array($queries) && !empty($queries)) {
+        if (is_array($queries) && 0 !== count($queries)) {
             $queryParts = array();
             foreach ($queries as $i => $q) {
                 $qterm = ':qterm' . $i;
@@ -84,7 +84,7 @@ class AlumniSearchPlugin extends PluginAbstract implements SearchPluginInterface
             $ret[$i]['time']  = $myrow['date'];
             //    $ret[$i]['content'] = $myrow['content_text'] . $myrow['content_shorttext'];
             $ret[$i]['uid'] = $myrow['usid'];
-            $i++;
+            ++$i;
 
             //$items[] = array(
             //               'title' => $myrow['name']." ".$myrow['mname']." ".$myrow['lname']."   ---   ".$myrow['school']." ---   ".$myrow['year'],

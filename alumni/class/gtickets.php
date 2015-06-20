@@ -12,7 +12,7 @@ if (!class_exists('XoopsGTicket')) {
         public $_latest_token = '';
         public $messages      = array();
 
-        public function XoopsGTicket()
+        public function __construct()
         {
             global $xoopsConfig;
 
@@ -24,7 +24,7 @@ if (!class_exists('XoopsGTicket')) {
             }
 
             // default messages
-            if (empty($this->messages)) {
+            if (0 === count($this->messages)) {
                 $this->messages = array(
                     'err_general'       => 'GTicket Error',
                     'err_nostubs'       => 'No stubs found',
@@ -33,7 +33,7 @@ if (!class_exists('XoopsGTicket')) {
                     'err_timeout'       => 'Time out',
                     'err_areaorref'     => 'Invalid area or referer',
                     'fmt_prompt4repost' => 'error(s) found:<br /><span style="background-color:red;font-weight:bold;color:white;">%s</span><br />Confirm it.<br />And do you want to post again?',
-                    'btn_repost'        => 'repost',);
+                    'btn_repost'        => 'repost');
             }
         }
 
@@ -120,7 +120,7 @@ if (!class_exists('XoopsGTicket')) {
             }
 
             // limit max stubs 10
-            if (sizeof($_SESSION['XOOPS_G_STUBS']) > 10) {
+            if (count($_SESSION['XOOPS_G_STUBS']) > 10) {
                 $_SESSION['XOOPS_G_STUBS'] = array_slice($_SESSION['XOOPS_G_STUBS'], -10);
             }
 
@@ -218,7 +218,7 @@ if (!class_exists('XoopsGTicket')) {
                 }
             }
 
-            if (!empty($this->_errors)) {
+            if (0 !== count($this->_errors)) {
                 if ($allow_repost) {
                     // repost form
                     $this->draw_repost_form($area);
@@ -363,7 +363,7 @@ if (!class_exists('XoopsGTicket')) {
                 echo 'Irregular output! check language files etc.';
             }
 
-            return;
+//            return;
         }
         // end of class
     }

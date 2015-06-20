@@ -37,9 +37,9 @@ $xoops->header();
 $admin_page = new \Xoops\Module\Admin();
 $admin_page->displayNavigation('permissions.php');
 
-//    $categories_Handler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-$cats     = $alumniCategoriesHandler->getAll();
-$cat_rows = $alumniCategoriesHandler->getCount();
+//    $categories_Handler = $xoops->getModuleHandler('alumni_categories', $moduleDirName);
+$cats     = $categoryHandler->getAll();
+$cat_rows = $categoryHandler->getCount();
 
 include_once(XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/alumni_tree.php");
 $cattree = new AlumniObjectTree($cats, 'cid', 'pid');

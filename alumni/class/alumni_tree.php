@@ -34,27 +34,27 @@ class AlumniObjectTree extends XoopsObjectTree
     /**
      * @var string
      */
-    private $_parentId;
+//    private $_parentId;
 
     /**
      * @var string
      */
-    private $_myId;
+//    private $_myId;
 
     /**
      * @var null|string
      */
-    private $_rootId;
+//    private $_rootId;
 
     /**
      * @var array
      */
-    private $_tree = array();
+//    private $_tree = array();
 
     /**
      * @var array
      */
-    private $_objects;
+//    private $_objects;
 
     /**
      * Constructor
@@ -66,10 +66,11 @@ class AlumniObjectTree extends XoopsObjectTree
      */
     public function __construct($objectArr, $myId, $parentId, $rootId = null)
     {
+        parent::__construct($objectArr, $myId, $parentId, $rootId = null);
         $this->_objects  = $objectArr;
         $this->_myId     = $myId;
         $this->_parentId = $parentId;
-        if (isset($rootId)) {
+        if (null !== $rootId) {
             $this->_rootId = $rootId;
         }
         $this->_initialize();
@@ -89,7 +90,7 @@ class AlumniObjectTree extends XoopsObjectTree
             $key2                          = $object->getVar($this->_parentId);
             $this->_tree[$key1]['parent']  = $key2;
             $this->_tree[$key2]['child'][] = $key1;
-            if (isset($this->_rootId)) {
+            if (isset($this->_rootId) && null !== $this->_rootId) {
                 $this->_tree[$key1]['root'] = $object->getVar($this->_rootId);
             }
         }

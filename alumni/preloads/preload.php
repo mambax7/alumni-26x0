@@ -20,11 +20,11 @@ use Xoops\Core\PreloadItem;
  */
 
 /**
- * Publisher core preloads
+ * Alumni core preloads
  *
  * @copyright       XOOPS Project http://xoops.org/
  * @license         GNU GPL V2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @author          trabis <lusopoemas@gmail.com>
+ * @author          XOOPS Development Team
  */
 class AlumniPreload extends PreloadItem
 {
@@ -39,5 +39,13 @@ class AlumniPreload extends PreloadItem
                               'alumni'        => $path . '/class/helper.php', //    'alumniutils' => $path . '/class/utils.php',
                               //     'alumniblockform' => $path . '/class/blockform.php',
                           ));
+
+        // instantiate the loader
+        $loader = new \Xoops\Core\Psr4ClassLoader;
+        // register the autoloader
+        $loader->register();
+        // register the base directories for the namespace prefix
+        $loader->addNamespace('Xoopsmodules\Alumni', dirname(__DIR__) . '/class');
+        $loader->addNamespace('Xoopsmodules\Alumni', dirname(__DIR__) . '/tests');
     }
 }

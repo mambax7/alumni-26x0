@@ -24,9 +24,9 @@ function alumni_show($options)
 
     $block                = array();
     $myts                 = MyTextSanitizer::getInstance();
-    $alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+    // $alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
 
-    $listings = $alumniListingHandler->getListingPublished(0, $options[1], $options[0], 'DESC');
+    $listings = $listingHandler->getListingPublished(0, $options[1], $options[0], 'DESC');
     foreach (array_keys($listings) as $l) {
         $a_item = array();
         $name   = $myts->undoHtmlSpecialChars($listings[$l]->getVar('name'));

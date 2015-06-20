@@ -41,8 +41,8 @@ switch ($op) {
 
         $indexAdmin->renderButton('left', '');
 
-        $listingCount = $alumniListingHandler->countAlumni();
-        $listingArray = $alumniListingHandler->getAll();
+        $listingCount = $listingHandler->countAlumni();
+        $listingArray = $listingHandler->getAll();
 
         // Assign Template variables
         $xoops->tpl()->assign('listingCount', $listingCount);
@@ -85,10 +85,10 @@ switch ($op) {
                     $newitem        = "<img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/newred.gif\" />";
                     $listing['new'] = $newitem;
                 }
-                if ($xoopsUser) {
-                    $timezone = $xoopsUser->timezone();
+                if ($xoops->user) {
+                    $timezone = $xoops->user->timezone();
                     if (null !== $timezone) {
-                        $useroffset = $xoopsUser->timezone();
+                        $useroffset = $xoops->user->timezone();
                     } else {
                         $useroffset = $xoopsConfig['default_TZ'];
                     }
@@ -108,7 +108,7 @@ switch ($op) {
                 $cat = addslashes($cid);
 
                 $listing['views'] = $view;
-                $xoopsTpl->append('listing', $listing);
+                $xoops->tpl()->append('listing', $listing);
                 $xoops->tpl()->assign('valid', AlumniLocale::A_APPROVE);
                 $xoops->tpl()->assign('school', AlumniLocale::A_SCHOOL);
                 $xoops->tpl()->assign('class_of', AlumniLocale::A_CLASS_OF);
@@ -123,14 +123,14 @@ switch ($op) {
     case 'new_listing':
         //    xoops_cp_header();
 
-        //$alumniListingHandler = $xoops->getModuleHandler('alumni_listing', 'alumni');
+        //$alumniListingHandler = $xoops->getModuleHandler('Listing', $moduleDirName);
 
         $xoops->header();
         $indexAdmin = new Xoops\Module\Admin();
         $indexAdmin->displayNavigation('alumni.php');
         $indexAdmin->addItemButton(constant($adminLang . '_CATEGORYLIST'), 'alumni.php');
         echo $indexAdmin->renderButton('left', '');
-        $obj  = $alumniListingHandler->create();
+        $obj  = $listingHandler->create();
         $form = $obj->getAdminForm();
         $form->display();
         break;
@@ -151,31 +151,33 @@ switch ($op) {
         $date = time();
 
         //        if (isset($_REQUEST['lid'])) {
-        //            $obj = $alumniListingHandler->get($_REQUEST['lid']);
+        //            $obj = $listingHandler->get($_REQUEST['lid']);
         //            $obj->setVar('lid', $_REQUEST['lid']);
         //        } else {
-        //            $obj = $alumniListingHandler->create();
+        //            $obj = $listingHandler->create();
         //        }
 
         if ($tempLid = Request::getInt('lid', null, 'POST')) {
-            $obj = $alumniListingHandler->get($tempLid);
+            $obj = $listingHandler->get($tempLid);
             $obj->setVar('lid', $lidTest);
         } else {
-            $obj = $alumniListingHandler->create();
+            $obj = $listingHandler->create();
         }
 
-        $destination = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
+        $destination = XOOPS_ROOT_PATH . "/uploads/{$moduleDirName}/photos/grad_photo";
 
         if ('1' == Request::getInt('del_photo', null, 'POST')) {
-            if (@file_exists('' . $destination . '/' . Request::getString('photo_old', '', 'POST') . '')) {
+//            if (@file_exists('' . $destination . '/' . Request::getString('photo_old', '', 'POST') . '')) {
+            if(false !==  stream_resolve_include_path('' . $destination . '/' . Request::getString('photo_old', '', 'POST') . '')) {
                 unlink('' . $destination . '/' . Request::getString('photo_old', '', 'POST') . '');
             }
             $obj->setVar('photo', '');
         }
 
-        $destination2 = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
+        $destination2 = XOOPS_ROOT_PATH . "/uploads/{$moduleDirName}/photos/now_photo";
         if ('1' == Request::getInt('del_photo2', null, 'POST')) {
-            if (@file_exists('' . $destination2 . '/' . Request::getString('photo2_old', '', 'POST') . '')) {
+//            if (@file_exists('' . $destination2 . '/' . Request::getString('photo2_old', '', 'POST') . '')) {
+            if (false !==  stream_resolve_include_path('' . $destination2 . '/' . Request::getString('photo2_old', '', 'POST') . '')) {
                 unlink('' . $destination2 . '/' . Request::getString('photo_old2', '', 'POST') . '');
             }
 
@@ -184,8 +186,8 @@ switch ($op) {
 
         if ($tempCid = Request::getInt('cid', null, 'POST')) {
             $cat_name                = '';
-            $alumniCategoriesHandler = $xoops->getModuleHandler('alumni_categories', 'alumni');
-            $catObj                  = $alumniCategoriesHandler->get($tempCid);
+            // $alumniCategoryHandler = $xoops->getModuleHandler('Category', $moduleDirName);
+            $catObj                  = $categoryHandler->get($tempCid);
             $cat_name                = $catObj->getVar('title');
         }
 
@@ -213,7 +215,7 @@ switch ($op) {
 
         if (!empty($_FILES['photo']['name'])) {
             include_once XOOPS_ROOT_PATH . '/class/uploader.php';
-            $uploaddir        = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/grad_photo";
+            $uploaddir        = XOOPS_ROOT_PATH . "/uploads/{$moduleDirName}/photos/grad_photo";
             $photomax         = $xoops->getModuleConfig('alumni_photomax');
             $maxwide          = $xoops->getModuleConfig('alumni_maxwide');
             $maxhigh          = $xoops->getModuleConfig('alumni_maxhigh');
@@ -236,7 +238,7 @@ switch ($op) {
 
         if (!empty($_FILES['photo2']['name'])) {
             include_once XOOPS_ROOT_PATH . '/class/uploader.php';
-            $uploaddir2       = XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/photos/now_photo";
+            $uploaddir2       = XOOPS_ROOT_PATH . "/uploads/{$moduleDirName}/photos/now_photo";
             $photomax         = $xoops->getModuleConfig('alumni_photomax');
             $maxwide          = $xoops->getModuleConfig('alumni_maxwide');
             $maxhigh          = $xoops->getModuleConfig('alumni_maxhigh');
@@ -257,7 +259,7 @@ switch ($op) {
             }
         }
 
-        if ($alumniListingHandler->insert($obj)) {
+        if ($listingHandler->insert($obj)) {
             $xoops->redirect('alumni.php', 3, constant($adminLang . '_FORMOK'));
 
             //notifications
@@ -283,19 +285,19 @@ switch ($op) {
         $indexAdmin->addItemButton(constant($adminLang . '_ADD_LINK'), 'alumni.php?op=new_listing', 'add');
         $indexAdmin->addItemButton(constant($adminLang . '_LISTINGLIST'), 'alumni.php', 'list');
         echo $indexAdmin->renderButton('left', '');
-        $obj  = $alumniListingHandler->get(Request::getInt('lid', 0, 'GET'));
+        $obj  = $listingHandler->get(Request::getInt('lid', 0, 'GET'));
         $form = $obj->getAdminForm();
         $form->display();
         break;
 
     case 'delete_listing':
         $xoops->header();
-        $obj = $alumniListingHandler->get(Request::getInt('lid', 0, 'POST'));
+        $obj = $listingHandler->get(Request::getInt('lid', 0, 'POST'));
         if (1 == Request::getInt('ok', null, 'POST')) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 $xoops->redirect('alumni.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ($alumniListingHandler->delete($obj)) {
+            if ($listingHandler->delete($obj)) {
                 $xoops->redirect('alumni.php', 3, constant($adminLang . '_FORMDELOK'));
             } else {
                 echo $obj->getHtmlErrors();
@@ -308,9 +310,9 @@ switch ($op) {
     case 'update_status':
         $lid = Request::getInt('lid', 0, 'POST');
         if ($lid > 0) {
-            $obj = $alumniListingHandler->get($lid);
+            $obj = $listingHandler->get($lid);
             $obj->setVar('valid', 1);
-            if ($alumniListingHandler->insert($obj)) {
+            if ($listingHandler->insert($obj)) {
                 $xoops->redirect('alumni.php?op=list_moderated', 3, constant($adminLang . '_LISTING_VALIDATED'));
             }
             echo $obj->getHtmlErrors();
@@ -331,10 +333,10 @@ switch ($op) {
         $xoTheme->addStylesheet(ALUMNI_URL . '/media/jquery/css/theme.blue.css');
         $xoTheme->addStylesheet(ALUMNI_URL . '/media/jquery/tablesorter-master/addons/pager/jquery.tablesorter.pager.css');
 
-        $listingHandler   = $xoops->getModuleHandler('alumni_listing', 'alumni');
+//        $listingHandler   = $xoops->getModuleHandler('Listing', 'alumni');
         $alumni           = Alumni::getInstance();
         $moduleId         = $xoops->module->getVar('mid');
-        $groups           = $xoops->isUser() ? $xoops->user->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $groups           = $xoops->isUser() ? $xoops->user->getGroups() : SystemLocale::ANONYMOUS_USERS_GROUP;
         $alumniIds        = $alumni->getGrouppermHandler()->getItemIds('alumni_view', $groups, $moduleId);
         $moderateCriteria = new CriteriaCompo();
         $moderateCriteria->add(new Criteria('valid', 0, '='));
@@ -384,10 +386,10 @@ switch ($op) {
                     $newitem        = "<img src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/newred.gif\" />";
                     $listing['new'] = $newitem;
                 }
-                if ($xoopsUser) {
-                    $timezone = $xoopsUser->timezone();
+                if ($xoops->user) {
+                    $timezone = $xoops->user->timezone();
                     if (null !== $timezone) {
-                        $useroffset = $xoopsUser->timezone();
+                        $useroffset = $xoops->user->timezone();
                     } else {
                         $useroffset = $xoopsConfig['default_TZ'];
                     }
@@ -411,7 +413,7 @@ switch ($op) {
                 $cat = addslashes($cid);
 
                 $listing['views'] = $view;
-                $xoopsTpl->append('listing', $listing);
+                $xoops->tpl()->append('listing', $listing);
                 $xoops->tpl()->assign('valid', AlumniLocale::A_APPROVE);
                 $xoops->tpl()->assign('school', AlumniLocale::A_SCHOOL);
                 $xoops->tpl()->assign('class_of', AlumniLocale::A_CLASS_OF);
