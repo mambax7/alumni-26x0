@@ -157,7 +157,7 @@ class Category extends Xoops\Core\Kernel\XoopsObject
     public function getPathFromId($id = null, $path = '')
     {
         $id   = null !== $id ? (int)$id : $this->cid;
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($this->title);
         $path = "/{$name}{$path}";
         if (0 != $this->pid) {
