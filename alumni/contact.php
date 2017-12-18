@@ -142,7 +142,7 @@ if (Request::getString('submit', '', 'POST')) {
 
         $semail = $xoops->user->getVar('email');
     }
-    $sendform = new XoopsThemeForm(constant($mainLang . '_CONTACTAUTOR') . ' ' . $listing, 'sendform', $_SERVER['PHP_SELF'] . '?lid=$lid', 'POST');
+    $sendform = new XoopsThemeForm(constant($mainLang . '_CONTACTAUTOR') . ' ' . $listing, 'sendform', $_SERVER['PHP_SELF'] . '?lid=$lid', 'post', true);
     $sendform->addElement(new XoopsFormLabel(constant($mainLang . '_SUBJECT'), $listing));
     $sendform->addElement(new XoopsFormText(constant($mainLang . '_YOURNAME'), 'sname', 50, 100, $sname), true);
     $sendform->addElement(new XoopsFormText(constant($mainLang . '_YOUREMAIL'), 'semail', 50, 50, $semail), true);

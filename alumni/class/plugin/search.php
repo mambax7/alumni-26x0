@@ -14,7 +14,7 @@ use Xoops\Core\Request;
 /**
  * alumni module
  * Edited by John Mordo (jlm69)
- * @copyright       XOOPS Project http://xoops.org/
+ * @copyright       XOOPS Project https://xoops.org/
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @since           2.6.0
  * @author          Mage Grégory (AKA Mage)

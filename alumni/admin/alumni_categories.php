@@ -11,11 +11,11 @@
 /**
  * Alumni module for xoops
  *
- * @copyright       XOOPS Project http://xoops.org/
+ * @copyright       XOOPS Project https://xoops.org/
  * @license         GPL 2.0 or later
  * @package         alumni
  * @since           2.5.x
- * @author          XOOPS Development Team ( http://xoops.org )
+ * @author          XOOPS Development Team ( https://xoops.org )
  * @version         $Id: const_entete.php 9860 2012-07-13 10:41:41Z txmodxoops $
  */
 

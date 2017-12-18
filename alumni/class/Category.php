@@ -12,7 +12,7 @@
 /**
  * test1 module for xoops
  *
- * @copyright       XOOPS Project http://xoops.org/
+ * @copyright       XOOPS Project https://xoops.org/
  * @license         GPL 2.0 or later
  * @package         alumni
  * @author          John Mordo (jlm69)

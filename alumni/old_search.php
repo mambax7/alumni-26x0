@@ -14,7 +14,7 @@ use Xoops\Core\Request;
 /**
  * XOOPS global search
  *
- * @copyright       XOOPS Project http://xoops.org/
+ * @copyright       XOOPS Project https://xoops.org/
  * @license         http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
  * @package         core
  * @since           2.0.0
